@@ -1,6 +1,8 @@
 <template>
   <div class="index">
     首页
+    <button v-on:click='remember'>记住</button>
+    <button v-on:click='forget'>忘记</button>
   </div>
 </template>
 
@@ -13,19 +15,18 @@ export default {
     return {};
   },
   //函数盒子
-  methods: {},
+  methods: {
+    remember(){
+      localStorage.setItem('indexUrl',true);
+    },
+    forget(){
+      localStorage.setItem('indexUrl',false);
+    }
+  },
   // 获取后端数据
   beforeRouter() {},
   // 修改数据
   created() {
-    // let indexUrl = localStorage.getItem("indexUrl");
-    // console.log(indexUrl);
-    // if (indexUrl == "true") {
-    //   console.log("需要跳转");
-    //   this.$router.push("/login");
-    // } else {
-    //   console.log("不需要跳转");
-    // }
   },
   // 操作dome
   mounted() {}
