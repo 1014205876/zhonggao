@@ -6,7 +6,8 @@ import Router from 'vue-router'
 // // 引入次级页面路由
 // 懒加载
 // 引入主级页面路由
-const Login = resolve => require(['@/page/login'], resolve);
+const login = resolve => require(['@/page/login'], resolve);
+const index = resolve => require(['@/page/index'], resolve);
 // 引入次级页面路由
 
 Vue.use(Router)
@@ -15,17 +16,25 @@ export default new Router({
   routes: [
     {
       path: '/',
-      redirect: "/login",
-      component: Login,
+      redirect: "/index",
+      component: index,
     },
     {
       path: '/login',
-      component: Login,
+      component: login,
       meta: {
         index: 1,
-        title: '登录'
+        title: '登录',
+      },
+    },
+    {
+      path: '/index',
+      component: index,
+      meta: {
+        index: 2,
+        title: '首页',
+        auth:true
       },
     }
   ],
-
 })

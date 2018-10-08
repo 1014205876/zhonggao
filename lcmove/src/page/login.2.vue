@@ -28,9 +28,8 @@ export default {
   methods: {
     signIn() {
       console.log(this.remember)
-      localStorage.setItem('indexUrl',this.remember);
       if (this.account == 123 && this.password == 123) {
-        this.$router.push("/index");
+        this.$router.push("/rou/index");
       } else {
         alert("用户名或密码错误");
       }

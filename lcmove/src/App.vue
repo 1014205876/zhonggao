@@ -1,23 +1,32 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view/>
+    <transition :name="run" mode="out-in">
+      <router-view v-wechat-title='$route.meta.title'></router-view>
+    </transition>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App",
+
+  data() {
+    return {
+      run: "left"
+    };
+  },
+  watch: {
+    $route(to, from) {
+      if (to.meta.index < from.meta.index) {
+        this.run = "right";
+      } else {
+        this.run = "left";
+      }
+    }
+  }
+};
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
+<style lang="less" scoped>
 </style>
