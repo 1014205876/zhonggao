@@ -8,26 +8,37 @@ import '../static/css/transition.css'
 import '../static/js/rem750.js'//750rem
 
 //引入修改页面title
-import VueWechatTitle from 'vue-wechat-title'
+// import VueWechatTitle from 'vue-wechat-title'
+// Vue.use(VueWechatTitle)
 Vue.config.productionTip = false
-Vue.use(VueWechatTitle)
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from, next) => {//路由跳转之前执行
+  if (to.meta.title) {//修改页面title
+    document.title = to.meta.title;
+  }
+  let loging = sessionStorage.getItem('loging');
   let indexUrl = localStorage.getItem('indexUrl');
+  console.log(loging)
   console.log(indexUrl)
   console.log(to.matched.some(m => m.meta.auth))
-  if (to.matched.some(m => m.meta.auth)) {
-    console.log('首次进入')
-    if (indexUrl=='false') {
-    console.log('需要跳转')
-      next({ path: '/login'})
+  if (loging == 'true') {
+    console.log('本次登陆过')
+    next()
+  } else {
+    console.log('本次未登陆过')
+    if (to.matched.some(m => m.meta.auth)) {
+      console.log('需要判定登录')
+      if (indexUrl == 'false') {
+        console.log('未记住登录状态，需要跳转')
+        next({ path: '/login' })
+      } else {
+        console.log('记住登录状态，不需要跳转')
+        next()
+      }
     } else {
-    console.log('不需要跳转')
+      console.log('不需要判定登录')
       next()
     }
-  } else {
-    console.log('非首次进入')
-    next()
   }
 });
 

@@ -27,9 +27,17 @@ export default {
   //函数盒子
   methods: {
     signIn() {
-      console.log(this.remember)
-      localStorage.setItem('indexUrl',this.remember);
+      console.log(this.remember);
+      localStorage.setItem("indexUrl", this.remember);
+      sessionStorage.setItem("loging", true);
       if (this.account == 123 && this.password == 123) {
+        if (this.remember) {
+          localStorage.setItem("account", this.account);
+          localStorage.setItem("password", this.password);
+        } else {
+          sessionStorage.setItem("account", this.account);
+          sessionStorage.setItem("password", this.password);
+        }
         this.$router.push("/index");
       } else {
         alert("用户名或密码错误");
@@ -39,7 +47,14 @@ export default {
   // 获取后端数据
   beforeRouter() {},
   // 修改数据
-  created() {},
+  created() {
+    let account =
+      localStorage.getItem("account") || sessionStorage.getItem("account");
+    console.log(account);
+    let password =
+      localStorage.getItem("password") || sessionStorage.getItem("password");
+    console.log(password);
+  },
   // 操作dome
   mounted() {
     $(".login").css("height", $(window).height());
