@@ -1,12 +1,25 @@
 <template>
-  <div class="login" style='background-image:url(static/img/bgimg.jpg)'>
+  <div class="login" style='background-image:url(static/img/bgimg_login.jpg)'>
     <form @submit.prevent="signIn">
-      <img class='logo' src="static/img/bgimg.jpg" alt="">
-      <input type="text" v-model='account' placeholder='请输入账号'>
-      <input type="password" v-model='password' placeholder='请输入密码'>
-      <label>
-        <input type="checkbox" v-model='remember'>记住我
+      <img class='logo' src="static/img/logo.png" alt="">
+      <div class="name">方舟资产系统</div>
+      <div class="input">
+        <img class='icon' src="static/img/icon/username.png" alt="">
+        <input type="text" v-model='account' placeholder='输入用户名'>
+      </div>
+      <div class="input">
+        <img class='icon' src="static/img/icon/password.png" alt="">
+        <input type="password" v-model='password' placeholder='输入密码'>
+      </div>
+      <div class="label">
+        <input id='remember' type="checkbox" v-model='remember'>
+      <label for='remember'>
+        <div class="check">
+          <img src="static/img/icon/sure.png" alt="">
+        </div>
+        自动登录
       </label>
+      </div>
       <input class='submit' type="submit" value='登录'>
     </form>
   </div>
@@ -77,21 +90,86 @@ export default {
     display: block;
     margin: 0 auto;
     width: 2rem;
-    // height:2rem;
   }
-  input {
-    display: block;
-    width: 70%;
-    margin: 0.1rem auto;
-    border-radius: 0.5rem;
-    background: rgba(255, 255, 255, 0.5);
+  .name {
+    font-size: 0.48rem;
+    color: #ffffff;
+    line-height: 1.3rem;
+    text-align: center;
   }
-  button {
+  .input {
+    width: 5rem;
+    height: 0.9rem;
+    margin: 0.4rem auto;
+    border-radius: 0.1rem;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    .icon {
+      width: 14px;
+      margin-left: 0.3rem;
+      margin-right: 0.2rem;
+    }
+    input {
+      height: 0.9rem;
+      background: none;
+      font-size:0.3rem;
+      color: #fff;
+      ::-webkit-input-placeholder,
+      :-moz-placeholder,
+      ::-moz-placeholder,
+      :-ms-input-placeholder {
+        color: #999999;
+      }
+    }
+  }
+  .label {
+    width: 5rem;
+    margin: 0.4rem auto;
+    display: flex;
+    align-items: center;
+    color: #999999;
+    font-size: 0.3rem;
+    label {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      .check {
+        width: 16px;
+        height: 16px;
+        margin-left:0.15rem;
+        margin-right:0.25rem;
+        border-radius: 0.05rem;
+        border: 1px solid #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          width:12px;
+          display: none;
+        }
+      }
+    }
+    input {
+      display: none;
+    }
+    input:checked + label .check {
+      img {
+        display: block;
+      }
+    }
+  }
+  .submit {
     display: block;
-    width: 70%;
-    margin: 0.1rem auto;
-    border-radius: 0.05rem;
-    padding: 5px;
+    background:#3674B2;
+    color:#fff;
+    font-size:0.3rem;
+    width: 5rem;
+    height:0.8rem;
+    margin: 0.5rem auto 0;
+    border-radius: 0.1rem;
+    text-align:center;
+    line-height:0.8rem;
   }
 }
 </style>

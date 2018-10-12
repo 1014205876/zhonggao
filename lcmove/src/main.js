@@ -12,6 +12,10 @@ import '../static/js/rem750.js'//750rem
 // Vue.use(VueWechatTitle)
 Vue.config.productionTip = false
 
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts
+
 router.beforeEach((to, from, next) => {//路由跳转之前执行
   if (to.meta.title) {//修改页面title
     document.title = to.meta.title;

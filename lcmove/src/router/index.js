@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // 非懒加载
 // // 引入主级页面路由
-// import Login from '@/page/login'
+// import login from '@/page/login'
+// import index from '@/page/index'
 // // 引入次级页面路由
 // 懒加载
 // 引入主级页面路由
@@ -32,7 +33,7 @@ export default new Router({
       component: index,
       meta: {
         index: 2,
-        title: '首页',
+        title: '工作台',
         auth:true
       },
     }
