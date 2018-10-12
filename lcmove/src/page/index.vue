@@ -22,7 +22,7 @@
         <li>
           <div class="top">订单总数</div>
           <div class='num'>
-            <numroll :value="213853213" :time='2'></numroll>
+            <numroll :value="23982" :time='1'></numroll>
           </div>
         </li>
         <li>
@@ -32,28 +32,77 @@
           </div>
         </li>
       </ul>
-      <button v-on:click='start' class='start'>开启动画</button>
+      <div class="start" v-on:click='start'>
+        查看待审批任务
+        <img src="static/img/icon/up.png" alt="">
+      </div>
     </div>
     <div class="banimate" v-on:click='stop'>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
-      <div class="box"></div>
+      <div class="header"></div>
+      <ul class='task'>
+        <li>
+          <div class="top">
+            <div class="left">
+              <div class="time">
+                <span>2018-10-09</span>
+                <span>16:23:12</span>
+              </div>
+              <div class="name">江西省博会金融九州服务有限公司</div>
+            </div>
+            <div class="btn wait">待开始</div>
+          </div>
+          <ul class="bottom">
+            <li>
+              <span>地址</span>
+              <span class='data'>江西省南昌市进贤县10000号</span>
+            </li>
+            <li>
+              <span>企业类型</span>
+              <span class='data'>新增</span>
+            </li>
+            <li>
+              <span>当前进度</span>
+              <span class='data'>流程名字</span>
+            </li>
+          </ul>
+        </li>
+        <li v-for='list in data' :key='list.id'>
+          <div class="top">
+            <div class="left">
+              <div class="time">
+                <span>2018-10-09</span>
+                <span>16:23:12</span>
+              </div>
+              <div class="name">江西省博会金融九州服务有限公司</div>
+            </div>
+            <div class="btn ing">进行中</div>
+          </div>
+          <ul class="bottom">
+            <li>
+              <span>地址</span>
+              <span class='data'>江西省南昌市进贤县10000号</span>
+            </li>
+            <li>
+              <span>企业类型</span>
+              <span class='data'>新增</span>
+            </li>
+            <li>
+              <span>当前进度</span>
+              <span class='data'>流程名字</span>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </div>
     <div class="head">
       <div class="left">
-        左动画
+        <img src="static/img/headimg_no.png" alt="">未登录
       </div>
-      <div class="right">
-        右动画
+      <div class="right" v-on:click='tohistory'>
+        历史记录<img src="static/img/icon/right_white.png" alt="">
       </div>
     </div>
+    <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div>
   </div>
 </template>
 
@@ -65,7 +114,9 @@ import numroll from "@/components/numroll";
 export default {
   name: "Index",
   data() {
-    return {};
+    return {
+      data: 3
+    };
   },
   components: {
     numroll
@@ -78,12 +129,15 @@ export default {
     forget() {
       localStorage.setItem("indexUrl", false);
     },
+    tohistory() {
+      this.$router.push("/history");
+    },
     start() {
       $("html,body").animate({ scrollTop: 0 }, 0);
-      $(".tanimate,.banimate,.head").addClass("active");
+      $(".tanimate,.banimate,.head,.headimg").addClass("active");
     },
     stop() {
-      $(".tanimate,.banimate,.head").removeClass("active");
+      $(".tanimate,.banimate,.head,.headimg").removeClass("active");
     },
     infoEchart() {
       let that = this;
@@ -94,14 +148,17 @@ export default {
         {
           title: {
             textStyle: {
-              color: "#fff"
+              color: "#fff",
+              fontFamily: "MicrosoftYaHeiLight",
+              fontSize: 18
             },
-            text: "一周订单数据"
+            text: "一周订单数据",
+            padding: [20, 0, 0, 30]
           },
           grid: {
             top: "20%",
-            left: "20%",
-            right: "10%",
+            left: "15%",
+            right: "5%",
             bottom: "10%",
             containLabel: false
           },
@@ -222,14 +279,17 @@ export default {
         {
           title: {
             textStyle: {
-              color: "#fff"
+              color: "#fff",
+              fontFamily: "MicrosoftYaHeiLight",
+              fontSize: 18
             },
-            text: "一周申请金额"
+            text: "一周申请金额",
+            padding: [20, 0, 0, 30]
           },
           grid: {
             top: "20%",
-            left: "20%",
-            right: "10%",
+            left: "15%",
+            right: "5%",
             bottom: "10%",
             containLabel: false
           },
@@ -350,15 +410,17 @@ export default {
         {
           title: {
             textStyle: {
-              color: "#fff"
+              color: "#fff",
+              fontFamily: "MicrosoftYaHeiLight",
+              fontSize: 18
             },
-            text: "一周居间费总金额"
-            // x: "center"
+            text: "一周居间费金额",
+            padding: [20, 0, 0, 30]
           },
           grid: {
             top: "20%",
-            left: "20%",
-            right: "10%",
+            left: "15%",
+            right: "5%",
             bottom: "10%",
             containLabel: false
           },
@@ -500,6 +562,7 @@ export default {
   // 操作dome
   mounted() {
     this.infoEchart();
+    $(".index .banimate").css("height", $(window).height());
   }
 };
 </script>
@@ -508,6 +571,7 @@ export default {
 .index {
   width: 100%;
   position: relative;
+
   .tanimate {
     position: fixed;
     top: 0;
@@ -531,6 +595,7 @@ export default {
     /* Safari */
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
+
     /* Safari and Chrome */
     .task {
       -moz-box-sizing: border-box;
@@ -547,137 +612,331 @@ export default {
       border-radius: 0.1rem;
       width: 2.4rem;
       background: #253369;
-      padding:0.1rem;
+      padding: 0.1rem;
+
       li {
-        display:flex;
-        align-items:center;
-        justify-content:space-around;
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
         span {
-          line-height:0.5rem;
-          color: #CACACA;
+          line-height: 0.5rem;
+          color: #cacaca;
           font-size: 0.28rem;
         }
+
         .num {
-          display:inline-block;
-          width:0.7rem;
-          text-align:center;
-          color: #71FEC6;
-          font-size:0.3rem;
+          display: inline-block;
+          width: 0.7rem;
+          text-align: center;
+          color: #71fec6;
+          font-size: 0.3rem;
         }
       }
     }
+
     .myChart {
       position: absolute;
       top: 5%;
       width: 100%;
       height: 7rem;
     }
+
     .data {
       position: absolute;
-      top: 65%;
+      top: 67%;
       width: 100%;
       display: flex;
       justify-content: center;
+
       li {
+        -moz-box-sizing: border-box;
+        /*Firefox3.5+*/
+        -webkit-box-sizing: border-box;
+        /*Safari3.2+*/
+        -o-box-sizing: border-box;
+        /*Opera9.6*/
+        -ms-box-sizing: border-box;
+        /*IE8*/
         width: 2.2rem;
         height: 2.2rem;
-        margin: 0 0.2rem;
+        border-radius: 0.05rem;
+        padding-top: 0.5rem;
+        margin: 0 0.1rem;
         background: #253369;
-        position:relative;
+        position: relative;
+        color: #71fec6;
+        text-align: center;
+
+        .top {
+          line-height: 0.28rem;
+          font-size: 0.26rem;
+        }
+
+        .num {
+          font-family: "Akrobat";
+          margin-top: 0.3rem;
+          line-height: 0.4rem;
+          font-size: 0.48rem;
+        }
       }
+
       li.active {
         background: #2a4874;
       }
-      li.active:after{
-        content:'';
-        position:absolute;
-        left:0;
-        right:0;
-        top:-0.3rem;
-        margin:auto;
-        width:0;
-        height:0;
-        border-top:0.3rem solid #2a4874;
-        border-left:0.15rem solid #2a4874;
-        border-right:0.15rem solid #2a4874;
-        border-bottom:0.3rem solid #2a4874;
+
+      li.active:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -18px;
+        margin: auto;
+        width: 0;
+        height: 0;
+        border-top: 0px solid transparent;
+        border-left: 11px solid transparent;
+        border-right: 11px solid transparent;
+        border-bottom: 18px solid #2a4874;
       }
     }
+
     .start {
+      width: 6.7rem;
+      height: 1.2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
       position: absolute;
+      left: 0;
+      right: 0;
       bottom: 0rem;
-      width: 100%;
-      height: 1rem;
-      font-size: 0.4rem;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.3rem;
+      color: rgba(255, 255, 255, 0.3);
+
+      img {
+        width: 13px;
+        height: 12px;
+        margin-left: 0.15rem;
+      }
     }
   }
+
   .tanimate.active {
     transform: translateY(-100%);
   }
+
   .banimate {
+    -moz-box-sizing: border-box;
+    /*Firefox3.5+*/
+    -webkit-box-sizing: border-box;
+    /*Safari3.2+*/
+    -o-box-sizing: border-box;
+    /*Opera9.6*/
+    -ms-box-sizing: border-box;
+    /*IE8*/
     position: relative;
-    z-index: -30;
+    z-index: 0;
     width: 100%;
+    padding-top: 1.8rem;
     transform: translateY(100%);
     transition: all 2s;
     -webkit-transition: all 2s;
     /* Safari */
-    transition-timing-function: ease;
-    -webkit-transition-timing-function: ease;
+    transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+
     /* Safari and Chrome */
-    .box {
-      width: 80%;
-      height: 3rem;
-      background: skyblue;
-      border-radius: 0.5rem;
-      margin: 0.5rem auto;
+    .header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      height: 1.8rem;
+      background-position: center center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .task {
+      > li {
+        margin: 0.4rem 0.3rem;
+        padding: 0 0.3rem;
+        border-radius: 0.1rem;
+        background: #fff;
+
+        .top {
+          padding: 0.2rem 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+
+          .left {
+            width: 3rem;
+
+            .time {
+              line-height: 0.45rem;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              font-size: 0.28rem;
+              color: #c6c6c6;
+            }
+
+            .name {
+              line-height: 0.45rem;
+              font-size: 0.3rem;
+              font-weight: 600;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              display: -webkit-box;
+              -webkit-line-clamp: 1;
+              -webkit-box-orient: vertical;
+            }
+          }
+
+          .btn {
+            width: 1.1rem;
+            line-height: 24px;
+            text-align: center;
+            border-radius: 0.1rem;
+            font-size: 14px;
+            color: #fff;
+          }
+
+          .btn.wait {
+            background: #3674b2;
+          }
+
+          .btn.ing {
+            background: #de964f;
+          }
+        }
+
+        .bottom {
+          padding: 0.2rem 0;
+          border-top: 1px solid #cacaca;
+
+          li {
+            line-height: 0.56rem;
+            display: flex;
+            justify-content: space-between;
+
+            span {
+              font-size: 0.3rem;
+              color: #666666;
+            }
+
+            .data {
+              color: #000000;
+            }
+          }
+        }
+      }
     }
   }
+
   .banimate.active {
     transform: translateY(0%);
-    z-index: 30;
+    z-index: 0;
   }
+
   .head {
     width: 100%;
-    height: 1rem;
-    z-index: 20;
+    height: 1.8rem;
+    overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
     position: fixed;
     top: 0;
-    overflow: hidden;
+    z-index: 20;
+
     .left {
       position: absolute;
+      width: 50%;
       top: 0;
       left: 0;
-      width: 40%;
-      background: red;
-      line-height: 1rem;
+      height: 1.8rem;
       transform: translateX(-100%);
       overflow: hidden;
       transition: all 2s;
       -webkit-transition: all 2s;
+    /* Safari */
+    transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+
+    /* Safari and Chrome */
       /* Safari */
+      display: flex;
+      align-items: center;
+      color: #fff;
+      font-size: 0.36rem;
+
+      img {
+        width: 1.1rem;
+        height: 1.1rem;
+        margin: 0 0.2rem 0 0.5rem;
+      }
     }
+
     .right {
       position: absolute;
+      width: 50%;
       top: 0;
       right: 0;
-      width: 40%;
-      background: red;
-      line-height: 1rem;
+      height: 1.8rem;
       transform: translateX(100%);
       overflow: hidden;
       transition: all 2s;
       -webkit-transition: all 2s;
+    /* Safari */
+    transition-timing-function: linear;
+    -webkit-transition-timing-function: linear;
+
+    /* Safari and Chrome */
       /* Safari */
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      color: #fff;
+      font-size: 0.3rem;
+
+      img {
+        width: 10px;
+        height: 16px;
+        margin: 0 0.3rem 0 0.15rem;
+      }
     }
   }
+
   .head.active {
+    position: absolute;
+
     .left {
       transform: translateX(0%);
     }
+
     .right {
       transform: translateX(0%);
     }
+  }
+
+  .headimg {
+    width: 100%;
+    height: 1.8rem;
+    overflow: hidden;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: fixed;
+    top: 0;
+    z-index: 0;
+  }
+
+  .headimg.active {
+    position: absolute;
   }
 }
 </style>
