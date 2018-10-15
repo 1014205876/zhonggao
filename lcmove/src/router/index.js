@@ -12,6 +12,8 @@ const login = resolve => require(['@/page/login'], resolve);//登录
 const index = resolve => require(['@/page/index'], resolve);//工作台
 const history = resolve => require(['@/page/history'], resolve);//历史记录
 const taskdetail = resolve => require(['@/page/taskdetail'], resolve);//任务详情
+const enterpriseinfo = resolve => require(['@/page/enterpriseinfo'], resolve);//企业详情
+const appointment = resolve => require(['@/page/appointment'], resolve);//企业详情
 // 引入次级页面路由
 
 Vue.use(Router)
@@ -55,6 +57,24 @@ export default new Router({
       meta: {
         index: 4,
         title: '任务详情',
+        auth:true
+      },
+    },
+    {
+      path: '/enterpriseinfo',
+      component: enterpriseinfo,
+      meta: {
+        index: 5,
+        title: '企业详情',
+        auth:true
+      },
+    },
+    {
+      path: '/appointment',
+      component: appointment,
+      meta: {
+        index: 6,
+        title: '预约确认',
         auth:true
       },
     },

@@ -286,46 +286,28 @@ export default {
         chartsData: [
           //图标数据
           {
-            amount: 713,
-            consumeAmount: 3.6856,
-            count: 26,
-            time: "10-15"
-          },
-          {
-            amount: 0,
-            consumeAmount: 0,
-            count: 0,
-            time: "10-14"
-          },
-          {
-            amount: 0,
-            consumeAmount: 0,
-            count: 0,
-            time: "10-13"
+            amount: 394, //申请金额
+            consumeAmount: 1.112, //居间费金额
+            count: 17, //订单数
+            time: "2018-10-13" //日期
           },
           {
             amount: 170,
             consumeAmount: 0.6512,
             count: 8,
-            time: "10-12"
-          },
-          {
-            amount: 394,
-            consumeAmount: 1.112,
-            count: 17,
-            time: "10-11"
+            time: "2018-10-08"
           },
           {
             amount: 90,
             consumeAmount: 0.44,
             count: 12,
-            time: "10-10"
+            time: "2018-10-11"
           },
           {
-            amount: 0,
-            consumeAmount: 0,
-            count: 0,
-            time: "10-09"
+            amount: 589,
+            consumeAmount: 1.6696,
+            count: 20,
+            time: "2018-10-09"
           }
         ]
       }
@@ -416,9 +398,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: 
-                that.xArr
-              //坐标轴数据
+              data: that.xArr //坐标轴数据
             }
           ],
           yAxis: {
@@ -459,14 +439,7 @@ export default {
             {
               type: "line",
               symbol: "none",
-              data: [
-                that.get.chartsData[6].amount,
-                that.get.chartsData[5].amount,
-                that.get.chartsData[4].amount,
-                that.get.chartsData[3].amount,
-                that.get.chartsData[2].amount,
-                that.get.chartsData[1].amount,
-                that.get.chartsData[0].amount,],
+              data: that.shenqingArr,
               lineStyle: {
                 color: {
                   type: "linear",
@@ -556,15 +529,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: [
-                that.get.chartsData[6].consumeAmount,
-                that.get.chartsData[5].consumeAmount,
-                that.get.chartsData[4].consumeAmount,
-                that.get.chartsData[3].consumeAmount,
-                that.get.chartsData[2].consumeAmount,
-                that.get.chartsData[1].consumeAmount,
-                that.get.chartsData[0].consumeAmount
-              ] //坐标轴数据
+              data: that.xArr //坐标轴数据
             }
           ],
           yAxis: {
@@ -695,15 +660,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: [
-                that.get.chartsData[6].count,
-                that.get.chartsData[5].count,
-                that.get.chartsData[4].count,
-                that.get.chartsData[3].count,
-                that.get.chartsData[2].count,
-                that.get.chartsData[1].count,
-                that.get.chartsData[0].count
-              ] //坐标轴数据
+              data: that.xArr //坐标轴数据
             }
           ],
           yAxis: {
@@ -818,6 +775,35 @@ export default {
       let xDate = month + "." + day;
       that.dayArr.push(nowDate);
       that.xArr.push(xDate);
+    }
+      // xArr: [],
+      // dayArr: [],
+      // shenqingArr: [],
+      // jujianArr: [],
+      // dindanArr: [],
+    for (let i = 0; i < 7; i++) {
+      let have = 0;
+      for (let j = 0; j < 7; j++) {
+        if (that.get.chartsData[j]) {
+          if (that.dayArr[i] == that.get.chartsData[j].time) {
+            that.shenqingArr.push(that.get.chartsData[j].amount);
+            that.jujianArr.push(that.get.chartsData[j].consumeAmount);
+            that.dindanArr.push(that.get.chartsData[j].count);
+          }else{
+            have++
+          }
+        }
+      }
+      console.log(have)
+      if (have >= that.get.chartsData.length) {
+        that.shenqingArr.push(0);
+        that.jujianArr.push(0);
+        that.dindanArr.push(0);
+      }
+      console.log(that.dayArr)
+      console.log(that.shenqingArr)
+      console.log(that.jujianArr)
+      console.log(that.dindanArr)
     }
     let account =
       localStorage.getItem("account") || sessionStorage.getItem("account");

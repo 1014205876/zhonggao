@@ -25,7 +25,7 @@
     </ul>
     <div class='loading' v-show='loading'>
       <img src="static/img/icon/loading.png" alt="">
-      载入中，请等待
+      加载中...
     </div>
   </div>
 </template>
@@ -80,7 +80,7 @@ export default {
 <style lang="less" scoped>
 .history {
   position: relative;
-  padding-bottom: 1rem;
+  padding-bottom: 1.6rem;
 
   .data {
     li {
@@ -137,14 +137,18 @@ export default {
   .loading {
     position: absolute;
     bottom: 0;
-    height: 1rem;
+    width:100%;
+    height: 1.6rem;
+    font-size:0.28rem;
+    color:#999999;
     display: flex;
     align-items: center;
     justify-content: center;
 
     img {
-      width: 0.5rem;
-      height: 0.5rem;
+      width: 0.4rem;
+      height: 0.4rem;
+      margin-right:0.2rem;
       animation-name: myfirst;
       animation-duration: 2s;
       animation-timing-function: linear;

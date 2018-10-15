@@ -113,14 +113,24 @@ export default {
     input {
       height: 0.9rem;
       background: none;
-      font-size:0.3rem;
+      font-size: 0.3rem;
       color: #fff;
-      ::-webkit-input-placeholder,
-      :-moz-placeholder,
-      ::-moz-placeholder,
-      :-ms-input-placeholder {
-        color: #999999;
-      }
+    }
+    input:-ms-input-placeholder {
+      color: #999999;
+      font-size: 0.3rem;
+    }
+    input::-moz-placeholder {
+      color: #999999;
+      font-size: 0.3rem;
+    }
+    input:-moz-placeholder {
+      color: #999999;
+      font-size: 0.3rem;
+    }
+    input::-webkit-input-placeholder {//手机端
+      color: #999999;
+      font-size: 0.3rem;
     }
   }
   .label {
@@ -137,15 +147,15 @@ export default {
       .check {
         width: 16px;
         height: 16px;
-        margin-left:0.15rem;
-        margin-right:0.25rem;
+        margin-left: 0.15rem;
+        margin-right: 0.25rem;
         border-radius: 0.05rem;
         border: 1px solid #fff;
         display: flex;
         align-items: center;
         justify-content: center;
         img {
-          width:12px;
+          width: 12px;
           display: none;
         }
       }
@@ -161,15 +171,15 @@ export default {
   }
   .submit {
     display: block;
-    background:#3674B2;
-    color:#fff;
-    font-size:0.3rem;
+    background: #3674b2;
+    color: #fff;
+    font-size: 0.3rem;
     width: 5rem;
-    height:0.8rem;
+    height: 0.8rem;
     margin: 0.5rem auto 0;
     border-radius: 0.1rem;
-    text-align:center;
-    line-height:0.8rem;
+    text-align: center;
+    line-height: 0.8rem;
   }
 }
 </style>
