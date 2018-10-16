@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div class='tanimate' style='background-image:url(static/img/bgimg_index.jpg)' @touchmove.prevent>
+    <div class='tanimate' style='background-image:url(static/img/bgimg_index.jpg)' @touchmove='touchmove' @touchend='touchend'>
       <ul class="task">
         <li>
           <span>当前任务</span>
@@ -32,13 +32,20 @@
           </div>
         </li>
       </ul>
-      <div class="start" v-on:click='start'>
+      <div class="start" @touchstart='touchstart'>
         查看待审批任务
         <img src="static/img/icon/up.png" alt="">
       </div>
     </div>
-    <div class="banimate" v-on:click='stop'>
-      <div class="header"></div>
+    <div class="banimate">
+      <div class="header" style='background-image:url(static/img/bgimg_index_head.jpg)'>
+        <div class="left" v-on:click='stop'>
+          <img src="static/img/headimg_no.png" alt="">未登录
+        </div>
+        <div class="right" v-on:click='tohistory'>
+          历史记录<img src="static/img/icon/right_white.png" alt="">
+        </div>
+      </div>
       <ul class='task'>
         <li v-on:click.stop='toappointment'>
           <div class="top">
@@ -250,15 +257,15 @@
         </li>
       </ul>
     </div>
-    <div class="head">
+    <!-- <div class="head">
       <div class="left" v-on:click='forget'>
         <img src="static/img/headimg_no.png" alt="">未登录
       </div>
       <div class="right" v-on:click='tohistory'>
         历史记录<img src="static/img/icon/right_white.png" alt="">
       </div>
-    </div>
-    <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div>
+    </div> -->
+    <!-- <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div> -->
   </div>
 </template>
 
@@ -271,11 +278,15 @@ export default {
   name: "Index",
   data() {
     return {
-      xArr: [],
-      dayArr: [],
-      shenqingArr: [],
-      jujianArr: [],
-      dindanArr: [],
+      startY: 0,
+      moveY: 0,
+      endY: 0,
+      canmove: true,
+      // xArr: [],
+      // dayArr: [],
+      // shenqingArr: [],
+      // jujianArr: [],
+      // dindanArr: [],
       data: 3,
       get: {
         sumApplyAmount: 1193, //申请金额
@@ -336,6 +347,36 @@ export default {
   },
   //函数盒子
   methods: {
+    touchstart(e) {
+      console.log("touchstart");
+      this.startY = e.targetTouches[0].pageY;
+      console.log(this.startY)
+    },
+    touchmove(e) {
+      let that = this;
+      if (that.canmove) {
+        $(".index .banimate").css({
+          transform:
+            "translateY(" +
+            ($(window).height() + that.moveY - that.startY) +
+            "px)",
+          transition: "all 0.1s"
+        });
+      }
+      console.log("touchmove");
+      console.log(that.moveY);
+      that.moveY = e.targetTouches[0].pageY;
+      if (that.startY - that.moveY >= 100) {
+        that.start();
+      }
+    },
+    touchend(e) {
+      if (this.startY - this.moveY >= 100) {
+        this.start(this);
+      } else {
+        this.stop(this);
+      }
+    },
     remember() {
       localStorage.setItem("indexUrl", true);
     },
@@ -366,12 +407,23 @@ export default {
     tomanager() {
       this.$router.push("/manager");
     },
-    start() {
-      $("html,body").animate({ scrollTop: 0 }, 0);
+    start(that) {
+      that.canmove = false;
+      $(".index .banimate").animate({ scrollTop: 0 }, 0);
+      $(".index .banimate").css({
+        transform: "translateY(0%)",
+        transition: "all 1s"
+      });
       $(".tanimate,.banimate,.head,.headimg").addClass("active");
     },
-    stop() {
+    stop(that) {
+      $(".index .banimate").animate({ scrollTop: 0 }, 0);
+      $(".index .banimate").css({
+        transform: "translateY(100%)",
+        transition: "all 1s"
+      });
       $(".tanimate,.banimate,.head,.headimg").removeClass("active");
+      that.canmove = true;
     },
     infoEchart() {
       let that = this;
@@ -565,7 +617,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: that.xArr, //坐标轴数据
+              data: that.xArr //坐标轴数据
             }
           ],
           yAxis: {
@@ -704,7 +756,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: that.xArr, //坐标轴数据
+              data: that.xArr //坐标轴数据
             }
           ],
           yAxis: {
@@ -812,22 +864,22 @@ export default {
   // 修改数据
   created() {
     let that = this;
-    for (let i = 0; i < 7; i++) {
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate() - 7 + i;
-      if (month < 10) {
-        month = "0" + month;
-      }
-      if (day < 10) {
-        day = "0" + day;
-      }
-      let nowDate = year + "-" + month + "-" + day;
-      let xDate = month + "." + day;
-      that.dayArr.push(nowDate);
-      that.xArr.push(xDate);
-    }
+    // for (let i = 0; i < 7; i++) {
+    //   let date = new Date();
+    //   let year = date.getFullYear();
+    //   let month = date.getMonth() + 1;
+    //   let day = date.getDate() - 7 + i;
+    //   if (month < 10) {
+    //     month = "0" + month;
+    //   }
+    //   if (day < 10) {
+    //     day = "0" + day;
+    //   }
+    //   let nowDate = year + "-" + month + "-" + day;
+    //   let xDate = month + "." + day;
+    //   that.dayArr.push(nowDate);
+    //   that.xArr.push(xDate);
+    // }
     let account =
       localStorage.getItem("account") || sessionStorage.getItem("account");
     console.log(account);
@@ -838,6 +890,8 @@ export default {
   // 操作dome
   mounted() {
     this.infoEchart();
+    $(".index").css("height", $(window).height());
+    $(".index .tanimate").css("height", $(window).height());
     $(".index .banimate").css("height", $(window).height());
   }
 };
@@ -847,13 +901,10 @@ export default {
 .index {
   width: 100%;
   position: relative;
+  overflow: hidden;
 
   .tanimate {
-    position: fixed;
-    top: 0;
-    z-index: 10;
     width: 100%;
-    height: 100%;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -865,12 +916,12 @@ export default {
     /*Opera9.6*/
     -ms-box-sizing: border-box;
     /*IE8*/
-    transform: translateY(0%);
-    transition: all 1s;
-    -webkit-transition: all 1s;
-    /* Safari */
-    transition-timing-function: linear;
-    -webkit-transition-timing-function: linear;
+    // transform: translateY(0%);
+    // transition: all 1s;
+    // -webkit-transition: all 1s;
+    // /* Safari */
+    // transition-timing-function: linear;
+    // -webkit-transition-timing-function: linear;
 
     /* Safari and Chrome */
     .task {
@@ -1001,7 +1052,8 @@ export default {
   }
 
   .tanimate.active {
-    transform: translateY(-100%);
+    // z-index:10;
+    // transform: translateY(-100%);
   }
 
   .banimate {
@@ -1013,26 +1065,87 @@ export default {
     /*Opera9.6*/
     -ms-box-sizing: border-box;
     /*IE8*/
-    position: relative;
-    z-index: 0;
+    background: #f3f3f3;
+    position: absolute;
+    top: 0;
+    z-index: 20;
     width: 100%;
+    overflow: auto;
     padding-top: 1.8rem;
     transform: translateY(100%);
-    transition: all 2s;
-    -webkit-transition: all 2s;
+    transition: all 1s;
+    -webkit-transition: all 1s;
     /* Safari */
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
 
     /* Safari and Chrome */
     .header {
-      position: fixed;
-      top: 0;
       width: 100%;
       height: 1.8rem;
+      overflow: hidden;
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+
+      .left {
+        position: absolute;
+        width: 50%;
+        top: 0;
+        left: 0;
+        height: 1.8rem;
+        transform: translateX(-100%);
+        overflow: hidden;
+        transition: all 1s;
+        -webkit-transition: all 1s;
+        /* Safari */
+        transition-timing-function: linear;
+        -webkit-transition-timing-function: linear;
+
+        /* Safari and Chrome */
+        /* Safari */
+        display: flex;
+        align-items: center;
+        color: #fff;
+        font-size: 0.36rem;
+
+        img {
+          width: 1.1rem;
+          height: 1.1rem;
+          margin: 0 0.2rem 0 0.5rem;
+        }
+      }
+
+      .right {
+        position: absolute;
+        width: 50%;
+        top: 0;
+        right: 0;
+        height: 1.8rem;
+        transform: translateX(100%);
+        overflow: hidden;
+        transition: all 1s;
+        -webkit-transition: all 1s;
+        /* Safari */
+        transition-timing-function: linear;
+        -webkit-transition-timing-function: linear;
+
+        /* Safari and Chrome */
+        /* Safari */
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: #fff;
+        font-size: 0.3rem;
+
+        img {
+          width: 10px;
+          height: 16px;
+          margin: 0 0.3rem 0 0.15rem;
+        }
+      }
     }
 
     .task {
@@ -1116,88 +1229,99 @@ export default {
   .banimate.active {
     transform: translateY(0%);
     z-index: 0;
-  }
-
-  .head {
-    width: 100%;
-    height: 1.8rem;
-    overflow: hidden;
-    background-position: center center;
-    background-size: cover;
-    background-repeat: no-repeat;
-    position: fixed;
-    top: 0;
-    z-index: 20;
-
-    .left {
+    .header {
       position: absolute;
-      width: 50%;
-      top: 0;
-      left: 0;
-      height: 1.8rem;
-      transform: translateX(-100%);
-      overflow: hidden;
-      transition: all 2s;
-      -webkit-transition: all 2s;
-      /* Safari */
-      transition-timing-function: linear;
-      -webkit-transition-timing-function: linear;
 
-      /* Safari and Chrome */
-      /* Safari */
-      display: flex;
-      align-items: center;
-      color: #fff;
-      font-size: 0.36rem;
-
-      img {
-        width: 1.1rem;
-        height: 1.1rem;
-        margin: 0 0.2rem 0 0.5rem;
+      .left {
+        transform: translateX(0%);
       }
-    }
 
-    .right {
-      position: absolute;
-      width: 50%;
-      top: 0;
-      right: 0;
-      height: 1.8rem;
-      transform: translateX(100%);
-      overflow: hidden;
-      transition: all 2s;
-      -webkit-transition: all 2s;
-      /* Safari */
-      transition-timing-function: linear;
-      -webkit-transition-timing-function: linear;
-
-      /* Safari and Chrome */
-      /* Safari */
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      color: #fff;
-      font-size: 0.3rem;
-
-      img {
-        width: 10px;
-        height: 16px;
-        margin: 0 0.3rem 0 0.15rem;
+      .right {
+        transform: translateX(0%);
       }
     }
   }
 
-  .head.active {
-    position: absolute;
+  // .head {
+  //   width: 100%;
+  //   height: 1.8rem;
+  //   overflow: hidden;
+  //   background-position: center center;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   position: fixed;
+  //   top: 0;
+  //   z-index: 20;
 
-    .left {
-      transform: translateX(0%);
-    }
+  //   .left {
+  //     position: absolute;
+  //     width: 50%;
+  //     top: 0;
+  //     left: 0;
+  //     height: 1.8rem;
+  //     transform: translateX(-100%);
+  //     overflow: hidden;
+  //     transition: all 2s;
+  //     -webkit-transition: all 2s;
+  //     /* Safari */
+  //     transition-timing-function: linear;
+  //     -webkit-transition-timing-function: linear;
 
-    .right {
-      transform: translateX(0%);
-    }
-  }
+  //     /* Safari and Chrome */
+  //     /* Safari */
+  //     display: flex;
+  //     align-items: center;
+  //     color: #fff;
+  //     font-size: 0.36rem;
+
+  //     img {
+  //       width: 1.1rem;
+  //       height: 1.1rem;
+  //       margin: 0 0.2rem 0 0.5rem;
+  //     }
+  //   }
+
+  //   .right {
+  //     position: absolute;
+  //     width: 50%;
+  //     top: 0;
+  //     right: 0;
+  //     height: 1.8rem;
+  //     transform: translateX(100%);
+  //     overflow: hidden;
+  //     transition: all 2s;
+  //     -webkit-transition: all 2s;
+  //     /* Safari */
+  //     transition-timing-function: linear;
+  //     -webkit-transition-timing-function: linear;
+
+  //     /* Safari and Chrome */
+  //     /* Safari */
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: flex-end;
+  //     color: #fff;
+  //     font-size: 0.3rem;
+
+  //     img {
+  //       width: 10px;
+  //       height: 16px;
+  //       margin: 0 0.3rem 0 0.15rem;
+  //     }
+  //   }
+  // }
+
+  // .head.active {
+  //   position: absolute;
+
+  //   .left {
+  //     transform: translateX(0%);
+  //   }
+
+  //   .right {
+  //     transform: translateX(0%);
+  //   }
+  // }
 
   .headimg {
     width: 100%;

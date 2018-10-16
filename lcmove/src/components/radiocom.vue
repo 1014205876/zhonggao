@@ -2,25 +2,25 @@
   <div class="check" v-on:click='alertshow'>
     <div class="name">{{list.name}}</div>
     <div class="label">
-      <div class="data" v-if='num'>选择{{num}}项</div>
+      <div class="data" v-if='list.radioValue'>{{list.radioValue}}</div>
       <img src="static/img/icon/right_gray.png" alt="" class="right">
     </div>
     <div class="mengban" v-bind:class='{show:show}' v-on:click.stop.self='alertclose'>
     <!-- <div class="mengban" v-bind:class='{show:show}' v-on:click.stop.self='alertclose'> -->
       <div class="alert">
-        <div class="top">
+        <!-- <div class="top">
           <label>
             <input type='checkbox' v-model='all' @change='allchange'>
             <div class="after"></div>
             全选
           </label>
           {{list.name}}
-        </div>
+        </div> -->
         <ul class="bottom">
-          <li v-for='item in list.check' :key='item.id'>
+          <li v-for='item in list.radio' :key='item.id'>
             <label>
               {{item}}
-              <input :name='list.fieldType' type='checkbox' v-model='list.checkValue' :value='item' :disabled='list.readOnly'>
+              <input :name='list.fieldType' type='radio' v-model='list.radioValue' :value='item' :disabled='list.readOnly' @change='alertclose'>
               <!-- <div class="after"></div> -->
             </label>
           </li>
@@ -34,36 +34,14 @@
 // 引入jq
 import $ from "jquery";
 export default {
-  name: "Checkcom",
+  name: "Radio",
   data() {
     return {
-      all: false,
-      num: 0,
       show: false
     };
   },
   props: ["list"],
-  watch: {
-    list: {
-      handler(val, oldVal) {
-        this.num = val.checkValue.length;
-        if (val.checkValue.length == val.check.length) {
-          this.all = true;
-        } else {
-          this.all = false;
-        }
-      },
-      deep: true
-    }
-  },
   methods: {
-    allchange() {
-      if (this.all) {
-        this.list.checkValue = this.list.check;
-      } else {
-        this.list.checkValue = [];
-      }
-    },
     alertshow() {
       this.show = true;
       $("body").css({ height: $(window).height(), overflow: "hidden" });
