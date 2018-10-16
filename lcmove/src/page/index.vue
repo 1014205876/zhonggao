@@ -416,8 +416,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: 
-                that.xArr
+              data: that.xArr
               //坐标轴数据
             }
           ],
@@ -466,7 +465,8 @@ export default {
                 that.get.chartsData[3].amount,
                 that.get.chartsData[2].amount,
                 that.get.chartsData[1].amount,
-                that.get.chartsData[0].amount,],
+                that.get.chartsData[0].amount
+              ],
               lineStyle: {
                 color: {
                   type: "linear",
@@ -556,15 +556,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: [
-                that.get.chartsData[6].consumeAmount,
-                that.get.chartsData[5].consumeAmount,
-                that.get.chartsData[4].consumeAmount,
-                that.get.chartsData[3].consumeAmount,
-                that.get.chartsData[2].consumeAmount,
-                that.get.chartsData[1].consumeAmount,
-                that.get.chartsData[0].consumeAmount
-              ] //坐标轴数据
+              data: that.xArr, //坐标轴数据
             }
           ],
           yAxis: {
@@ -605,7 +597,15 @@ export default {
             {
               type: "line",
               symbol: "none",
-              data: that.jujianArr,
+              data: [
+                that.get.chartsData[6].consumeAmount,
+                that.get.chartsData[5].consumeAmount,
+                that.get.chartsData[4].consumeAmount,
+                that.get.chartsData[3].consumeAmount,
+                that.get.chartsData[2].consumeAmount,
+                that.get.chartsData[1].consumeAmount,
+                that.get.chartsData[0].consumeAmount
+              ],
               lineStyle: {
                 color: {
                   type: "linear",
@@ -695,15 +695,7 @@ export default {
                   color: "rgba(255,255,255,0.15)"
                 }
               },
-              data: [
-                that.get.chartsData[6].count,
-                that.get.chartsData[5].count,
-                that.get.chartsData[4].count,
-                that.get.chartsData[3].count,
-                that.get.chartsData[2].count,
-                that.get.chartsData[1].count,
-                that.get.chartsData[0].count
-              ] //坐标轴数据
+              data: that.xArr, //坐标轴数据
             }
           ],
           yAxis: {
@@ -744,7 +736,15 @@ export default {
             {
               type: "line",
               symbol: "none",
-              data: that.dindanArr,
+              data: [
+                that.get.chartsData[6].count,
+                that.get.chartsData[5].count,
+                that.get.chartsData[4].count,
+                that.get.chartsData[3].count,
+                that.get.chartsData[2].count,
+                that.get.chartsData[1].count,
+                that.get.chartsData[0].count
+              ],
               lineStyle: {
                 color: {
                   type: "linear",
