@@ -66,7 +66,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-on:click.stop='torisk'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -92,7 +92,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-on:click.stop='tocomprehensive'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -118,7 +118,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-on:click.stop='toriskdirector'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -144,7 +144,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-on:click.stop='toregulations'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -170,7 +170,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-on:click.stop='tovicemanager'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -196,7 +196,7 @@
             </li>
           </ul>
         </li>
-        <li>
+        <li v-on:click.stop='tomanager'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -348,15 +348,24 @@ export default {
     toappointment() {
       this.$router.push("/appointment");
     },
-    // tohistory() {
-    //   this.$router.push("/history");
-    // },
-    // tohistory() {
-    //   this.$router.push("/history");
-    // },
-    // tohistory() {
-    //   this.$router.push("/history");
-    // },
+    torisk() {
+      this.$router.push("/risk");
+    },
+    tocomprehensive() {
+      this.$router.push("/comprehensive");
+    },
+    toriskdirector() {
+      this.$router.push("/riskdirector");
+    },
+    toregulations() {
+      this.$router.push("/regulations");
+    },
+    tovicemanager() {
+      this.$router.push("/vicemanager");
+    },
+    tomanager() {
+      this.$router.push("/manager");
+    },
     start() {
       $("html,body").animate({ scrollTop: 0 }, 0);
       $(".tanimate,.banimate,.head,.headimg").addClass("active");

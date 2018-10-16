@@ -3,8 +3,8 @@
       <div class="alert">
         <div class="main">{{remind}}</div>
         <div class="btn">
-          <div class="left" v-if='left' v-on:click='btn("left")'>{{left}}</div>
-          <div class="right" v-if='right' v-on:click='btn("right")'>{{right}}</div>
+          <div class="left" v-if='left' v-on:click='btn("left",index)' :style='{color:leftColor}'>{{left}}</div>
+          <div class="right" v-if='right' v-on:click='btn("right",index)' :style='{color:rightColor}'>{{right}}</div>
         </div>
       </div>
     </div>
@@ -18,10 +18,10 @@ export default {
       show: false
     };
   },
-  props: ['remind','left','right'],
+  props: ["index", "remind", "left", "leftColor", "right", "rightColor"],
   methods: {
-    btn(choice) {
-      this.$emit("choice", choice);
+    btn(choice, index) {
+      this.$emit("choice", { data: choice, index: index });
     },
     alertshow() {
       this.show = true;
@@ -44,12 +44,12 @@ export default {
   bottom: 0;
   margin: auto;
   background: rgba(0, 0, 0, 0.5);
-	transition:all 0.2s;
-  -webkit-transition:all 0.2s; /* Safari */
-  transform:scale3d(0,0,0);
+  transition: all 0.2s;
+  -webkit-transition: all 0.2s; /* Safari */
+  transform: scale3d(0, 0, 0);
   .alert {
-    width: 4.5rem;
-    height: 2rem;
+    width: 4.2rem;
+    height: 2.8rem;
     border-radius: 0.2rem;
     position: absolute;
     top: 0;
@@ -59,32 +59,40 @@ export default {
     margin: auto;
     background: #fff;
     text-align: center;
-    .main{
-      font-size:0.4rem;
+    font-size: 0.3rem;
+    .main {
+      width: 100%;
+      height: 2rem;
+      color: #333333;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .btn {
       position: absolute;
       bottom: 0;
       display: flex;
       width: 100%;
-      height: 0.6rem;
-      line-height: 0.6rem;
-      font-size: 0.3rem;
+      height: 0.8rem;
+      line-height: 0.8rem;
       div {
         flex: 1;
-        border-top: 1px solid #000;
+        border-top: 1px solid #cacaca;
+        border-left: 1px solid #cacaca;
+      }
+      div:first-child {
+        border-left: 0px solid transparent;
       }
       .left {
-        color: red;
-        border-right: 1px solid #000;
+        color: #333333;
       }
       .right {
-        color: blue;
+        color: #3674b2;
       }
     }
   }
 }
-.show{
-  transform:scale3d(1,1,1);
+.show {
+  transform: scale3d(1, 1, 1);
 }
 </style>

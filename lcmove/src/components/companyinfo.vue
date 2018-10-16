@@ -1,12 +1,12 @@
 <template>
     <div class="companyinfo">
-      <div class="top">
+      <div class="top" v-on:click='toreport'>
         <div class="name">江西省南昌市进贤县有限公司</div>
-        <div class="seereport" v-on:click='toenterpriseinfo'>
+        <div class="seereport">
           查看报告<img src="static/img/icon/right_gray.png" alt="">
         </div>
       </div>
-      <ul class='data'>
+      <ul class='data' v-on:click='toenterpriseinfo'>
         <li>
           <span>企业法人 ：</span>张三
         </li>
@@ -30,8 +30,10 @@ export default {
     return {};
   },
   methods: {
+    toreport() {
+      this.$router.push("/report");
+    },
     toenterpriseinfo() {
-      console.log(123)
       this.$router.push("/enterpriseinfo");
     }
   }
