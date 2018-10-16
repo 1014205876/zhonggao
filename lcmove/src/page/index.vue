@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <div class='tanimate' style='background-image:url(static/img/bgimg_index.jpg)'>
+    <div class='tanimate' style='background-image:url(static/img/bgimg_index.jpg)' @touchmove.prevent>
       <ul class="task">
         <li>
           <span>当前任务</span>

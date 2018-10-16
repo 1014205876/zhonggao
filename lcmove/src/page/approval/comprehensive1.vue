@@ -1,5 +1,5 @@
 <template>
-<!-- 预约确认 -->
+<!-- 综合审批 -->
   <div class="approval">
     <companyinfo></companyinfo>
     <div class="shenpi" v-on:click='toapprovalRecord'>
@@ -17,21 +17,21 @@
       <ul class="form">
         <li>
           <div class="left">联系人</div>
-          <input type="text" v-model='form.contacts' placeholder='请输入联系人姓名'>
+          <input type="text" v-model='contacts' placeholder='请输入联系人姓名'>
         </li>
         <li>
           <div class="left">联系电话</div>
-          <input type="text" v-model='form.tel' placeholder='请输入电话'>
+          <input type="text" v-model='tel' placeholder='请输入电话'>
         </li>
         <li>
           <div class="left">联系地址</div>
-          <input type="text" v-model='form.address' placeholder='请输入地址'>
+          <input type="text" v-model='address' placeholder='请输入地址'>
         </li>
         <li>
           <div class="left">备注</div>
         </li>
         <li>
-          <textarea rows="5" placeholder='请输入备注' v-model='form.remarks'></textarea>
+          <textarea rows="5" placeholder='请输入备注'></textarea>
         </li>
       </ul>
       <div class="submit">
@@ -49,15 +49,12 @@ import alert from "@/components/alert";
 // 引入公司详情组件
 import companyinfo from "@/components/companyinfo";
 export default {
-  name: "Appointment",
+  name: "Comprehensive",
   data() {
     return {
-      form: {
-        contacts: "",
-        tel: "",
-        address: "",
-        remarks: ""
-      }
+      contacts: "",
+      tel: "",
+      address: "",
     };
   },
   components: {
@@ -65,28 +62,27 @@ export default {
     companyinfo
   },
   methods: {
-    toapprovalRecord() {
+    toapprovalRecord(){
       this.$router.push("/approvalRecord");
     },
     submit() {
-      let that=this;
-      if (that.form.contacts && that.form.tel && that.form.address) {
+      if (this.contacts && this.tel && this.address) {
         console.log("全部填完");
-        that.$refs.alert1.alertshow();
+        this.$refs.alert1.alertshow();
       } else {
         console.log("未填完");
-        that.$refs.alert2.alertshow();
+        this.$refs.alert2.alertshow();
       }
     },
     choice(choice) {
       if (choice == "left") {
-        console.log(`点击${choice}`);
+        console.log(`点击${choice}`)
       }
       if (choice == "right") {
-        console.log(`点击${choice}`);
+        console.log(`点击${choice}`)
       }
       if (choice == "btn") {
-        console.log(`点击${choice}`);
+        console.log(`点击${choice}`)
       }
       this.$refs.alert1.alertclose();
       this.$refs.alert2.alertclose();
@@ -96,5 +92,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-@import "../../assets/css/approval.less";
+  @import '../../assets/css/approval.less';
 </style>

@@ -3,8 +3,8 @@
       <div class="alert">
         <div class="main">{{remind}}</div>
         <div class="btn">
-          <div class="left" v-if='left' v-on:click='btn("left",index)' :style='{color:leftColor}'>{{left}}</div>
-          <div class="right" v-if='right' v-on:click='btn("right",index)' :style='{color:rightColor}'>{{right}}</div>
+          <div class="left" v-if='left' v-on:click='btn("left",left,index)' :style='{color:leftColor}'>{{left}}</div>
+          <div class="right" v-if='right' v-on:click='btn("right",right,index)' :style='{color:rightColor}'>{{right}}</div>
         </div>
       </div>
     </div>
@@ -20,8 +20,8 @@ export default {
   },
   props: ["index", "remind", "left", "leftColor", "right", "rightColor"],
   methods: {
-    btn(choice, index) {
-      this.$emit("choice", { data: choice, index: index });
+    btn(choice,name, index) {
+      this.$emit("choice", { data: choice,name:name, index: index });
     },
     alertshow() {
       this.show = true;
