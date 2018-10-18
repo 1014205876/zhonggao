@@ -7,6 +7,10 @@ import '../static/css/transition.css'
 // 引入外部js文件
 import '../static/js/rem750.js'//750rem
 
+// 引入axios
+import axios from 'axios'
+Vue.prototype.$http=axios
+
 //引入修改页面title
 // import VueWechatTitle from 'vue-wechat-title'
 // Vue.use(VueWechatTitle)

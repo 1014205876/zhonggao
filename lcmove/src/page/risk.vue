@@ -1,5 +1,4 @@
 <template>
-<!-- 风控审批 -->
   <div class="approval">
     <companyinfo></companyinfo>
     <div class="shenpi" v-on:click='toapprovalRecord'>
@@ -10,7 +9,7 @@
     </div>
     <div class="shenpi">
       <div class="left">
-        <img src="static/img/icon/task_gray.png" alt="">预约确认
+        <img src="static/img/icon/task_gray.png" alt="">风控审批
       </div>
     </div>
     <form @submit.prevent="submit">
@@ -18,6 +17,7 @@
         <li v-for='list in form' :key='list.id'>
           <inputcom v-if='list.type=="input"' v-bind:list='list'></inputcom>
           <selectcom v-if='list.type=="select"' v-bind:list='list'></selectcom>
+          <radiocom v-if='list.type=="radio"' v-bind:list='list'></radiocom>
           <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
         </li>
         <li class='remarks'>
@@ -41,6 +41,7 @@ import alert from "@/components/alert";
 import companyinfo from "@/components/companyinfo";
 // 引入表单组件
 import inputcom from "@/components/inputcom";
+import radiocom from "@/components/radiocom";
 import selectcom from "@/components/selectcom";
 import checkcom from "@/components/checkcom";
 export default {
@@ -94,7 +95,21 @@ export default {
           fieldType: "FormField05",
           name: "表单名字05",
           type: "select",
-          option: ["选项1", "选项2", "选项3","选项1", "选项2", "选项3","选项1", "选项2", "选项3","选项1", "选项2", "选项3","选项1", "选项2", "选项3",],
+          option: [
+            "选项1",
+            "选项2",
+            "选项3",
+            "选项4",
+            "选项5",
+            "选项6",
+            "选项7",
+            "选项8",
+            "选项9",
+            "选项10",
+            "选项11",
+            "选项12",
+            "选项13"
+          ],
           optionValue: "",
           readOnly: false,
           required: true
@@ -112,7 +127,7 @@ export default {
           fieldType: "FormField07",
           name: "表单名字07",
           type: "check",
-          check: ["选项1", "选项2", "选项3", "选项3", "选项3"],
+          check: ["选项1", "选项2", "选项3", "选项4", "选项5"],
           checkValue: [],
           readOnly: false,
           required: true
@@ -121,11 +136,60 @@ export default {
           fieldType: "FormField08",
           name: "表单名字08",
           type: "check",
-          check: ["选项1", "选项2", "选项3", "选项3", "选项3","选项1", "选项2", "选项3", "选项3", "选项3",],
+          check: [
+            "选项1",
+            "选项2",
+            "选项3",
+            "选项4",
+            "选项5",
+            "选项6",
+            "选项7",
+            "选项8",
+            "选项9",
+            "选项10"
+          ],
           checkValue: [],
           readOnly: false,
           required: true
         },
+        {
+          fieldType: "FormField09",
+          name: "表单名字09",
+          type: "radio",
+          radio: ["选项1", "选项2", "选项3"],
+          radioValue: "",
+          readOnly: false,
+          required: true
+        },
+        {
+          fieldType: "FormField10",
+          name: "表单名字10",
+          type: "radio",
+          radio: ["选项1", "选项2", "选项3", "选项4", "选项5"],
+          radioValue: "",
+          readOnly: false,
+          required: true
+        },
+        {
+          fieldType: "FormField11",
+          name: "表单名字11",
+          type: "radio",
+          radio: [
+            "选项1",
+            "选项2",
+            "选项3",
+            "选项4",
+            "选项5",
+            "选项6",
+            "选项7",
+            "选项8",
+            "选项9",
+            "选项10"
+          ],
+          radioValue: "",
+          readOnly: false,
+          required: true
+        }
       ]
     };
   },
@@ -134,7 +198,8 @@ export default {
     companyinfo,
     inputcom,
     selectcom,
-    checkcom,
+    radiocom,
+    checkcom
   },
   methods: {
     toapprovalRecord() {
@@ -146,7 +211,6 @@ export default {
       console.log(this.form);
     },
     forEach(that) {
-      // console.log(that.form[10].checkValue.length)
       for (let i = 0; i < that.form.length; i++) {
         if (that.form[i].required) {
           if (

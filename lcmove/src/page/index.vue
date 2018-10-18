@@ -1,14 +1,15 @@
 <template>
   <div class="index">
-    <div class='tanimate' style='background-image:url(static/img/bgimg_index.jpg)' @touchmove.prevent>
+    <div class="bgimg" style='background-image:url(static/img/bgimg_index.jpg)'></div>
+    <div class='tanimate' @touchmove='touchmovet' @touchend='touchendt'>
       <ul class="task">
         <li>
           <span>当前任务</span>
-          <span class='num'>22</span>
+          <span class='num'>{{echart0.waiting}}</span>
         </li>
         <li>
           <span>已办任务</span>
-          <span class='num'>222</span>
+          <span class='num'>{{echart0.already}}</span>
         </li>
       </ul>
       <div id="myChart" class='myChart'></div>
@@ -16,29 +17,36 @@
         <li class='active'>
           <div class="top">订单总数</div>
           <div class='num'>
-            <numroll :value="123165" :time='1'></numroll>
+            <numroll :value="echart1.sumOrder" :time='1'></numroll>
           </div>
         </li>
         <li>
-          <div class="top">订单总数</div>
+          <div class="top">申请总金额</div>
           <div class='num'>
-            <numroll :value="23982" :time='1'></numroll>
+            <numroll :value="echart2.sumApplyAmount" :time='1'></numroll>
           </div>
         </li>
         <li>
-          <div class="top">订单总数</div>
+          <div class="top">居间费总金额</div>
           <div class='num'>
-            <numroll :value="6546" :time='1'></numroll>
+            <numroll :value="echart3.sumConsumeAmount" :time='1'></numroll>
           </div>
         </li>
       </ul>
-      <div class="start" v-on:click='start'>
+      <div class="start" @touchstart='touchstartt'>
         查看待审批任务
         <img src="static/img/icon/up.png" alt="">
       </div>
     </div>
-    <div class="banimate" v-on:click='stop'>
-      <div class="header"></div>
+    <div class="banimate">
+      <!-- <div class="header" style='background-image:url(static/img/bgimg_index_head.jpg)' @touchstart='touchstartb'>
+        <div class="left" v-on:click='stop'>
+          <img src="static/img/headimg_no.png" alt="">未登录
+        </div>
+        <div class="right" v-on:click='tohistory'>
+          历史记录<img src="static/img/icon/right_white.png" alt="">
+        </div>
+      </div> -->
       <ul class='task'>
         <li v-on:click.stop='toappointment'>
           <div class="top">
@@ -251,14 +259,14 @@
       </ul>
     </div>
     <div class="head">
-      <div class="left" v-on:click='forget'>
+      <div class="left" v-on:click='forget' @click='stop'>
         <img src="static/img/headimg_no.png" alt="">未登录
       </div>
       <div class="right" v-on:click='tohistory'>
         历史记录<img src="static/img/icon/right_white.png" alt="">
       </div>
     </div>
-    <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div>
+    <!-- <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div> -->
   </div>
 </template>
 
@@ -267,65 +275,118 @@
 import $ from "jquery";
 // 引入数字滚动组件
 import numroll from "@/components/numroll";
+//typical import
+import { TweenMax, Power2, TimelineLite } from "gsap";
 export default {
   name: "Index",
   data() {
     return {
-      xArr: [],
-      dayArr: [],
-      shenqingArr: [],
-      jujianArr: [],
-      dindanArr: [],
+      startY: 0,
+      moveY: 0,
+      endY: 0,
+      canmove: true,
+      xArr: [8.1, 8.2, 8.3, 82, 88, 81, 88],
       data: 3,
-      get: {
-        sumApplyAmount: 1193, //申请金额
-        waiting: 31, //当前任务数
-        sumConsumeAmount: 2.366, //居间费总金额
-        already: 4, //已办任务数
-        sumOrderCount: 50, //订单总数
+      echart0: {
+        already: 0,
+        waiting: 0
+      },
+      echart1: {
+        sumOrder: 0,
         chartsData: [
-          //图标数据
           {
-            amount: 713,
-            consumeAmount: 3.6856,
-            count: 26,
-            time: "10-15"
-          },
-          {
-            amount: 0,
-            consumeAmount: 0,
             count: 0,
-            time: "10-14"
+            time: "2018-10-17"
           },
           {
-            amount: 0,
-            consumeAmount: 0,
             count: 0,
-            time: "10-13"
+            time: "2018-10-16"
           },
           {
-            amount: 170,
-            consumeAmount: 0.6512,
-            count: 8,
-            time: "10-12"
+            count: 15,
+            time: "2018-10-15"
           },
           {
-            amount: 394,
-            consumeAmount: 1.112,
-            count: 17,
-            time: "10-11"
-          },
-          {
-            amount: 90,
-            consumeAmount: 0.44,
-            count: 12,
-            time: "10-10"
-          },
-          {
-            amount: 0,
-            consumeAmount: 0,
             count: 0,
-            time: "10-09"
+            time: "2018-10-14"
+          },
+          {
+            count: 0,
+            time: "2018-10-13"
+          },
+          {
+            count: 5,
+            time: "2018-10-12"
+          },
+          {
+            count: 10,
+            time: "2018-10-11"
+          }
+        ]
+      },
+      echart2: {
+        sumApplyAmount: "0",
+        chartsData: [
+          {
+            amount: "0",
+            time: "2018-10-17"
+          },
+          {
+            amount: "0",
+            time: "2018-10-16"
+          },
+          {
+            amount: 653,
+            time: "2018-10-15"
+          },
+          {
+            amount: "0",
+            time: "2018-10-14"
+          },
+          {
+            amount: "0",
+            time: "2018-10-13"
+          },
+          {
+            amount: 214,
+            time: "2018-10-12"
+          },
+          {
+            amount: 221,
+            time: "2018-10-11"
+          }
+        ]
+      },
+      echart3: {
+        sumConsumeAmount: "0",
+        chartsData: [
+          {
+            consumeAmount: 0,
+            time: "2018-10-17"
+          },
+          {
+            consumeAmount: 0,
+            time: "2018-10-16"
+          },
+          {
+            consumeAmount: 0.672,
+            time: "2018-10-15"
+          },
+          {
+            consumeAmount: 0,
+            time: "2018-10-14"
+          },
+          {
+            consumeAmount: 0,
+            time: "2018-10-13"
+          },
+          {
+            consumeAmount: 0,
+            time: "2018-10-12"
+          },
+          {
+            consumeAmount: 0,
+            time: "2018-10-11"
           }
         ]
       }
@@ -336,6 +397,62 @@ export default {
   },
   //函数盒子
   methods: {
+    touchstartt(e) {
+      this.canmove = true;
+      this.startY = e.targetTouches[0].pageY;
+      this.moveY = e.targetTouches[0].pageY;
+    },
+    touchmovet(e) {
+      let that = this;
+      if (that.canmove) {
+        that.moveY = e.targetTouches[0].pageY;
+        $(".index .head .left").css({
+          transform:
+            "translateX(" +
+            (($(window).height() + that.moveY - that.startY) * -100) /
+              $(window).height() +
+            "%)",
+          transition: "none"
+        });
+        $(".index .head .right").css({
+          transform:
+            "translateX(" +
+            (($(window).height() + that.moveY - that.startY) * 100) /
+              $(window).height() +
+            "%)",
+          transition: "none"
+        });
+        $(".index .banimate").css({
+          transform:
+            "translateY(" +
+            (($(window).height() + that.moveY - that.startY) * 100) /
+              $(window).height() +
+            "%)",
+          transition: "none"
+        });
+        $(".index .tanimate").css({
+          transform:
+            "translateY(" +
+            ((that.moveY - that.startY) * 30) / $(window).height() +
+            "%)",
+          opacity:
+            (($(window).height() + that.moveY - that.startY) /
+              $(window).height()) *
+            0.7,
+          transition: "none"
+        });
+      }
+    },
+    touchendt(e) {
+      this.canmove = false;
+      if (this.startY - this.moveY >= 200) {
+        this.start(this);
+      } else {
+        this.stop(this);
+      }
+      this.startY = 0;
+      this.moveY = 0;
+    },
     remember() {
       localStorage.setItem("indexUrl", true);
     },
@@ -366,354 +483,72 @@ export default {
     tomanager() {
       this.$router.push("/manager");
     },
-    start() {
-      $("html,body").animate({ scrollTop: 0 }, 0);
-      $(".tanimate,.banimate,.head,.headimg").addClass("active");
+    start(that) {
+      $(".index .banimate").animate({ scrollTop: 0 }, 0);
+      $(".index .head .left").css({
+        transform: "translateX(0%)",
+        transition: "all 1s"
+      });
+      $(".index .head .right").css({
+        transform: "translateX(0%)",
+        transition: "all 1s"
+      });
+      $(".index .tanimate").css({
+        transform: "translateY(-30%)",
+        opacity: 0,
+        transition: "all 1s"
+      });
+      $(".index .banimate").css({
+        transform: "translateY(0%)",
+        transition: "all 1s"
+      });
+      $(".tanimate,.banimate,.head").addClass("active");
     },
-    stop() {
-      $(".tanimate,.banimate,.head,.headimg").removeClass("active");
+    stop(that) {
+      $(".index .banimate").animate({ scrollTop: 0 }, 0);
+      $(".index .head .left").css({
+        transform: "translateX(-100%)",
+        transition: "all 1s"
+      });
+      $(".index .head .right").css({
+        transform: "translateX(100%)",
+        transition: "all 1s"
+      });
+      $(".index .tanimate").css({
+        transform: "translateY(0%)",
+        opacity: 1,
+        transition: "all 1s"
+      });
+      $(".index .banimate").css({
+        transform: "translateY(100%)",
+        transition: "all 1s"
+      });
+      $(".tanimate,.banimate,.head").removeClass("active");
     },
-    infoEchart() {
-      let that = this;
+    infoEchart01(that) {
       // 基于准备好的dom，初始化echarts实例
       let myChart = that.$echarts.init(document.getElementById("myChart"));
       // 绘制图表
-      let option = [
-        {
-          title: {
-            textStyle: {
-              color: "#fff",
-              fontFamily: "MicrosoftYaHeiLight",
-              fontSize: 18
-            },
-            text: "一周订单数据",
-            padding: [20, 0, 0, 30]
+      let option = {
+        title: {
+          textStyle: {
+            color: "#fff",
+            fontFamily: "MicrosoftYaHeiLight",
+            fontSize: 18
           },
-          grid: {
-            top: "20%",
-            left: "15%",
-            right: "5%",
-            bottom: "10%",
-            containLabel: false
-          },
-          xAxis: [
-            {
-              type: "category",
-              boundaryGap: false, //坐标轴2端留白
-              axisLine: {
-                //坐标轴相关
-                show: true, //是否显示
-                lineStyle: {
-                  //颜色
-                  color: "rgba(255,255,255,0.15)"
-                }
-              },
-              axisLabel: {
-                //坐标轴刻度标签相关
-                color: "#CACACA",
-                rotate: "45"
-              },
-              axisTick: {
-                //坐标轴刻度相关
-                show: false
-              },
-              splitLine: {
-                //网格线相关
-                show: true, //是否显示
-                lineStyle: {
-                  //颜色
-                  color: "rgba(255,255,255,0.15)"
-                }
-              },
-              data: that.xArr
-              //坐标轴数据
-            }
-          ],
-          yAxis: {
-            name: "单",
-            nameTextStyle: {
-              color: "#CACACA",
-              fontSize: "12",
-              padding: [0, 35, 0, 0]
-            },
-            boundaryGap: false, //坐标轴2端留白
-            axisLine: {
-              //坐标轴相关
-              show: true, //是否显示
-              lineStyle: {
-                //颜色
-                color: "rgba(255,255,255,0.15)"
-              }
-            },
-            axisLabel: {
-              //坐标轴刻度标签相关
-              color: "#CACACA",
-              showMinLabel: false
-            },
-            axisTick: {
-              //坐标轴刻度相关
-              show: false
-            },
-            splitLine: {
-              //网格线相关
-              show: true, //是否显示
-              lineStyle: {
-                //颜色
-                color: "rgba(255,255,255,0.15)"
-              }
-            }
-          },
-          series: [
-            {
-              type: "line",
-              symbol: "none",
-              data: [
-                that.get.chartsData[6].amount,
-                that.get.chartsData[5].amount,
-                that.get.chartsData[4].amount,
-                that.get.chartsData[3].amount,
-                that.get.chartsData[2].amount,
-                that.get.chartsData[1].amount,
-                that.get.chartsData[0].amount
-              ],
-              lineStyle: {
-                color: {
-                  type: "linear",
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "#C9446A" // 0% 处的颜色
-                    },
-                    {
-                      offset: 0.25,
-                      color: "#E99253" // 25% 处的颜色
-                    },
-                    {
-                      offset: 0.5,
-                      color: "#F8FB53" // 50% 处的颜色
-                    },
-                    {
-                      offset: 0.75,
-                      color: "#B8FFA0" // 75% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#6BFFDA" // 100% 处的颜色
-                    }
-                  ],
-                  globalCoord: false // 缺省为 false
-                }
-              },
-              areaStyle: {
-                color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(0,0,0,0.4)" // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(0,0,0,0)" // 100% 处的颜色
-                  }
-                ]) //背景渐变色
-              }
-            }
-          ]
+          text: "一周订单数据",
+          padding: [20, 0, 0, 30]
         },
-        {
-          title: {
-            textStyle: {
-              color: "#fff",
-              fontFamily: "MicrosoftYaHeiLight",
-              fontSize: 18
-            },
-            text: "一周申请金额",
-            padding: [20, 0, 0, 30]
-          },
-          grid: {
-            top: "20%",
-            left: "15%",
-            right: "5%",
-            bottom: "10%",
-            containLabel: false
-          },
-          xAxis: [
-            {
-              type: "category",
-              boundaryGap: false, //坐标轴2端留白
-              axisLine: {
-                //坐标轴相关
-                show: true, //是否显示
-                lineStyle: {
-                  //颜色
-                  color: "rgba(255,255,255,0.15)"
-                }
-              },
-              axisLabel: {
-                //坐标轴刻度标签相关
-                color: "#CACACA",
-                rotate: "45"
-              },
-              axisTick: {
-                //坐标轴刻度相关
-                show: false
-              },
-              splitLine: {
-                //网格线相关
-                show: true, //是否显示
-                lineStyle: {
-                  //颜色
-                  color: "rgba(255,255,255,0.15)"
-                }
-              },
-              data: that.xArr, //坐标轴数据
-            }
-          ],
-          yAxis: {
-            name: "单",
-            nameTextStyle: {
-              color: "#CACACA",
-              fontSize: "12",
-              padding: [0, 35, 0, 0]
-            },
-            boundaryGap: false, //坐标轴2端留白
-            axisLine: {
-              //坐标轴相关
-              show: true, //是否显示
-              lineStyle: {
-                //颜色
-                color: "rgba(255,255,255,0.15)"
-              }
-            },
-            axisLabel: {
-              //坐标轴刻度标签相关
-              color: "#CACACA",
-              showMinLabel: false
-            },
-            axisTick: {
-              //坐标轴刻度相关
-              show: false
-            },
-            splitLine: {
-              //网格线相关
-              show: true, //是否显示
-              lineStyle: {
-                //颜色
-                color: "rgba(255,255,255,0.15)"
-              }
-            }
-          },
-          series: [
-            {
-              type: "line",
-              symbol: "none",
-              data: [
-                that.get.chartsData[6].consumeAmount,
-                that.get.chartsData[5].consumeAmount,
-                that.get.chartsData[4].consumeAmount,
-                that.get.chartsData[3].consumeAmount,
-                that.get.chartsData[2].consumeAmount,
-                that.get.chartsData[1].consumeAmount,
-                that.get.chartsData[0].consumeAmount
-              ],
-              lineStyle: {
-                color: {
-                  type: "linear",
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "#C9446A" // 0% 处的颜色
-                    },
-                    {
-                      offset: 0.25,
-                      color: "#E99253" // 25% 处的颜色
-                    },
-                    {
-                      offset: 0.5,
-                      color: "#F8FB53" // 50% 处的颜色
-                    },
-                    {
-                      offset: 0.75,
-                      color: "#B8FFA0" // 75% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#6BFFDA" // 100% 处的颜色
-                    }
-                  ],
-                  globalCoord: false // 缺省为 false
-                }
-              },
-              areaStyle: {
-                color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
-                  {
-                    offset: 0,
-                    color: "rgba(0,0,0,0.4)" // 0% 处的颜色
-                  },
-                  {
-                    offset: 1,
-                    color: "rgba(0,0,0,0)" // 100% 处的颜色
-                  }
-                ]) //背景渐变色
-              }
-            }
-          ]
+        grid: {
+          top: "20%",
+          left: "15%",
+          right: "5%",
+          bottom: "10%",
+          containLabel: false
         },
-        {
-          title: {
-            textStyle: {
-              color: "#fff",
-              fontFamily: "MicrosoftYaHeiLight",
-              fontSize: 18
-            },
-            text: "一周居间费金额",
-            padding: [20, 0, 0, 30]
-          },
-          grid: {
-            top: "20%",
-            left: "15%",
-            right: "5%",
-            bottom: "10%",
-            containLabel: false
-          },
-          xAxis: [
-            {
-              type: "category",
-              boundaryGap: false, //坐标轴2端留白
-              axisLine: {
-                //坐标轴相关
-                show: true, //是否显示
-                lineStyle: {
-                  //颜色
-                  color: "rgba(255,255,255,0.15)"
-                }
-              },
-              axisLabel: {
-                //坐标轴刻度标签相关
-                color: "#CACACA",
-                rotate: "45"
-              },
-              axisTick: {
-                //坐标轴刻度相关
-                show: false
-              },
-              splitLine: {
-                //网格线相关
-                show: true, //是否显示
-                lineStyle: {
-                  //颜色
-                  color: "rgba(255,255,255,0.15)"
-                }
-              },
-              data: that.xArr, //坐标轴数据
-            }
-          ],
-          yAxis: {
-            name: "单",
-            nameTextStyle: {
-              color: "#CACACA",
-              fontSize: "12",
-              padding: [0, 35, 0, 0]
-            },
+        xAxis: [
+          {
+            type: "category",
             boundaryGap: false, //坐标轴2端留白
             axisLine: {
               //坐标轴相关
@@ -726,7 +561,7 @@ export default {
             axisLabel: {
               //坐标轴刻度标签相关
               color: "#CACACA",
-              showMinLabel: false
+              rotate: "45"
             },
             axisTick: {
               //坐标轴刻度相关
@@ -739,106 +574,528 @@ export default {
                 //颜色
                 color: "rgba(255,255,255,0.15)"
               }
+            },
+            data: that.xArr
+            //坐标轴数据
+          }
+        ],
+        yAxis: {
+          name: "单",
+          nameTextStyle: {
+            color: "#CACACA",
+            fontSize: "12",
+            padding: [0, 35, 0, 0]
+          },
+          boundaryGap: false, //坐标轴2端留白
+          axisLine: {
+            //坐标轴相关
+            show: true, //是否显示
+            lineStyle: {
+              //颜色
+              color: "rgba(255,255,255,0.15)"
             }
           },
-          series: [
-            {
-              type: "line",
-              symbol: "none",
-              data: [
-                that.get.chartsData[6].count,
-                that.get.chartsData[5].count,
-                that.get.chartsData[4].count,
-                that.get.chartsData[3].count,
-                that.get.chartsData[2].count,
-                that.get.chartsData[1].count,
-                that.get.chartsData[0].count
-              ],
-              lineStyle: {
-                color: {
-                  type: "linear",
-                  colorStops: [
-                    {
-                      offset: 0,
-                      color: "#C9446A" // 0% 处的颜色
-                    },
-                    {
-                      offset: 0.25,
-                      color: "#E99253" // 25% 处的颜色
-                    },
-                    {
-                      offset: 0.5,
-                      color: "#F8FB53" // 50% 处的颜色
-                    },
-                    {
-                      offset: 0.75,
-                      color: "#B8FFA0" // 75% 处的颜色
-                    },
-                    {
-                      offset: 1,
-                      color: "#6BFFDA" // 100% 处的颜色
-                    }
-                  ],
-                  globalCoord: false // 缺省为 false
-                }
-              },
-              areaStyle: {
-                color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+          axisLabel: {
+            //坐标轴刻度标签相关
+            color: "#CACACA",
+            showMinLabel: false
+          },
+          axisTick: {
+            //坐标轴刻度相关
+            show: false
+          },
+          splitLine: {
+            //网格线相关
+            show: true, //是否显示
+            lineStyle: {
+              //颜色
+              color: "rgba(255,255,255,0.15)"
+            }
+          }
+        },
+        series: [
+          {
+            type: "line",
+            symbol: "none",
+            data: [
+              100,
+              123,
+              345,
+              678,
+              997,
+              222,
+              112
+              // that.get.chartsData[6].amount,
+              // that.get.chartsData[5].amount,
+              // that.get.chartsData[4].amount,
+              // that.get.chartsData[3].amount,
+              // that.get.chartsData[2].amount,
+              // that.get.chartsData[1].amount,
+              // that.get.chartsData[0].amount
+            ],
+            lineStyle: {
+              color: {
+                type: "linear",
+                colorStops: [
                   {
                     offset: 0,
-                    color: "rgba(0,0,0,0.4)" // 0% 处的颜色
+                    color: "#C9446A" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.25,
+                    color: "#E99253" // 25% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "#F8FB53" // 50% 处的颜色
+                  },
+                  {
+                    offset: 0.75,
+                    color: "#B8FFA0" // 75% 处的颜色
                   },
                   {
                     offset: 1,
-                    color: "rgba(0,0,0,0)" // 100% 处的颜色
+                    color: "#6BFFDA" // 100% 处的颜色
                   }
-                ]) //背景渐变色
+                ],
+                globalCoord: false // 缺省为 false
               }
+            },
+            areaStyle: {
+              color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(0,0,0,0.4)" // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "rgba(0,0,0,0)" // 100% 处的颜色
+                }
+              ]) //背景渐变色
             }
-          ]
-        }
-      ];
-      myChart.setOption(option[0]);
-      $(".index .tanimate .data li").click(function() {
-        $(".index .tanimate .data li").removeClass("active");
-        $(this).addClass("active");
-        myChart.clear();
-        myChart.setOption(option[$(this).index()]);
-      });
+          }
+        ]
+      };
+
+      myChart.setOption(option);
+    },
+    infoEchart2(that) {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = that.$echarts.init(document.getElementById("myChart"));
+      // 绘制图表
+      let option = {
+        title: {
+          textStyle: {
+            color: "#fff",
+            fontFamily: "MicrosoftYaHeiLight",
+            fontSize: 18
+          },
+          text: "一周申请金额",
+          padding: [20, 0, 0, 30]
+        },
+        grid: {
+          top: "20%",
+          left: "15%",
+          right: "5%",
+          bottom: "10%",
+          containLabel: false
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false, //坐标轴2端留白
+            axisLine: {
+              //坐标轴相关
+              show: true, //是否显示
+              lineStyle: {
+                //颜色
+                color: "rgba(255,255,255,0.15)"
+              }
+            },
+            axisLabel: {
+              //坐标轴刻度标签相关
+              color: "#CACACA",
+              rotate: "45"
+            },
+            axisTick: {
+              //坐标轴刻度相关
+              show: false
+            },
+            splitLine: {
+              //网格线相关
+              show: true, //是否显示
+              lineStyle: {
+                //颜色
+                color: "rgba(255,255,255,0.15)"
+              }
+            },
+            data: that.xArr //坐标轴数据
+          }
+        ],
+        yAxis: {
+          name: "单",
+          nameTextStyle: {
+            color: "#CACACA",
+            fontSize: "12",
+            padding: [0, 35, 0, 0]
+          },
+          boundaryGap: false, //坐标轴2端留白
+          axisLine: {
+            //坐标轴相关
+            show: true, //是否显示
+            lineStyle: {
+              //颜色
+              color: "rgba(255,255,255,0.15)"
+            }
+          },
+          axisLabel: {
+            //坐标轴刻度标签相关
+            color: "#CACACA",
+            showMinLabel: false
+          },
+          axisTick: {
+            //坐标轴刻度相关
+            show: false
+          },
+          splitLine: {
+            //网格线相关
+            show: true, //是否显示
+            lineStyle: {
+              //颜色
+              color: "rgba(255,255,255,0.15)"
+            }
+          }
+        },
+        series: [
+          {
+            type: "line",
+            symbol: "none",
+            data: [
+              100,
+              123,
+              345,
+              678,
+              997,
+              222,
+              112
+              // that.get.chartsData[6].amount,
+              // that.get.chartsData[5].amount,
+              // that.get.chartsData[4].amount,
+              // that.get.chartsData[3].amount,
+              // that.get.chartsData[2].amount,
+              // that.get.chartsData[1].amount,
+              // that.get.chartsData[0].amount
+            ],
+            lineStyle: {
+              color: {
+                type: "linear",
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#C9446A" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.25,
+                    color: "#E99253" // 25% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "#F8FB53" // 50% 处的颜色
+                  },
+                  {
+                    offset: 0.75,
+                    color: "#B8FFA0" // 75% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#6BFFDA" // 100% 处的颜色
+                  }
+                ],
+                globalCoord: false // 缺省为 false
+              }
+            },
+            areaStyle: {
+              color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(0,0,0,0.4)" // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "rgba(0,0,0,0)" // 100% 处的颜色
+                }
+              ]) //背景渐变色
+            }
+          }
+        ]
+      };
+      myChart.setOption(option);
+    },
+    infoEchart3(that) {
+      // 基于准备好的dom，初始化echarts实例
+      let myChart = that.$echarts.init(document.getElementById("myChar03"));
+      // 绘制图表
+      let option = {
+        title: {
+          textStyle: {
+            color: "#fff",
+            fontFamily: "MicrosoftYaHeiLight",
+            fontSize: 18
+          },
+          text: "一周居间费金额",
+          padding: [20, 0, 0, 30]
+        },
+        grid: {
+          top: "20%",
+          left: "15%",
+          right: "5%",
+          bottom: "10%",
+          containLabel: false
+        },
+        xAxis: [
+          {
+            type: "category",
+            boundaryGap: false, //坐标轴2端留白
+            axisLine: {
+              //坐标轴相关
+              show: true, //是否显示
+              lineStyle: {
+                //颜色
+                color: "rgba(255,255,255,0.15)"
+              }
+            },
+            axisLabel: {
+              //坐标轴刻度标签相关
+              color: "#CACACA",
+              rotate: "45"
+            },
+            axisTick: {
+              //坐标轴刻度相关
+              show: false
+            },
+            splitLine: {
+              //网格线相关
+              show: true, //是否显示
+              lineStyle: {
+                //颜色
+                color: "rgba(255,255,255,0.15)"
+              }
+            },
+            data: that.xArr //坐标轴数据
+          }
+        ],
+        yAxis: {
+          name: "单",
+          nameTextStyle: {
+            color: "#CACACA",
+            fontSize: "12",
+            padding: [0, 35, 0, 0]
+          },
+          boundaryGap: false, //坐标轴2端留白
+          axisLine: {
+            //坐标轴相关
+            show: true, //是否显示
+            lineStyle: {
+              //颜色
+              color: "rgba(255,255,255,0.15)"
+            }
+          },
+          axisLabel: {
+            //坐标轴刻度标签相关
+            color: "#CACACA",
+            showMinLabel: false
+          },
+          axisTick: {
+            //坐标轴刻度相关
+            show: false
+          },
+          splitLine: {
+            //网格线相关
+            show: true, //是否显示
+            lineStyle: {
+              //颜色
+              color: "rgba(255,255,255,0.15)"
+            }
+          }
+        },
+        series: [
+          {
+            type: "line",
+            symbol: "none",
+            data: [
+              100,
+              123,
+              345,
+              678,
+              997,
+              222,
+              112
+              // that.get.chartsData[6].amount,
+              // that.get.chartsData[5].amount,
+              // that.get.chartsData[4].amount,
+              // that.get.chartsData[3].amount,
+              // that.get.chartsData[2].amount,
+              // that.get.chartsData[1].amount,
+              // that.get.chartsData[0].amount
+            ],
+            lineStyle: {
+              color: {
+                type: "linear",
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: "#C9446A" // 0% 处的颜色
+                  },
+                  {
+                    offset: 0.25,
+                    color: "#E99253" // 25% 处的颜色
+                  },
+                  {
+                    offset: 0.5,
+                    color: "#F8FB53" // 50% 处的颜色
+                  },
+                  {
+                    offset: 0.75,
+                    color: "#B8FFA0" // 75% 处的颜色
+                  },
+                  {
+                    offset: 1,
+                    color: "#6BFFDA" // 100% 处的颜色
+                  }
+                ],
+                globalCoord: false // 缺省为 false
+              }
+            },
+            areaStyle: {
+              color: new that.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: "rgba(0,0,0,0.4)" // 0% 处的颜色
+                },
+                {
+                  offset: 1,
+                  color: "rgba(0,0,0,0)" // 100% 处的颜色
+                }
+              ]) //背景渐变色
+            }
+          }
+        ]
+      };
+
+      myChart.setOption(option);
+      // $(".index .tanimate .data li").click(function() {
+      //   $(".index .tanimate .data li").removeClass("active");
+      //   $(this).addClass("active");
+      //   myChart.clear();
+      //   myChart.setOption(option[$(this).index()]);
+      // });
     }
   },
   // 获取后端数据
-  beforeRouter() {},
+  beforeCreate() {
+    let that = this;
+    console.log("beforeCreatestart");
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url:
+          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=0"
+      })
+      .then(function(res) {
+        that.echart0 = JSON.parse(res.data.data);
+        console.log("echart0");
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url:
+          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=1"
+      })
+      .then(function(res) {
+        that.echart1 = JSON.parse(res.data.data);
+        console.log("echart1");
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url:
+          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=2"
+      })
+      .then(function(res) {
+        that.echart2 = JSON.parse(res.data.data);
+        console.log("echart2");
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url:
+          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=3"
+      })
+      .then(function(res) {
+        that.echart3 = JSON.parse(res.data.data);
+        console.log("echart3");
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    console.log("beforeCreateend");
+  },
   // 修改数据
   created() {
     let that = this;
-    for (let i = 0; i < 7; i++) {
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate() - 7 + i;
-      if (month < 10) {
-        month = "0" + month;
-      }
-      if (day < 10) {
-        day = "0" + day;
-      }
-      let nowDate = year + "-" + month + "-" + day;
-      let xDate = month + "." + day;
-      that.dayArr.push(nowDate);
-      that.xArr.push(xDate);
-    }
+    console.log("createdstart");
+    // for (let i = 0; i < 7; i++) {
+    //   let date = new Date();
+    //   let year = date.getFullYear();
+    //   let month = date.getMonth() + 1;
+    //   let day = date.getDate() - 7 + i;
+    //   if (month < 10) {
+    //     month = "0" + month;
+    //   }
+    //   if (day < 10) {
+    //     day = "0" + day;
+    //   }
+    //   let nowDate = year + "-" + month + "-" + day;
+    //   let xDate = month + "." + day;
+    //   that.dayArr.push(nowDate);
+    //   that.xArr.push(xDate);
+    // }
     let account =
       localStorage.getItem("account") || sessionStorage.getItem("account");
     console.log(account);
     let password =
       localStorage.getItem("password") || sessionStorage.getItem("password");
     console.log(password);
+    console.log("createdend");
   },
   // 操作dome
   mounted() {
-    this.infoEchart();
-    $(".index .banimate").css("height", $(window).height());
+    console.log("mountedstart");
+    $(".index").css("height", $(window).height());
+    $(".index .bgimg").css("height", $(window).height());
+    $(".index .tanimate").css("height", $(window).height());
+    $(".index .banimate").css(
+      "height",
+      $(window).height() - $(".index .head").height()
+    );
+    // document.querySelector("body").addEventListener("touchmove", function(e) {
+    //   e.preventDefault();
+    // });
+    // this.infoEchart(this);
+    console.log("mountedend");
   }
 };
 </script>
@@ -847,13 +1104,17 @@ export default {
 .index {
   width: 100%;
   position: relative;
-
-  .tanimate {
+  overflow: hidden;
+  .bgimg {
     position: fixed;
-    top: 0;
-    z-index: 10;
     width: 100%;
     height: 100%;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .tanimate {
+    width: 100%;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -866,6 +1127,7 @@ export default {
     -ms-box-sizing: border-box;
     /*IE8*/
     transform: translateY(0%);
+    opacity: 1;
     transition: all 1s;
     -webkit-transition: all 1s;
     /* Safari */
@@ -1001,7 +1263,9 @@ export default {
   }
 
   .tanimate.active {
-    transform: translateY(-100%);
+    z-index: 10;
+    transform: translateY(-30%);
+    opacity: 0;
   }
 
   .banimate {
@@ -1013,29 +1277,91 @@ export default {
     /*Opera9.6*/
     -ms-box-sizing: border-box;
     /*IE8*/
-    position: relative;
-    z-index: 0;
+    position: absolute;
+    top: 1.8rem;
+    z-index: 20;
     width: 100%;
-    padding-top: 1.8rem;
+    overflow: auto;
+    // padding-top: 1.8rem;
     transform: translateY(100%);
-    transition: all 2s;
-    -webkit-transition: all 2s;
+    transition: all 1s;
+    -webkit-transition: all 1s;
     /* Safari */
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
 
     /* Safari and Chrome */
     .header {
-      position: fixed;
-      top: 0;
       width: 100%;
       height: 1.8rem;
+      overflow: hidden;
       background-position: center center;
       background-size: cover;
       background-repeat: no-repeat;
+      position: absolute;
+      top: 0;
+
+      .left {
+        position: absolute;
+        width: 50%;
+        top: 0;
+        left: 0;
+        height: 1.8rem;
+        transform: translateX(-100%);
+        overflow: hidden;
+        transition: all 1s;
+        -webkit-transition: all 1s;
+        /* Safari */
+        transition-timing-function: linear;
+        -webkit-transition-timing-function: linear;
+
+        /* Safari and Chrome */
+        /* Safari */
+        display: flex;
+        align-items: center;
+        color: #fff;
+        font-size: 0.36rem;
+
+        img {
+          width: 1.1rem;
+          height: 1.1rem;
+          margin: 0 0.2rem 0 0.5rem;
+        }
+      }
+
+      .right {
+        position: absolute;
+        width: 50%;
+        top: 0;
+        right: 0;
+        height: 1.8rem;
+        transform: translateX(100%);
+        overflow: hidden;
+        transition: all 1s;
+        -webkit-transition: all 1s;
+        /* Safari */
+        transition-timing-function: linear;
+        -webkit-transition-timing-function: linear;
+
+        /* Safari and Chrome */
+        /* Safari */
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        color: #fff;
+        font-size: 0.3rem;
+
+        img {
+          width: 10px;
+          height: 16px;
+          margin: 0 0.3rem 0 0.15rem;
+        }
+      }
     }
 
     .task {
+      background: #f3f3f3;
+      padding: 0.1rem 0;
       > li {
         margin: 0.4rem 0.3rem;
         padding: 0 0.3rem;
@@ -1116,6 +1442,17 @@ export default {
   .banimate.active {
     transform: translateY(0%);
     z-index: 0;
+    .header {
+      position: absolute;
+
+      .left {
+        transform: translateX(0%);
+      }
+
+      .right {
+        transform: translateX(0%);
+      }
+    }
   }
 
   .head {
@@ -1137,8 +1474,8 @@ export default {
       height: 1.8rem;
       transform: translateX(-100%);
       overflow: hidden;
-      transition: all 2s;
-      -webkit-transition: all 2s;
+      transition: all 1s;
+      -webkit-transition: all 1s;
       /* Safari */
       transition-timing-function: linear;
       -webkit-transition-timing-function: linear;
@@ -1165,8 +1502,8 @@ export default {
       height: 1.8rem;
       transform: translateX(100%);
       overflow: hidden;
-      transition: all 2s;
-      -webkit-transition: all 2s;
+      transition: all 1s;
+      -webkit-transition: all 1s;
       /* Safari */
       transition-timing-function: linear;
       -webkit-transition-timing-function: linear;

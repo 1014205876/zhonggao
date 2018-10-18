@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // 非懒加载
 // // 引入主级页面路由
-// import login from '@/page/login'
-// import index from '@/page/index'
+// import login from '@/page/login';//登录
+// import index from '@/page/index';//工作台
 // import history from '@/page/history'
 // // 引入次级页面路由
 // 懒加载
@@ -15,7 +15,7 @@ const taskdetail = resolve => require(['@/page/taskdetail'], resolve);//任务�
 const enterpriseinfo = resolve => require(['@/page/enterpriseinfo'], resolve);//企业详情
 // 审批页面approval文件夹
 const appointment = resolve => require(['@/page/approval/appointment'], resolve);//预约确认
-const risk = resolve => require(['@/page/approval/risk'], resolve);//风控审批
+const risk = resolve => require(['@/page/risk'], resolve);//风控审批
 const comprehensive = resolve => require(['@/page/approval/comprehensive'], resolve);//综合审批
 const riskdirector = resolve => require(['@/page/approval/riskdirector'], resolve);//风控总监审批
 const regulations = resolve => require(['@/page/approval/regulations'], resolve);//合规审查
