@@ -8,14 +8,14 @@
     <div class="mengban" v-bind:class='{show:show}' v-on:click.stop.self='alertclose'>
     <!-- <div class="mengban" v-bind:class='{show:show}' v-on:click.stop.self='alertclose'> -->
       <div class="alert">
-        <!-- <div class="top">
+        <div class="top">
           <label>
             <input type='checkbox' v-model='all' @change='allchange'>
             <div class="after"></div>
             全选
           </label>
           {{list.name}}
-        </div> -->
+        </div>
         <ul class="bottom">
           <li v-for='item in list.check' :key='item.id'>
             <label>

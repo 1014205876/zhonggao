@@ -1,7 +1,11 @@
 <template>
   <div class="index">
+<<<<<<< HEAD
     <div class="bgimg" style='background-image:url(static/img/bgimg_index.jpg)'></div>
     <div class='tanimate' @touchmove='touchmovet' @touchend='touchendt'>
+=======
+    <div class='tanimate' style='background-image:url(static/img/bgimg_index.jpg)' @touchmove='touchmove' @touchend='touchend'>
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
       <ul class="task">
         <li>
           <span>当前任务</span>
@@ -33,20 +37,32 @@
           </div>
         </li>
       </ul>
+<<<<<<< HEAD
       <div class="start" @touchstart='touchstartt'>
+=======
+      <div class="start" @touchstart='touchstart'>
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
         查看待审批任务
         <img src="static/img/icon/up.png" alt="">
       </div>
     </div>
     <div class="banimate">
+<<<<<<< HEAD
       <!-- <div class="header" style='background-image:url(static/img/bgimg_index_head.jpg)' @touchstart='touchstartb'>
+=======
+      <div class="header" style='background-image:url(static/img/bgimg_index_head.jpg)'>
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
         <div class="left" v-on:click='stop'>
           <img src="static/img/headimg_no.png" alt="">未登录
         </div>
         <div class="right" v-on:click='tohistory'>
           历史记录<img src="static/img/icon/right_white.png" alt="">
         </div>
+<<<<<<< HEAD
       </div> -->
+=======
+      </div>
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
       <ul class='task'>
         <li v-on:click.stop='toappointment'>
           <div class="top">
@@ -258,14 +274,23 @@
         </li>
       </ul>
     </div>
+<<<<<<< HEAD
     <div class="head">
       <div class="left" v-on:click='forget' @click='stop'>
+=======
+    <!-- <div class="head">
+      <div class="left" v-on:click='forget'>
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
         <img src="static/img/headimg_no.png" alt="">未登录
       </div>
       <div class="right" v-on:click='tohistory'>
         历史记录<img src="static/img/icon/right_white.png" alt="">
       </div>
+<<<<<<< HEAD
     </div>
+=======
+    </div> -->
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
     <!-- <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div> -->
   </div>
 </template>
@@ -285,7 +310,15 @@ export default {
       moveY: 0,
       endY: 0,
       canmove: true,
+<<<<<<< HEAD
       xArr: [8.1, 8.2, 8.3, 82, 88, 81, 88],
+=======
+      // xArr: [],
+      // dayArr: [],
+      // shenqingArr: [],
+      // jujianArr: [],
+      // dindanArr: [],
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
       data: 3,
       echart0: {
         already: 0,
@@ -397,6 +430,7 @@ export default {
   },
   //函数盒子
   methods: {
+<<<<<<< HEAD
     touchstartt(e) {
       this.canmove = true;
       this.startY = e.targetTouches[0].pageY;
@@ -446,12 +480,42 @@ export default {
     touchendt(e) {
       this.canmove = false;
       if (this.startY - this.moveY >= 200) {
+=======
+    touchstart(e) {
+      console.log("touchstart");
+      this.startY = e.targetTouches[0].pageY;
+      console.log(this.startY)
+    },
+    touchmove(e) {
+      let that = this;
+      if (that.canmove) {
+        $(".index .banimate").css({
+          transform:
+            "translateY(" +
+            ($(window).height() + that.moveY - that.startY) +
+            "px)",
+          transition: "all 0.1s"
+        });
+      }
+      console.log("touchmove");
+      console.log(that.moveY);
+      that.moveY = e.targetTouches[0].pageY;
+      if (that.startY - that.moveY >= 100) {
+        that.start();
+      }
+    },
+    touchend(e) {
+      if (this.startY - this.moveY >= 100) {
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
         this.start(this);
       } else {
         this.stop(this);
       }
+<<<<<<< HEAD
       this.startY = 0;
       this.moveY = 0;
+=======
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
     },
     remember() {
       localStorage.setItem("indexUrl", true);
@@ -484,6 +548,7 @@ export default {
       this.$router.push("/manager");
     },
     start(that) {
+<<<<<<< HEAD
       $(".index .banimate").animate({ scrollTop: 0 }, 0);
       $(".index .head .left").css({
         transform: "translateX(0%)",
@@ -498,10 +563,15 @@ export default {
         opacity: 0,
         transition: "all 1s"
       });
+=======
+      that.canmove = false;
+      $(".index .banimate").animate({ scrollTop: 0 }, 0);
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
       $(".index .banimate").css({
         transform: "translateY(0%)",
         transition: "all 1s"
       });
+<<<<<<< HEAD
       $(".tanimate,.banimate,.head").addClass("active");
     },
     stop(that) {
@@ -519,11 +589,22 @@ export default {
         opacity: 1,
         transition: "all 1s"
       });
+=======
+      $(".tanimate,.banimate,.head,.headimg").addClass("active");
+    },
+    stop(that) {
+      $(".index .banimate").animate({ scrollTop: 0 }, 0);
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
       $(".index .banimate").css({
         transform: "translateY(100%)",
         transition: "all 1s"
       });
+<<<<<<< HEAD
       $(".tanimate,.banimate,.head").removeClass("active");
+=======
+      $(".tanimate,.banimate,.head,.headimg").removeClass("active");
+      that.canmove = true;
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
     },
     infoEchart01(that) {
       // 基于准备好的dom，初始化echarts实例
@@ -671,7 +752,29 @@ export default {
                   offset: 1,
                   color: "rgba(0,0,0,0)" // 100% 处的颜色
                 }
+<<<<<<< HEAD
               ]) //背景渐变色
+=======
+              },
+              axisLabel: {
+                //坐标轴刻度标签相关
+                color: "#CACACA",
+                rotate: "45"
+              },
+              axisTick: {
+                //坐标轴刻度相关
+                show: false
+              },
+              splitLine: {
+                //网格线相关
+                show: true, //是否显示
+                lineStyle: {
+                  //颜色
+                  color: "rgba(255,255,255,0.15)"
+                }
+              },
+              data: that.xArr //坐标轴数据
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
             }
           }
         ]
@@ -824,7 +927,12 @@ export default {
                   offset: 1,
                   color: "rgba(0,0,0,0)" // 100% 处的颜色
                 }
+<<<<<<< HEAD
               ]) //背景渐变色
+=======
+              },
+              data: that.xArr //坐标轴数据
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
             }
           }
         ]
@@ -1056,7 +1164,10 @@ export default {
   // 修改数据
   created() {
     let that = this;
+<<<<<<< HEAD
     console.log("createdstart");
+=======
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
     // for (let i = 0; i < 7; i++) {
     //   let date = new Date();
     //   let year = date.getFullYear();
@@ -1083,6 +1194,7 @@ export default {
   },
   // 操作dome
   mounted() {
+<<<<<<< HEAD
     console.log("mountedstart");
     $(".index").css("height", $(window).height());
     $(".index .bgimg").css("height", $(window).height());
@@ -1096,6 +1208,12 @@ export default {
     // });
     // this.infoEchart(this);
     console.log("mountedend");
+=======
+    this.infoEchart();
+    $(".index").css("height", $(window).height());
+    $(".index .tanimate").css("height", $(window).height());
+    $(".index .banimate").css("height", $(window).height());
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
   }
 };
 </script>
@@ -1105,10 +1223,14 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
+<<<<<<< HEAD
   .bgimg {
     position: fixed;
+=======
+
+  .tanimate {
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
     width: 100%;
-    height: 100%;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1126,6 +1248,7 @@ export default {
     /*Opera9.6*/
     -ms-box-sizing: border-box;
     /*IE8*/
+<<<<<<< HEAD
     transform: translateY(0%);
     opacity: 1;
     transition: all 1s;
@@ -1133,6 +1256,14 @@ export default {
     /* Safari */
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
+=======
+    // transform: translateY(0%);
+    // transition: all 1s;
+    // -webkit-transition: all 1s;
+    // /* Safari */
+    // transition-timing-function: linear;
+    // -webkit-transition-timing-function: linear;
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
 
     /* Safari and Chrome */
     .task {
@@ -1263,9 +1394,14 @@ export default {
   }
 
   .tanimate.active {
+<<<<<<< HEAD
     z-index: 10;
     transform: translateY(-30%);
     opacity: 0;
+=======
+    // z-index:10;
+    // transform: translateY(-100%);
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
   }
 
   .banimate {
@@ -1277,12 +1413,22 @@ export default {
     /*Opera9.6*/
     -ms-box-sizing: border-box;
     /*IE8*/
+<<<<<<< HEAD
     position: absolute;
     top: 1.8rem;
     z-index: 20;
     width: 100%;
     overflow: auto;
     // padding-top: 1.8rem;
+=======
+    background: #f3f3f3;
+    position: absolute;
+    top: 0;
+    z-index: 20;
+    width: 100%;
+    overflow: auto;
+    padding-top: 1.8rem;
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
     transform: translateY(100%);
     transition: all 1s;
     -webkit-transition: all 1s;
@@ -1443,6 +1589,7 @@ export default {
     transform: translateY(0%);
     z-index: 0;
     .header {
+<<<<<<< HEAD
       position: absolute;
 
       .left {
@@ -1479,21 +1626,21 @@ export default {
       /* Safari */
       transition-timing-function: linear;
       -webkit-transition-timing-function: linear;
+=======
+      position: absolute;
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
 
-      /* Safari and Chrome */
-      /* Safari */
-      display: flex;
-      align-items: center;
-      color: #fff;
-      font-size: 0.36rem;
+      .left {
+        transform: translateX(0%);
+      }
 
-      img {
-        width: 1.1rem;
-        height: 1.1rem;
-        margin: 0 0.2rem 0 0.5rem;
+      .right {
+        transform: translateX(0%);
       }
     }
+  }
 
+<<<<<<< HEAD
     .right {
       position: absolute;
       width: 50%;
@@ -1507,34 +1654,88 @@ export default {
       /* Safari */
       transition-timing-function: linear;
       -webkit-transition-timing-function: linear;
+=======
+  // .head {
+  //   width: 100%;
+  //   height: 1.8rem;
+  //   overflow: hidden;
+  //   background-position: center center;
+  //   background-size: cover;
+  //   background-repeat: no-repeat;
+  //   position: fixed;
+  //   top: 0;
+  //   z-index: 20;
+>>>>>>> 6e72fca4ae035ae8dd93f89377df94cc3a3f717a
 
-      /* Safari and Chrome */
-      /* Safari */
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      color: #fff;
-      font-size: 0.3rem;
+  //   .left {
+  //     position: absolute;
+  //     width: 50%;
+  //     top: 0;
+  //     left: 0;
+  //     height: 1.8rem;
+  //     transform: translateX(-100%);
+  //     overflow: hidden;
+  //     transition: all 2s;
+  //     -webkit-transition: all 2s;
+  //     /* Safari */
+  //     transition-timing-function: linear;
+  //     -webkit-transition-timing-function: linear;
 
-      img {
-        width: 10px;
-        height: 16px;
-        margin: 0 0.3rem 0 0.15rem;
-      }
-    }
-  }
+  //     /* Safari and Chrome */
+  //     /* Safari */
+  //     display: flex;
+  //     align-items: center;
+  //     color: #fff;
+  //     font-size: 0.36rem;
 
-  .head.active {
-    position: absolute;
+  //     img {
+  //       width: 1.1rem;
+  //       height: 1.1rem;
+  //       margin: 0 0.2rem 0 0.5rem;
+  //     }
+  //   }
 
-    .left {
-      transform: translateX(0%);
-    }
+  //   .right {
+  //     position: absolute;
+  //     width: 50%;
+  //     top: 0;
+  //     right: 0;
+  //     height: 1.8rem;
+  //     transform: translateX(100%);
+  //     overflow: hidden;
+  //     transition: all 2s;
+  //     -webkit-transition: all 2s;
+  //     /* Safari */
+  //     transition-timing-function: linear;
+  //     -webkit-transition-timing-function: linear;
 
-    .right {
-      transform: translateX(0%);
-    }
-  }
+  //     /* Safari and Chrome */
+  //     /* Safari */
+  //     display: flex;
+  //     align-items: center;
+  //     justify-content: flex-end;
+  //     color: #fff;
+  //     font-size: 0.3rem;
+
+  //     img {
+  //       width: 10px;
+  //       height: 16px;
+  //       margin: 0 0.3rem 0 0.15rem;
+  //     }
+  //   }
+  // }
+
+  // .head.active {
+  //   position: absolute;
+
+  //   .left {
+  //     transform: translateX(0%);
+  //   }
+
+  //   .right {
+  //     transform: translateX(0%);
+  //   }
+  // }
 
   .headimg {
     width: 100%;
