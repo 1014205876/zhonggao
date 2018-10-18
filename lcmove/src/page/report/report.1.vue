@@ -7,7 +7,7 @@
               <li v-for='two in one.tr' :key='two.id'>
               <div class="title">{{two.title}}</div>
               <ul class="three">
-                <li v-for='three in two.td' :key='three.id'>
+                <li v-for='three in two.td' :key='three.id'>kb12345.com
                   <div class="left">{{three.left}}</div>
                   <div class="right">{{three.right}}</div>
                 </li>
@@ -31,10 +31,10 @@ export default {
             {
               title: "二级标题",
               td: [
-                { left: "左边内容左边内容左边内容左边内容左边内容左边内容", right: "右边内容" },
                 { left: "左边内容", right: "右边内容" },
                 { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容右边内容右边内容右边内容右边内容右边内容" }
+                { left: "左边内容", right: "右边内容" },
+                { left: "左边内容", right: "右边内容" }
               ]
             },
             {
@@ -97,43 +97,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.report {
-  .one {
-    > li {
-      > .title {
-        // border-top: 1px solid #cacaca;
-        color: red;
-      }
-      .two {
-        > li {
-          > .title {
-            border-top: 1px solid #cacaca;
-            color: blue;
-          }
-          .three {
-            > li {
-              background:#FFFFFF;
-              border-top: 1px solid #cacaca;
-              line-height:0.4rem;
-              // height:1rem;
-              font-size:0.3rem;
-              display: flex;
-              .left {
-                flex: 4;
-                color:#999999;
-                padding: 0.1rem 0.3rem;
-              }
-              .right {
-                flex: 3;
-                color:#333333;
-                padding: 0.1rem 0.3rem;
-                border-left: 1px solid #cacaca;
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-}
 </style>
