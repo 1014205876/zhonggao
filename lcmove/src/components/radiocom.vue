@@ -19,7 +19,7 @@
         <ul class="bottom">
           <li v-for='item in list.radio' :key='item.id'>
             <label>
-              {{item}}
+              <span>{{item}}</span>
               <input :name='list.fieldType' type='radio' v-model='list.radioValue' :value='item' :disabled='list.readOnly' @change='alertclose'>
               <!-- <div class="after"></div> -->
             </label>
@@ -68,6 +68,10 @@ export default {
   > .label {
     width: 1.8rem;
     position: relative;
+    .data{
+      width:1.6rem;
+    line-height:0.4rem;
+    }
     .right {
       position: absolute;
       top: 0;
@@ -102,7 +106,7 @@ export default {
       right: 0;
       margin: auto;
       background: #fff;
-      text-align: center;
+      // text-align: center;
       font-size: 0.3rem;
       // .after {
       //   width: 100%;
@@ -144,6 +148,7 @@ export default {
           line-height: 0.9rem;
           padding: 0 0.2rem;
           label {
+            line-height:0.4rem;
             display: flex;
             width: 100%;
             height: 100%;

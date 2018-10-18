@@ -12,7 +12,7 @@
         <img src="static/img/icon/task_gray.png" alt="">风控审批
       </div>
     </div>
-    <form @submit.prevent="submit">
+    <form>
       <ul class="form">
         <li v-for='list in form' :key='list.id'>
           <inputcom v-if='list.type=="input"' v-bind:list='list'></inputcom>
@@ -26,9 +26,10 @@
         </li>
       </ul>
       <div class="submit">
-        <input type="submit" value='提交'>
-      <alert v-on:choice='choice2' ref="alert5" v-bind:remind="'是否确定提交？'" v-bind:left="'取消'" v-bind:leftColor="'#333333'" v-bind:right="'确认'" v-bind:rightColor="'#3674B2'"></alert>
-      <alert v-on:choice='choice2' ref="alert6" v-bind:remind="'请补充完善信息'" v-bind:left="'确定'" v-bind:leftColor="'#3674B2'"></alert>
+        <div class="btn nopass" @click='submit(false)'>不通过</div>
+        <div class="btn pass" @click='submit(true)'>通过</div>
+      <alert v-on:choice='choice' ref="alert1" v-bind:remind="'是否确定提交？'" v-bind:left="'取消'" v-bind:leftColor="'#333333'" v-bind:right="'确认'" v-bind:rightColor="'#3674B2'"></alert>
+      <alert v-on:choice='choice' ref="alert2" v-bind:remind="'请补充完善信息'" v-bind:left="'确定'" v-bind:leftColor="'#3674B2'"></alert>
       </div>
     </form>
   </div>
@@ -151,8 +152,8 @@ export default {
             "选项10"
           ],
           checkValue: [],
-          another:true,
-          anotherValue:'',
+          another: true,
+          anotherValue: "",
           readOnly: false,
           required: true
         },
@@ -169,7 +170,13 @@ export default {
           fieldType: "FormField10",
           name: "表单名字10",
           type: "radio",
-          radio: ["选项1", "选项2", "选项3", "选项4", "选项5"],
+          radio: [
+            "选项1选项1选项1选项1选项1选项1",
+            "选项2",
+            "选项3",
+            "选项4",
+            "选项5"
+          ],
           radioValue: "",
           readOnly: false,
           required: true
@@ -209,28 +216,45 @@ export default {
     toapprovalRecord() {
       this.$router.push("/approvalRecord");
     },
-    submit() {
+    submit(pass) {
       let that = this;
       this.forEach(that);
+      if (that.over) {
+        that.$refs.alert2.alertshow();
+      } else {
+        that.$refs.alert1.alertshow();
+      }
+      if(pass){
+        console.log('通过')
+      }else{
+        console.log('不通过')
+      }
       console.log(this.form);
     },
     forEach(that) {
+      that.over = false;
       for (let i = 0; i < that.form.length; i++) {
         if (that.form[i].required) {
           if (
             that.form[i].value ||
             that.form[i].optionValue ||
             that.form[i].radioValue ||
-            ((that.form[i].checkValue && that.form[i].checkValue.length > 0)||that.form[i].anotherValue)
+            ((that.form[i].checkValue && that.form[i].checkValue.length > 0) ||
+              that.form[i].anotherValue)
           ) {
-            $('.approval .form>li').eq(i).removeClass('no')
+            $(".approval .form>li")
+              .eq(i)
+              .removeClass("no");
           } else {
-            $('.approval .form>li').eq(i).addClass('no')
+            $(".approval .form>li")
+              .eq(i)
+              .addClass("no");
+            that.over = true;
           }
         }
       }
     },
-    choice2(choice) {
+    choice(choice) {
       console.log("选择是否通过");
       let that = this;
       console.log(`点击${choice.data}`);
@@ -241,8 +265,8 @@ export default {
         console.log(`提交`);
         console.log(that.form);
       }
-      that.$refs.alert5.alertclose();
-      that.$refs.alert6.alertclose();
+      that.$refs.alert1.alertclose();
+      that.$refs.alert2.alertclose();
     }
   }
 };
@@ -286,8 +310,8 @@ export default {
         padding-left: 0.1rem;
         padding-right: 0.3rem;
       }
-      > li.no{
-        background:red;
+      > li.no {
+        background: red;
       }
       .remarks {
         textarea {
@@ -318,18 +342,28 @@ export default {
     .submit {
       margin-top: 0.2rem;
       height: 1.1rem;
+      padding: 0 0.75rem;
       background: #fff;
       display: flex;
       align-items: center;
-      justify-content: center;
-      input {
+      justify-content: space-between;
+      .btn {
         width: 2.6rem;
-        height: 0.8rem;
+        height: 38px;
+        line-height:38px;
+        text-align:center;
+        border: 1px solid #3674b2;
         border-radius: 0.8rem;
+        font-size: 18px;
+        font-weight: 600;
+      }
+      .nopass {
+        background: #fff;
+        color: #3674b2;
+      }
+      .pass {
         background: #3674b2;
         color: #fff;
-        font-size: 0.36rem;
-        font-weight: 600;
       }
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <ul class='data'>
-      <!-- <li v-on:click='totask'>
+      <li v-on:click='totask'>
         <div class="left">
           <div class="name">江西省南昌市进贤县111号</div>
           <div class="num">任务编号:6543213546132</div>
@@ -20,7 +20,7 @@
           <div class="time">2018-10-16</div>
           <div class="pass">审批通过</div>
         </div>
-      </li> -->
+      </li>
     </ul>
     <div class="notask" v-if='no'>
       <img src="/static/img/icon/notask.png" alt="">
