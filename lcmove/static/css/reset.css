@@ -5,6 +5,10 @@ margin:0;
 list-style:none;
 border:0;
 }
+@font-face {
+font-family: 'Akrobat-ExtraBold';
+src: url('../font/Akrobat-ExtraBold.otf');
+}
 html{
 font-size: 100px;
 background: #f3f3f3;

@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <ul class='data'>
-      <li v-on:click='totask'>
+      <!-- <li v-on:click='totask'>
         <div class="left">
           <div class="name">江西省南昌市进贤县111号</div>
           <div class="num">任务编号:6543213546132</div>
@@ -12,7 +12,6 @@
         </div>
       </li>
       <li v-for='list in history' :key='list.id' v-on:click='totask'>
-      <!-- <li v-on:click='totask'> -->
         <div class="left">
           <div class="name">江西省南昌市进贤县111号</div>
           <div class="num">任务编号:6543213546132</div>
@@ -21,8 +20,12 @@
           <div class="time">2018-10-16</div>
           <div class="pass">审批通过</div>
         </div>
-      </li>
+      </li> -->
     </ul>
+    <div class="notask" v-if='no'>
+      <img src="/static/img/icon/notask.png" alt="">
+      您暂时还没有历史任务
+    </div>
     <div class='loading' v-show='loading'>
       <img src="static/img/icon/loading.png" alt="">
       加载中...
@@ -37,6 +40,7 @@ export default {
   name: "History",
   data() {
     return {
+      no:{},
       history: ["历史记录","历史记录","历史记录","历史记录","历史记录","历史记录","历史记录","历史记录", "历史记录"],
       loading: false,
       switch: true
@@ -131,6 +135,19 @@ export default {
     }
     li:first-child {
       margin-top: 0;
+    }
+  }
+
+  .notask{
+    padding-top:3rem;
+    text-align:center;
+    color:#999999;
+    font-size:0.28rem;
+    img{
+      display:block;
+      width:1.52rem;
+      height:1.72rem;
+      margin:0 auto 0.4rem;
     }
   }
 

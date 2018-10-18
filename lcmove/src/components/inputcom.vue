@@ -20,19 +20,19 @@ export default {
 
 <style lang="less" scoped>
 .inputcom {
-  width:100%;
-  height:1.2rem;
+  width: 100%;
+  height: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   label {
-    width:100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .name{
-      width:5rem;
-    line-height:0.4rem;
+    .name {
+      width: 5rem;
+      line-height: 0.4rem;
     }
     // .right {
     //   display: flex;
@@ -45,7 +45,7 @@ export default {
     //   }
     // }
     input {
-    width:1.8rem;
+      width: 1.8rem;
       font-size: 0.3rem;
     }
     input:-ms-input-placeholder {

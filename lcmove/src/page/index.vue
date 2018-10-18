@@ -26,20 +26,22 @@
         <li class='active'>
           <div class="top">订单总数</div>
           <div class='num'>
-            <span>{{sumOrder}}</span>
+            <span>{{movesumOrder}}</span>
             <!-- <numroll :value="echart1.sumOrder" :time='1'></numroll> -->
           </div>
         </li>
         <li>
           <div class="top">申请总金额</div>
           <div class='num'>
-            <numroll :value="echart2.sumApplyAmount" :time='1'></numroll>
+            <span>{{movesumApplyAmount}}</span>
+            <!-- <numroll :value="echart2.sumApplyAmount" :time='1'></numroll> -->
           </div>
         </li>
         <li>
           <div class="top">居间费总金额</div>
           <div class='num'>
-            <numroll :value="echart3.sumConsumeAmount" :time='1'></numroll>
+            <span>{{movesumConsumeAmount}}</span>
+            <!-- <numroll :value="echart3.sumConsumeAmount" :time='1'></numroll> -->
           </div>
         </li>
       </ul>
@@ -58,7 +60,7 @@
         </div>
       </div> -->
       <ul class='task'>
-        <li v-on:click.stop='toappointment'>
+        <li v-on:click='toappointment'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -84,7 +86,7 @@
             </li>
           </ul>
         </li>
-        <li v-on:click.stop='torisk'>
+        <li v-on:click='torisk'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -110,7 +112,7 @@
             </li>
           </ul>
         </li>
-        <li v-on:click.stop='tocomprehensive'>
+        <li v-on:click='tocomprehensive'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -136,7 +138,7 @@
             </li>
           </ul>
         </li>
-        <li v-on:click.stop='toriskdirector'>
+        <li v-on:click='toriskdirector'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -162,7 +164,7 @@
             </li>
           </ul>
         </li>
-        <li v-on:click.stop='toregulations'>
+        <li v-on:click='toregulations'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -188,7 +190,7 @@
             </li>
           </ul>
         </li>
-        <li v-on:click.stop='tovicemanager'>
+        <li v-on:click='tovicemanager'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -214,7 +216,7 @@
             </li>
           </ul>
         </li>
-        <li v-on:click.stop='tomanager'>
+        <li v-on:click='tomanager'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -269,13 +271,14 @@
       </ul>
     </div>
     <div class="head">
-      <div class="left" v-on:click='forget' @click='stop'>
+      <div class="left" v-on:click='forget'>
         <img src="static/img/headimg_no.png" alt="">未登录
       </div>
-      <div class="right" v-on:click='tohistory'>
-        历史记录<img src="static/img/icon/right_white.png" alt="">
+      <div class="right" @click='stop'>
+        数据统计<img src="static/img/icon/echart.png" alt="">
       </div>
     </div>
+      <div class="history" v-on:click='tohistory'>历史任务</div>
     <!-- <div class="headimg" style='background-image:url(static/img/bgimg_index_head.jpg)'></div> -->
   </div>
 </template>
@@ -297,6 +300,8 @@ export default {
       canmove: true,
       xArr: [],
       sumOrder: 0,
+      sumApplyAmount: 0,
+      sumConsumeAmount: 0,
       data: 3,
       echart0: {
         already: 0,
@@ -314,7 +319,7 @@ export default {
             time: "2018-10-16"
           },
           {
-            count: 15,
+            count: 0,
             time: "2018-10-15"
           },
           {
@@ -326,11 +331,11 @@ export default {
             time: "2018-10-13"
           },
           {
-            count: 5,
+            count: 0,
             time: "2018-10-12"
           },
           {
-            count: 10,
+            count: 0,
             time: "2018-10-11"
           }
         ]
@@ -339,31 +344,31 @@ export default {
         sumApplyAmount: "0",
         chartsData: [
           {
-            amount: "0",
+            amount: 0,
             time: "2018-10-17"
           },
           {
-            amount: "0",
+            amount: 0,
             time: "2018-10-16"
           },
           {
-            amount: 653,
+            amount: 0,
             time: "2018-10-15"
           },
           {
-            amount: "0",
+            amount: 0,
             time: "2018-10-14"
           },
           {
-            amount: "0",
+            amount: 0,
             time: "2018-10-13"
           },
           {
-            amount: 214,
+            amount: 0,
             time: "2018-10-12"
           },
           {
-            amount: 221,
+            amount: 0,
             time: "2018-10-11"
           }
         ]
@@ -380,7 +385,7 @@ export default {
             time: "2018-10-16"
           },
           {
-            consumeAmount: 0.672,
+            consumeAmount: 0,
             time: "2018-10-15"
           },
           {
@@ -403,9 +408,31 @@ export default {
       }
     };
   },
+
+  computed: {
+    movesumOrder: function() {
+      return this.sumOrder.toFixed(2);
+    },
+    movesumApplyAmount: function() {
+      return this.sumApplyAmount.toFixed(2);
+    },
+    movesumConsumeAmount: function() {
+      return this.sumConsumeAmount.toFixed(2);
+    }
+  },
   watch: {
-    sumOrder: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { sumOrder: newValue });
+    echart1: function(newValue) {
+      TweenLite.to(this.$data, 0.5, { sumOrder: newValue.sumOrder });
+    },
+    echart2: function(newValue) {
+      TweenLite.to(this.$data, 0.5, {
+        sumApplyAmount: newValue.sumApplyAmount
+      });
+    },
+    echart3: function(newValue) {
+      TweenLite.to(this.$data, 0.5, {
+        sumConsumeAmount: newValue.sumConsumeAmount
+      });
     }
   },
   components: {
@@ -464,7 +491,7 @@ export default {
       if (this.startY - this.moveY >= 200) {
         this.start(this);
       } else {
-        this.stop(this);
+        this.stop();
       }
       this.startY = 0;
       this.moveY = 0;
@@ -503,43 +530,43 @@ export default {
       $(".index .banimate").animate({ scrollTop: 0 }, 0);
       $(".index .head .left").css({
         transform: "translateX(0%)",
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
       $(".index .head .right").css({
         transform: "translateX(0%)",
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
       $(".index .tanimate").css({
         transform: "translateY(-30%)",
         opacity: 0,
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
       $(".index .banimate").css({
         transform: "translateY(0%)",
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
-      $(".tanimate,.banimate,.head").addClass("active");
+      $(".tanimate,.banimate,.head,.history").addClass("active");
     },
-    stop(that) {
+    stop() {
       $(".index .banimate").animate({ scrollTop: 0 }, 0);
       $(".index .head .left").css({
         transform: "translateX(-100%)",
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
       $(".index .head .right").css({
         transform: "translateX(100%)",
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
       $(".index .tanimate").css({
         transform: "translateY(0%)",
         opacity: 1,
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
       $(".index .banimate").css({
         transform: "translateY(100%)",
-        transition: "all 1s"
+        transition: "all 0.6s"
       });
-      $(".tanimate,.banimate,.head").removeClass("active");
+      $(".tanimate,.banimate,.head,.history").removeClass("active");
     },
     infoEchart1(that) {
       // 基于准备好的dom，初始化echarts实例
@@ -1029,7 +1056,6 @@ export default {
       })
       .then(function(res) {
         that.echart1 = JSON.parse(res.data.data);
-        that.sumOrder=that.echart1.sumOrder;
         console.log("echart1");
         console.log(that.echart1);
         that.infoEchart1(that);
@@ -1161,8 +1187,8 @@ export default {
     /*IE8*/
     transform: translateY(0%);
     opacity: 1;
-    transition: all 1s;
-    -webkit-transition: all 1s;
+    transition: all 0.6s;
+    -webkit-transition: all 0.6s;
     /* Safari */
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
@@ -1202,6 +1228,7 @@ export default {
           text-align: center;
           color: #71fec6;
           font-size: 0.3rem;
+          font-family: "Akrobat-ExtraBold";
         }
       }
     }
@@ -1252,10 +1279,10 @@ export default {
         }
 
         .num {
-          font-family: "Akrobat";
           margin-top: 0.3rem;
           line-height: 0.4rem;
           font-size: 0.48rem;
+          font-family: "Akrobat-ExtraBold";
         }
       }
 
@@ -1324,8 +1351,8 @@ export default {
     overflow: auto;
     // padding-top: 1.8rem;
     transform: translateY(100%);
-    transition: all 1s;
-    -webkit-transition: all 1s;
+    transition: all 0.6s;
+    -webkit-transition: all 0.6s;
     /* Safari */
     transition-timing-function: linear;
     -webkit-transition-timing-function: linear;
@@ -1349,8 +1376,8 @@ export default {
         height: 1.8rem;
         transform: translateX(-100%);
         overflow: hidden;
-        transition: all 1s;
-        -webkit-transition: all 1s;
+        transition: all 0.6s;
+        -webkit-transition: all 0.6s;
         /* Safari */
         transition-timing-function: linear;
         -webkit-transition-timing-function: linear;
@@ -1377,8 +1404,8 @@ export default {
         height: 1.8rem;
         transform: translateX(100%);
         overflow: hidden;
-        transition: all 1s;
-        -webkit-transition: all 1s;
+        transition: all 0.6s;
+        -webkit-transition: all 0.6s;
         /* Safari */
         transition-timing-function: linear;
         -webkit-transition-timing-function: linear;
@@ -1482,6 +1509,9 @@ export default {
   .banimate.active {
     transform: translateY(0%);
     z-index: 0;
+    .history {
+      z-index: 30;
+    }
     .header {
       position: absolute;
 
@@ -1505,6 +1535,7 @@ export default {
     position: fixed;
     top: 0;
     z-index: 20;
+    font-size: 0.36rem;
 
     .left {
       position: absolute;
@@ -1514,8 +1545,8 @@ export default {
       height: 1.8rem;
       transform: translateX(-100%);
       overflow: hidden;
-      transition: all 1s;
-      -webkit-transition: all 1s;
+      transition: all 0.6s;
+      -webkit-transition: all 0.6s;
       /* Safari */
       transition-timing-function: linear;
       -webkit-transition-timing-function: linear;
@@ -1525,7 +1556,6 @@ export default {
       display: flex;
       align-items: center;
       color: #fff;
-      font-size: 0.36rem;
 
       img {
         width: 1.1rem;
@@ -1542,8 +1572,8 @@ export default {
       height: 1.8rem;
       transform: translateX(100%);
       overflow: hidden;
-      transition: all 1s;
-      -webkit-transition: all 1s;
+      transition: all 0.6s;
+      -webkit-transition: all 0.6s;
       /* Safari */
       transition-timing-function: linear;
       -webkit-transition-timing-function: linear;
@@ -1554,11 +1584,10 @@ export default {
       align-items: center;
       justify-content: flex-end;
       color: #fff;
-      font-size: 0.3rem;
 
       img {
-        width: 10px;
-        height: 16px;
+        width: 18px;
+        height: 15px;
         margin: 0 0.3rem 0 0.15rem;
       }
     }
@@ -1576,6 +1605,28 @@ export default {
     }
   }
 
+  .history {
+    position: absolute;
+    z-index: -10;
+    right: 0.5rem;
+    bottom: 1rem;
+    width: 0.6rem;
+    padding: 0.2rem;
+    height: 0.6rem;
+    border-radius: 1rem;
+    background: #3674b2;
+    box-shadow: 0px 2px 5px #3674b2;
+    font-size: 0.28rem;
+    color: #fff;
+    line-height: 0.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .history.active {
+    z-index: 30;
+  }
   .headimg {
     width: 100%;
     height: 1.8rem;
