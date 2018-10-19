@@ -57,20 +57,33 @@ export default {
 <style lang="less" scoped>
 .check {
   width: 100%;
-  height:1.2rem;
+  height: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  >.name{
-    width:5rem;
-    line-height:0.4rem;
+  > .name {
+    width: 3.8rem;
+    line-height: 0.4rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
   }
   > .label {
-    width: 1.8rem;
+    width: 3rem;
     position: relative;
-    .data{
-      width:1.6rem;
-    line-height:0.4rem;
+    .data {
+      font-size:0.28rem;
+      color:#cacaca;
+      width: 2.6rem;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
     .right {
       position: absolute;
@@ -148,7 +161,7 @@ export default {
           line-height: 0.9rem;
           padding: 0 0.2rem;
           label {
-            line-height:0.4rem;
+            line-height: 0.4rem;
             display: flex;
             width: 100%;
             height: 100%;

@@ -60,21 +60,20 @@
         </div>
       </div> -->
       <ul class='task'>
-        <li v-on:click='toappointment'>
+        <li v-for='list in task' :key='list.id' v-on:click='torisk(list.processInsId)'>
           <div class="top">
             <div class="left">
               <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
+                <span>{{list.creatTime}}</span>
               </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
+              <div class="name">{{list.entName}}</div>
             </div>
             <div class="btn wait">待开始</div>
           </div>
           <ul class="bottom">
             <li>
               <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
+              <span class='data'>{{list.scope}}</span>
             </li>
             <li>
               <span>企业类型</span>
@@ -82,189 +81,7 @@
             </li>
             <li>
               <span>当前进度</span>
-              <span class='data'>预约确认</span>
-            </li>
-          </ul>
-        </li>
-        <li v-on:click='torisk'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn wait">待开始</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>风控审批</span>
-            </li>
-          </ul>
-        </li>
-        <li v-on:click='tocomprehensive'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn wait">待开始</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>综合审批</span>
-            </li>
-          </ul>
-        </li>
-        <li v-on:click='toriskdirector'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn wait">待开始</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>风控总监审批</span>
-            </li>
-          </ul>
-        </li>
-        <li v-on:click='toregulations'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn wait">待开始</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>合规审查</span>
-            </li>
-          </ul>
-        </li>
-        <li v-on:click='tovicemanager'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn wait">待开始</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>副总经理审批</span>
-            </li>
-          </ul>
-        </li>
-        <li v-on:click='tomanager'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn wait">待开始</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>总经理审批</span>
-            </li>
-          </ul>
-        </li>
-        <li v-for='list in data' :key='list.id'>
-          <div class="top">
-            <div class="left">
-              <div class="time">
-                <span>2018-10-09</span>
-                <span>16:23:12</span>
-              </div>
-              <div class="name">江西省博会金融九州服务有限公司</div>
-            </div>
-            <div class="btn ing">进行中</div>
-          </div>
-          <ul class="bottom">
-            <li>
-              <span>地址</span>
-              <span class='data'>江西省南昌市进贤县10000号</span>
-            </li>
-            <li>
-              <span>企业类型</span>
-              <span class='data'>新增</span>
-            </li>
-            <li>
-              <span>当前进度</span>
-              <span class='data'>流程名字</span>
+              <span class='data'>{{list.actName}}</span>
             </li>
           </ul>
         </li>
@@ -294,20 +111,22 @@ export default {
   name: "Index",
   data() {
     return {
-      startY: 0,
-      moveY: 0,
-      endY: 0,
-      canmove: true,
-      xArr: [],
-      sumOrder: 0,
-      sumApplyAmount: 0,
-      sumConsumeAmount: 0,
-      data: 3,
+      startY: 0, //手指开始y坐标
+      moveY: 0, //手指滑动y坐标
+      endY: 0, //手指结束y坐标
+      canmove: true, //控制上滑动画
+      xArr: [], //表格横轴
+      sumOrder: 0, //订单数字动画
+      sumApplyAmount: 0, //申请数字动画
+      sumConsumeAmount: 0, //居间费数字动画
+      //请求到的后台数据
       echart0: {
+        //任务数量
         already: 0,
         waiting: 0
-      },
+      }, //任务数量
       echart1: {
+        //订单表格
         sumOrder: 0,
         chartsData: [
           {
@@ -339,8 +158,9 @@ export default {
             time: "2018-10-11"
           }
         ]
-      },
+      }, //订单表格
       echart2: {
+        //申请表格
         sumApplyAmount: "0",
         chartsData: [
           {
@@ -372,8 +192,9 @@ export default {
             time: "2018-10-11"
           }
         ]
-      },
+      }, //申请表格
       echart3: {
+        //居间费表格
         sumConsumeAmount: "0",
         chartsData: [
           {
@@ -405,7 +226,86 @@ export default {
             time: "2018-10-11"
           }
         ]
-      }
+      }, //居间费表格
+      // 任务列表
+      task: [
+        {
+          processInsId: "1050479",
+          taskId: "1050549",
+          actInsId: "1050548",
+          actName: "征信拆解", //当前状态
+          entName: "江西省新新美容咨询服务有限公司", //公司名称
+          amount: 12, //贷款金额
+          productId: null,
+          productName: "征信贷", //产品名称
+          progress: null,
+          creatTime: "2018-09-27 21:43:06", //时间
+          endTime: null,
+          operatorId: null,
+          operatorName: "riskAssistant", //操作员
+          assignee: "riskAssistant",
+          no: null,
+          scope: "江西省-南昌市-红谷港新区", //公司地址
+          projectNumber: "229961043575705600" //项目编号
+        },
+        {
+          processInsId: "1050479",
+          taskId: "1050549",
+          actInsId: "1050548",
+          actName: "征信拆解",
+          entName: "江西省新新美容咨询服务有限公司",
+          amount: 12,
+          productId: null,
+          productName: "征信贷",
+          progress: null,
+          creatTime: "2018-09-27 21:43:06",
+          endTime: null,
+          operatorId: null,
+          operatorName: "riskAssistant",
+          assignee: "riskAssistant",
+          no: null,
+          scope: "江西省-南昌市-红谷港新区",
+          projectNumber: "229961043575705600"
+        },
+        {
+          processInsId: "1050479",
+          taskId: "1050549",
+          actInsId: "1050548",
+          actName: "征信拆解",
+          entName: "江西省新新美容咨询服务有限公司",
+          amount: 12,
+          productId: null,
+          productName: "征信贷",
+          progress: null,
+          creatTime: "2018-09-27 21:43:06",
+          endTime: null,
+          operatorId: null,
+          operatorName: "riskAssistant",
+          assignee: "riskAssistant",
+          no: null,
+          scope: "江西省-南昌市-红谷港新区",
+          projectNumber: "229961043575705600"
+        },
+        {
+          processInsId: "1050479",
+          taskId: "1050549",
+          actInsId: "1050548",
+          actName: "征信拆解",
+          entName: "江西省新新美容咨询服务有限公司",
+          amount: 12,
+          productId: null,
+          productName: "征信贷",
+          progress: null,
+          creatTime: "2018-09-27 21:43:06",
+          endTime: null,
+          operatorId: null,
+          operatorName: "riskAssistant",
+          assignee: "riskAssistant",
+          no: null,
+          scope: "江西省-南昌市-红谷港新区",
+          projectNumber: "229961043575705600"
+        }
+      ]
     };
   },
 
@@ -508,8 +408,13 @@ export default {
     toappointment() {
       this.$router.push("/appointment");
     },
-    torisk() {
-      this.$router.push("/risk");
+    torisk(processInsId) {
+      this.$router.push({
+        path: "/risk",
+        query: {
+          processInsId: processInsId
+        }
+      });
     },
     tocomprehensive() {
       this.$router.push("/comprehensive");
@@ -1033,6 +938,7 @@ export default {
   created() {
     let that = this;
     console.log("createdstart");
+    //调取后台数据
     that
       .$http({
         method: "get",
@@ -1041,7 +947,7 @@ export default {
           "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=0"
       })
       .then(function(res) {
-        that.echart0 = JSON.parse(res.data.data);
+        that.echart0 = res.data.data;
         console.log("echart0");
       })
       .catch(function(err) {
@@ -1055,7 +961,7 @@ export default {
           "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=1"
       })
       .then(function(res) {
-        that.echart1 = JSON.parse(res.data.data);
+        that.echart1 = res.data.data;
         console.log("echart1");
         console.log(that.echart1);
         that.infoEchart1(that);
@@ -1071,7 +977,7 @@ export default {
           "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=2"
       })
       .then(function(res) {
-        that.echart2 = JSON.parse(res.data.data);
+        that.echart2 = res.data.data;
         console.log("echart2");
         console.log(that.echart2);
         that.infoEchart2(that);
@@ -1090,13 +996,25 @@ export default {
           "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=3"
       })
       .then(function(res) {
-        that.echart3 = JSON.parse(res.data.data);
+        that.echart3 = res.data.data;
         console.log("echart3");
         console.log(that.echart3);
         that.infoEchart3(that);
         $(".index .tanimate .box")
           .eq(2)
           .removeClass("active");
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url: "api/v1/flow/task/ZXD"
+      })
+      .then(function(res) {
+        console.log(res);
       })
       .catch(function(err) {
         console.log(err);
@@ -1344,6 +1262,7 @@ export default {
     /*Opera9.6*/
     -ms-box-sizing: border-box;
     /*IE8*/
+    background: #f3f3f3;
     position: absolute;
     top: 1.8rem;
     z-index: 20;
@@ -1427,7 +1346,6 @@ export default {
     }
 
     .task {
-      background: #f3f3f3;
       padding: 0.1rem 0;
       > li {
         margin: 0.4rem 0.3rem;
@@ -1442,7 +1360,7 @@ export default {
           justify-content: space-between;
 
           .left {
-            width: 3rem;
+            width: 5rem;
 
             .time {
               line-height: 0.45rem;

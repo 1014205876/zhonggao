@@ -88,17 +88,28 @@ export default {
 <style lang="less" scoped>
 .check {
   width: 100%;
-  height:1.2rem;
+  height: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  >.name{
-    width:5rem;
-    line-height:0.4rem;
+  > .name {
+    width: 3.8rem;
+    line-height: 0.4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
-  >.label {
-    width:1.8rem;
+  > .label {
+    width: 3rem;
     position: relative;
+    .data {
+      font-size:0.28rem;
+      color:#cacaca;
+      width: 2.6rem;
+      line-height: 0.4rem;
+    }
     .right {
       position: absolute;
       top: 0;
@@ -183,7 +194,7 @@ export default {
           }
         }
         > li:last-of-type {
-          border-radius:0 0 0.2rem 0.2rem;
+          border-radius: 0 0 0.2rem 0.2rem;
         }
         textarea {
           -moz-box-sizing: border-box;

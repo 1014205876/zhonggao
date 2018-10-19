@@ -1,15 +1,19 @@
 <template>
   <div class="report">
         <ul class="one">
-          <li v-for='one in table' :key='one.id'>
-            <div class="title">{{one.title}}</div>
+          <li v-for='one in table' :key='one.ids'>
+            <div class="title" v-if='one.name!="null"'>{{one.name}}</div>
             <ul class="two">
-              <li v-for='two in one.tr' :key='two.id'>
-              <div class="title">{{two.title}}</div>
+              <li v-for='two in one.child' :key='two.ids'>
+              <div class="title" v-if='two.name!="null"'>{{two.name}}</div>
               <ul class="three">
-                <li v-for='three in two.td' :key='three.id'>
-                  <div class="left">{{three.left}}</div>
-                  <div class="right">{{three.right}}</div>
+                <li v-for='three in two.child' :key='three.ids'>
+                  <div class="left">
+                    <div>{{three.name}}</div>
+                  </div>
+                  <div class="right">
+                    <div>{{three.value}}</div>
+                  </div>
                 </li>
               </ul>
               </li>
@@ -26,71 +30,46 @@ export default {
     return {
       table: [
         {
-          title: "一级标题",
-          tr: [
+          name: "项目基本信息",
+          id: 1,
+          type: "String",
+          child: [
             {
-              title: "二级标题",
-              td: [
-                { left: "左边内容左边内容左边内容左边内容左边内容左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容右边内容右边内容右边内容右边内容右边内容" }
-              ]
-            },
-            {
-              title: "二级标题",
-              td: [
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" }
-              ]
-            },
-            {
-              title: "二级标题",
-              td: [
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" }
-              ]
-            }
-          ]
-        },
-        {
-          title: "一级标题",
-          tr: [
-            {
-              title: "二级标题",
-              td: [
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" }
-              ]
-            },
-            {
-              title: "二级标题",
-              td: [
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" }
-              ]
-            },
-            {
-              title: "二级标题",
-              td: [
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" },
-                { left: "左边内容", right: "右边内容" }
+              name: "二级标题",
+              id: 1,
+              type: "String",
+              child: [
+                {
+                  name: "产品类型",
+                  id: 1,
+                  type: "String",
+                  value: "征信贷",
+                  key: "prodectType"
+                }
               ]
             }
           ]
         }
       ]
     };
+  },
+  created() {
+    let that = this;
+    console.log("createdstart");
+    //调取后台数据
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url: "api/v1/flow/customer/1057470"
+      })
+      .then(function(res) {
+        that.table = res.data.data;
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
   },
   methods: {}
 };
@@ -100,39 +79,68 @@ export default {
 .report {
   .one {
     > li {
+      line-height: 0.4rem;
+      font-size: 0.3rem;
+      background: #ffffff;
+      margin-top: 0.4rem;
       > .title {
-        // border-top: 1px solid #cacaca;
-        color: red;
+        color: #000000;
+        font-size: 0.36rem;
+        padding: 0rem 0.3rem;
+        line-height: 1rem;
+        font-weight: 700;
       }
       .two {
+        // border-bottom: 1px solid #cacaca;
         > li {
           > .title {
+            padding: 0rem 0.3rem;
+            line-height: 1rem;
             border-top: 1px solid #cacaca;
-            color: blue;
+            color: #666666;
+            font-weight: 600;
           }
           .three {
             > li {
-              background:#FFFFFF;
               border-top: 1px solid #cacaca;
-              line-height:0.4rem;
-              // height:1rem;
-              font-size:0.3rem;
+              height: 1rem;
               display: flex;
               .left {
                 flex: 4;
-                color:#999999;
+                color: #999999;
                 padding: 0.1rem 0.3rem;
+                div {
+                  white-space: normal;
+                  word-break: break-all;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                }
               }
               .right {
                 flex: 3;
-                color:#333333;
+                color: #333333;
                 padding: 0.1rem 0.3rem;
                 border-left: 1px solid #cacaca;
+                div {
+                  white-space: normal;
+                  word-break: break-all;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+                }
               }
             }
           }
         }
       }
+    }
+    > li:first-of-type {
+      margin-top: 0;
     }
   }
 }

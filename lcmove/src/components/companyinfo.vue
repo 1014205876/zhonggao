@@ -19,6 +19,9 @@
         <li>
           <span>贷款期限 ：</span>张三
         </li>
+        <li>
+          <span>预约时间 ：</span>张三
+        </li>
       </ul>
     </div>
 </template>

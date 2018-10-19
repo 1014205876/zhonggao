@@ -1,6 +1,30 @@
 <template>
   <div class="approval">
-    <companyinfo></companyinfo>
+    <div class="companyinfo">
+      <div class="top" v-on:click='toreport'>
+        <div class="name">{{companyinfo.entName}}</div>
+        <div class="seereport">
+          查看报告<img src="static/img/icon/right_gray.png" alt="">
+        </div>
+      </div>
+      <ul class='data' v-on:click='toenterpriseinfo'>
+        <li>
+          <span>企业法人 ：</span>{{companyinfo.legalRep}} {{companyinfo.legalName}}
+        </li>
+        <li>
+          <span>任务编号 ：</span>{{companyinfo.projectNumber}}
+        </li>
+        <li>
+          <span>贷款金额 ：</span>{{companyinfo.amount}}万元
+        </li>
+        <li>
+          <span>贷款期限 ：</span>{{companyinfo.term}}个月
+        </li>
+        <li>
+          <span>预约时间 ：</span>{{companyinfo.appointTime}}
+        </li>
+      </ul>
+    </div>
     <div class="shenpi" v-on:click='toapprovalRecord'>
       <div class="left">
         <img src="static/img/icon/task_gray.png" alt="">审批记录
@@ -20,9 +44,15 @@
           <radiocom v-if='list.type=="radio"' v-bind:list='list'></radiocom>
           <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
         </li>
-        <li class='remarks'>
-          <div class="name">备注</div>
-          <textarea rows="3" placeholder='请输入备注' v-model='form.remarks'></textarea>
+        <li v-for='list in data.jsonObject.fields' :key='list.id'>
+          <inputcom v-if='list.type=="input"' v-bind:list='list'></inputcom>
+          <selectcom v-if='list.type=="select"' v-bind:list='list'></selectcom>
+          <radiocom v-if='list.type=="radio-buttons"' v-bind:list='list'></radiocom>
+          <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
+          <div class="remarks" v-if='list.type=="multi-line-text"'>
+            <div class="name">{{list.name}}</div>
+            <textarea rows="3" :placeholder='list.placeholder' v-model='form.remarks'></textarea>
+          </div>
         </li>
       </ul>
       <div class="submit">
@@ -51,6 +81,7 @@ export default {
   name: "Risk",
   data() {
     return {
+      processInsId: "",
       form: [
         {
           fieldType: "FormField00",
@@ -201,7 +232,106 @@ export default {
           readOnly: false,
           required: true
         }
-      ]
+      ],
+      data: {
+        jsonObject: {
+          outcomes: [],
+          name: "征信拆解",
+          fields: [
+            {
+              readOnly: false,
+              type: "radio-buttons",
+              required: true,
+              layout: null,
+              optionType: null,
+              hasEmptyValue: null,
+              name: "是否允许准入",
+              overrideId: true,
+              options: [
+                {
+                  name: "禁入",
+                  type: "allowOrNot",
+                  value: "reject"
+                },
+                {
+                  name: "准入",
+                  type: "allowOrNot",
+                  value: "pass"
+                }
+              ],
+              id: "allowOrNot",
+              placeholder: null,
+              optionsExpression: "${allowOrNot}",
+              fieldType: "OptionFormField",
+              value: null
+            },
+            {
+              layout: null,
+              name: "备注",
+              overrideId: true,
+              readOnly: false,
+              id: "approveRemark",
+              placeholder: "没有则不填",
+              type: "multi-line-text",
+              fieldType: "FormField",
+              value: null,
+              required: false
+            }
+          ],
+          version: 0,
+          key: "creditForm"
+        },
+        claim: true
+      },
+      companyinfo: {
+        legalPhone: "13697919058",
+        legalRep: "李新宇",
+        legalName: "李新宇",
+        legalCardNo: "360103199408051774",
+        legalSex: "男",
+        legalBirth: "1994/8/5",
+        legalAddress: "江西省南昌市西湖区",
+        projectNumber: "229919636794249216",
+        province: "江西省",
+        productName: "征信贷",
+        productId: "267c12f4-cc00-4f7d-a633-0b980f5fa253",
+        infoAuthNum: "20180927000113",
+        controllerIdCode: "360103199408051774",
+        entName: "江西省新新美容咨询服务有限公司1",
+        city: "南昌市",
+        creditTaskId: "1043456",
+        productName: "征信贷",
+        authUrl:
+          "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/c7481486-4040-4090-bcd5-96e8f6e2cd50.jpg",
+        controllerCreditUrls:
+          "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/个人征信9a559c57-53fc-438e-9f5d-3d267d210739.zip",
+        corporateCreditUrls:
+          "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/企业征信387c2fb8-7fe9-426e-a70a-91e3cac2c95c.zip",
+        creditCode: "911401057480908051",
+        replyMethod: "按月付息，到期还本",
+        controllerName: "李新宇",
+        regCap: "贰仟万圆整",
+        term: "2",
+        busScope:
+          "消防设施工程、建筑智险化工程、机电设备安装工程的设计、施工及技术咨询;电子产品的开发、销售:酒防设施、设备的维护、保养、检料;消防设施维修:消防设备、安防设备、制冷设备,空调通风设备,电控设备、防火门.店火春饰门、店火饰料、装饰材料、电线电缆、五金交电的销售。(依法须批准的项目,经相关部门批准后方可开展经营活动)",
+        area: "红谷新区",
+        amount: "12",
+        address: "江西省南昌市红谷新区世贸路333号星大厦楼",
+        appointTime: "2018-09-29 14:00:00",
+        assignee: "riskAssistant",
+        controllerPhone: "13697919058",
+        ddTask: "ufinish",
+        bodyUrl:
+          "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/15dea291-7656-4abd-9cb1-5f005c1a8f0d.jpg",
+        busUrl:
+          "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/8c55f4ea-9778-4df2-8b16-4337f5b448fc.jpg",
+        legalNation: "汉",
+        controllerUrl:
+          "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/0ef685a3-e90b-46d5-9f94-24a9a696a1f2.jpg",
+
+        register: "unfinish",
+        status: "未完成"
+      }
     };
   },
   components: {
@@ -212,7 +342,38 @@ export default {
     radiocom,
     checkcom
   },
+  created() {
+    let that = this;
+    console.log("createdstart");
+    that.processInsId = that.$route.query.processInsId;
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url: "api/v1/flow/process/" + that.processInsId + "/variables"
+      })
+      .then(function(res) {
+        that.companyinfo = res.data.data;
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    console.log("createdend");
+  },
   methods: {
+    toreport() {
+      this.$router.push("/report");
+    },
+    toenterpriseinfo() {
+      let that=this;
+      that.$router.push({
+        path: "/enterpriseinfo",
+        query: {
+          processInsId: that.processInsId
+        }
+      });
+    },
     toapprovalRecord() {
       this.$router.push("/approvalRecord");
     },
@@ -224,10 +385,10 @@ export default {
       } else {
         that.$refs.alert1.alertshow();
       }
-      if(pass){
-        console.log('通过')
-      }else{
-        console.log('不通过')
+      if (pass) {
+        console.log("通过");
+      } else {
+        console.log("不通过");
       }
       console.log(this.form);
     },
@@ -274,6 +435,49 @@ export default {
 
 <style lang="less" scoped>
 .approval {
+  .companyinfo {
+    background: #fff;
+    .top {
+      padding: 0 0.4rem;
+      height: 1.2rem;
+      line-height: 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      .name {
+        width: 5rem;
+        font-size: 0.36rem;
+        color: #333333;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+      .seereport {
+        display: flex;
+        align-items: center;
+        color: #999999;
+        font-size: 0.28rem;
+        img {
+          width: 10px;
+          height: 16px;
+          margin-left: 0.2rem;
+        }
+      }
+    }
+    .data {
+      border-top: 1px solid #cacaca;
+      padding: 0.2rem 0.4rem;
+      li {
+        line-height: 0.56rem;
+        color: #000000;
+        font-size: 0.3rem;
+        span {
+          color: #999999;
+        }
+      }
+    }
+  }
   .shenpi {
     margin-top: 0.3rem;
     line-height: 1.2rem;
@@ -311,7 +515,7 @@ export default {
         padding-right: 0.3rem;
       }
       > li.no {
-        background: red;
+        background: #ffe0da;
       }
       .remarks {
         textarea {
@@ -350,8 +554,8 @@ export default {
       .btn {
         width: 2.6rem;
         height: 38px;
-        line-height:38px;
-        text-align:center;
+        line-height: 38px;
+        text-align: center;
         border: 1px solid #3674b2;
         border-radius: 0.8rem;
         font-size: 18px;

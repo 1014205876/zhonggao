@@ -13,12 +13,12 @@
       </li>
       <li v-for='list in history' :key='list.id' v-on:click='totask'>
         <div class="left">
-          <div class="name">江西省南昌市进贤县111号</div>
+          <div class="name">{{list.entName}}</div>
           <div class="num">任务编号:6543213546132</div>
         </div>
         <div class="right">
-          <div class="time">2018-10-16</div>
-          <div class="pass">审批通过</div>
+          <div class="time">{{list.creatTime}}</div>
+          <div class="pass">{{list.actName}}</div>
         </div>
       </li>
     </ul>
@@ -40,8 +40,39 @@ export default {
   name: "History",
   data() {
     return {
-      no:{},
-      history: ["历史记录","历史记录","历史记录","历史记录","历史记录","历史记录","历史记录","历史记录", "历史记录"],
+      no: false,
+      history: [
+        {
+          actName: "状态",
+          entName: "企业/用户",
+          creatTime: "接收时间",
+          endTime: "已办时间"
+        },
+        {
+          actName: "状态",
+          entName: "企业/用户",
+          creatTime: "接收时间",
+          endTime: "已办时间"
+        },
+        {
+          actName: "状态",
+          entName: "企业/用户",
+          creatTime: "接收时间",
+          endTime: "已办时间"
+        },
+        {
+          actName: "状态",
+          entName: "企业/用户",
+          creatTime: "接收时间",
+          endTime: "已办时间"
+        },
+        {
+          actName: "状态",
+          entName: "企业/用户",
+          creatTime: "接收时间",
+          endTime: "已办时间"
+        }
+      ],
       loading: false,
       switch: true
     };
@@ -49,11 +80,74 @@ export default {
   methods: {
     totask() {
       this.$router.push("/taskdetail");
-    },
+    }
+  },
+  created() {
+    let that = this;
+    console.log("createdstart");
+    that.processInsId = that.$route.query.processInsId;
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url:
+          "api/v1/flow/historic-task?pageSize=" +
+          10 +
+          "&pageNo=" +
+          2 +
+          "&etpName=" +
+          1 +
+          "&createStartDate=" +
+          1 +
+          "&createEndDate=" +
+          1 +
+          "&productName=" +
+          1 +
+          "ZXD"
+      })
+      .then(function(res) {
+        // that.companyinfo = res.data.data;
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    console.log("createdend");
   },
   mounted() {
     let that = this;
-    let newArr = ["历史记录", "历史记录", "历史记录", "历史记录", "历史记录"];
+    let newArr = [
+      {
+        actName: "状态",
+        entName: "企业/用户",
+        creatTime: "接收时间",
+        endTime: "已办时间"
+      },
+      {
+        actName: "状态",
+        entName: "企业/用户",
+        creatTime: "接收时间",
+        endTime: "已办时间"
+      },
+      {
+        actName: "状态",
+        entName: "企业/用户",
+        creatTime: "接收时间",
+        endTime: "已办时间"
+      },
+      {
+        actName: "状态",
+        entName: "企业/用户",
+        creatTime: "接收时间",
+        endTime: "已办时间"
+      },
+      {
+        actName: "状态",
+        entName: "企业/用户",
+        creatTime: "接收时间",
+        endTime: "已办时间"
+      }
+    ];
     $(document).on("scroll", function() {
       console.log("滚动");
       console.log($(document).scrollTop());
@@ -96,19 +190,19 @@ export default {
       .left {
         width: 3.6rem;
         .name {
-          line-height:0.5rem;
-          font-size:0.36rem;
-          color:#333333;
+          line-height: 0.5rem;
+          font-size: 0.36rem;
+          color: #333333;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
           -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
         }
-        .num{
-          line-height:0.5rem;
-          font-size:0.28rem;
-          color:#999999;
+        .num {
+          line-height: 0.5rem;
+          font-size: 0.28rem;
+          color: #999999;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
@@ -116,20 +210,20 @@ export default {
           -webkit-box-orient: vertical;
         }
       }
-      .right{
-        text-align:right;
-        .time{
-          line-height:0.5rem;
-          font-size:0.28rem;
-          color:#C6C6C6;
+      .right {
+        text-align: right;
+        .time {
+          line-height: 0.5rem;
+          font-size: 0.28rem;
+          color: #c6c6c6;
         }
-        .pass{
-          line-height:0.5rem;
-          font-size:0.3rem;
-          color:#333333;
+        .pass {
+          line-height: 0.5rem;
+          font-size: 0.3rem;
+          color: #333333;
         }
-        .pass.no{
-          color:#F35535;
+        .pass.no {
+          color: #f35535;
         }
       }
     }
@@ -138,26 +232,26 @@ export default {
     }
   }
 
-  .notask{
-    padding-top:3rem;
-    text-align:center;
-    color:#999999;
-    font-size:0.28rem;
-    img{
-      display:block;
-      width:1.52rem;
-      height:1.72rem;
-      margin:0 auto 0.4rem;
+  .notask {
+    padding-top: 3rem;
+    text-align: center;
+    color: #999999;
+    font-size: 0.28rem;
+    img {
+      display: block;
+      width: 1.52rem;
+      height: 1.72rem;
+      margin: 0 auto 0.4rem;
     }
   }
 
   .loading {
     position: absolute;
     bottom: 0;
-    width:100%;
+    width: 100%;
     height: 1.6rem;
-    font-size:0.28rem;
-    color:#999999;
+    font-size: 0.28rem;
+    color: #999999;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,7 +259,7 @@ export default {
     img {
       width: 0.4rem;
       height: 0.4rem;
-      margin-right:0.2rem;
+      margin-right: 0.2rem;
       animation-name: myfirst;
       animation-duration: 2s;
       animation-timing-function: linear;

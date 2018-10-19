@@ -31,7 +31,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     .name {
-      width: 5rem;
+      width: 3.8rem;
       line-height: 0.4rem;
     }
     // .right {
@@ -45,7 +45,7 @@ export default {
     //   }
     // }
     input {
-      width: 1.8rem;
+      width: 3rem;
       font-size: 0.3rem;
     }
     input:-ms-input-placeholder {
