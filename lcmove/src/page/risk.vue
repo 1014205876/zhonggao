@@ -33,25 +33,25 @@
     </div>
     <div class="shenpi">
       <div class="left">
-        <img src="static/img/icon/task_gray.png" alt="">风控审批
+        <img src="static/img/icon/task_gray.png" alt="">{{data.jsonObject.name}}
       </div>
     </div>
     <form>
       <ul class="form">
-        <li v-for='list in form' :key='list.id'>
+        <!-- <li v-for='list in form' :key='list.id'>
           <inputcom v-if='list.type=="input"' v-bind:list='list'></inputcom>
           <selectcom v-if='list.type=="select"' v-bind:list='list'></selectcom>
           <radiocom v-if='list.type=="radio"' v-bind:list='list'></radiocom>
           <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
-        </li>
+        </li> -->
         <li v-for='list in data.jsonObject.fields' :key='list.id'>
-          <inputcom v-if='list.type=="input"' v-bind:list='list'></inputcom>
-          <selectcom v-if='list.type=="select"' v-bind:list='list'></selectcom>
-          <radiocom v-if='list.type=="radio-buttons"' v-bind:list='list'></radiocom>
+          <inputcom v-if='list.type=="text"' v-bind:list='list'></inputcom>
+          <!-- <selectcom v-if='list.type=="dropdown"||list.type=="radio-buttons"' v-bind:list='list'></selectcom> -->
+          <radiocom v-if='list.type=="dropdown"||list.type=="radio-buttons"' v-bind:list='list'></radiocom>
           <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
           <div class="remarks" v-if='list.type=="multi-line-text"'>
             <div class="name">{{list.name}}</div>
-            <textarea rows="3" :placeholder='list.placeholder' v-model='form.remarks'></textarea>
+            <textarea rows="3" :placeholder='list.placeholder' v-model='list.value'></textarea>
           </div>
         </li>
       </ul>
@@ -82,162 +82,89 @@ export default {
   data() {
     return {
       processInsId: "",
-      form: [
-        {
-          fieldType: "FormField00",
-          name: "表单名字00",
-          type: "input",
-          value: "",
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField01",
-          name: "表单名字01",
-          type: "input",
-          value: "",
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField02",
-          name: "表单名字02",
-          type: "input",
-          value: "",
-          readOnly: false,
-          required: true
-        },
-        // {
-        //   fieldType: "FormField03",
-        //   name: "表单名字03",
-        //   type: "select",
-        //   option: ["选项1", "选项2", "选项3"],
-        //   optionValue: "",
-        //   readOnly: false,
-        //   required: true
-        // },
-        // {
-        //   fieldType: "FormField04",
-        //   name: "表单名字04",
-        //   type: "select",
-        //   option: ["选项1", "选项2", "选项3"],
-        //   optionValue: "",
-        //   readOnly: false,
-        //   required: true
-        // },
-        // {
-        //   fieldType: "FormField05",
-        //   name: "表单名字05",
-        //   type: "select",
-        //   option: [
-        //     "选项1",
-        //     "选项2",
-        //     "选项3",
-        //     "选项4",
-        //     "选项5",
-        //     "选项6",
-        //     "选项7",
-        //     "选项8",
-        //     "选项9",
-        //     "选项10",
-        //     "选项11",
-        //     "选项12",
-        //     "选项13"
-        //   ],
-        //   optionValue: "",
-        //   readOnly: false,
-        //   required: true
-        // },
-        {
-          fieldType: "FormField06",
-          name: "表单名字06",
-          type: "check",
-          check: ["选项1", "选项2", "选项3"],
-          checkValue: [],
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField07",
-          name: "表单名字07",
-          type: "check",
-          check: ["选项1", "选项2", "选项3", "选项4", "选项5"],
-          checkValue: [],
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField08",
-          name: "表单名字08表单名字08表单名字08表单名字08表单名字08表单名字08",
-          type: "check",
-          check: [
-            "选项1",
-            "选项2",
-            "选项3",
-            "选项4",
-            "选项5",
-            "选项6",
-            "选项7",
-            "选项8",
-            "选项9",
-            "选项10"
-          ],
-          checkValue: [],
-          another: true,
-          anotherValue: "",
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField09",
-          name: "表单名字09",
-          type: "radio",
-          radio: ["选项1", "选项2", "选项3"],
-          radioValue: "",
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField10",
-          name: "表单名字10",
-          type: "radio",
-          radio: [
-            "选项1选项1选项1选项1选项1选项1",
-            "选项2",
-            "选项3",
-            "选项4",
-            "选项5"
-          ],
-          radioValue: "",
-          readOnly: false,
-          required: true
-        },
-        {
-          fieldType: "FormField11",
-          name: "表单名字11",
-          type: "radio",
-          radio: [
-            "选项1",
-            "选项2",
-            "选项3",
-            "选项4",
-            "选项5",
-            "选项6",
-            "选项7",
-            "选项8",
-            "选项9",
-            "选项10"
-          ],
-          radioValue: "",
-          readOnly: false,
-          required: true
-        }
-      ],
+      pass: false,
       data: {
         jsonObject: {
           outcomes: [],
-          name: "征信拆解",
+          name: "综合审批",
           fields: [
+            {
+              layout: null,
+              name: "综合审查结论",
+              overrideId: true,
+              readOnly: false,
+              id: "syntheticalapproveconclusion",
+              placeholder: null,
+              type: "text",
+              fieldType: "FormField",
+              value: null,
+              required: true
+            },
+            {
+              readOnly: false,
+              type: "dropdown",
+              required: true,
+              layout: null,
+              optionType: null,
+              hasEmptyValue: true,
+              name: "客户评级",
+              overrideId: true,
+              options: [
+                {
+                  name: "一级",
+                  type: "clientRating",
+                  value: "firstRank"
+                },
+                {
+                  name: "二级",
+                  type: "clientRating",
+                  value: "secondRank"
+                },
+                {
+                  name: "三级",
+                  type: "clientRating",
+                  value: "thirdRank"
+                },
+                {
+                  name: "四级",
+                  type: "clientRating",
+                  value: "forthRank"
+                },
+                {
+                  name: "五级",
+                  type: "clientRating",
+                  value: "fifthRank"
+                }
+              ],
+              id: "ratingResult",
+              placeholder: null,
+              optionsExpression: "${clientRating}",
+              fieldType: "OptionFormField",
+              value: null
+            },
+            {
+              fieldType: "FormField08",
+              name:
+                "表单名字08表单名字08表单名字08表单名字08表单名字08表单名字08",
+              type: "check",
+              options: [
+                "选项1",
+                "选项2",
+                "选项3",
+                "选项4",
+                "选项5",
+                "选项6",
+                "选项7",
+                "选项8",
+                "选项9",
+                "选项10"
+              ],
+              value: [],
+              another: true,
+              anotherValue: "",
+              readOnly: false,
+              required: true
+            },
             {
               readOnly: false,
               type: "radio-buttons",
@@ -245,23 +172,28 @@ export default {
               layout: null,
               optionType: null,
               hasEmptyValue: null,
-              name: "是否允许准入",
+              name: "审批结果",
               overrideId: true,
               options: [
                 {
-                  name: "禁入",
-                  type: "allowOrNot",
-                  value: "reject"
+                  name: "通过",
+                  type: "loanApproveProposal",
+                  value: "getThrough"
                 },
                 {
-                  name: "准入",
-                  type: "allowOrNot",
-                  value: "pass"
+                  name: "不通过",
+                  type: "loanApproveProposal",
+                  value: "notPass"
+                },
+                {
+                  name: "通过，变更贷款建议",
+                  type: "loanApproveProposal",
+                  value: "passWithChange"
                 }
               ],
-              id: "allowOrNot",
+              id: "syntheticalPassOrNot",
               placeholder: null,
-              optionsExpression: "${allowOrNot}",
+              optionsExpression: "${loanApproveProposal}",
               fieldType: "OptionFormField",
               value: null
             },
@@ -271,15 +203,15 @@ export default {
               overrideId: true,
               readOnly: false,
               id: "approveRemark",
-              placeholder: "没有则不填",
+              placeholder: null,
               type: "multi-line-text",
               fieldType: "FormField",
-              value: null,
+              value: "",
               required: false
             }
           ],
           version: 0,
-          key: "creditForm"
+          key: "syntheticalApprove"
         },
         claim: true
       },
@@ -359,6 +291,20 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url: "api/v1/flow/task/"+1073023+"/variables"
+      })
+      .then(function(res) {
+        that.data = res.data.data;
+        document.getElementById("titleId").innerHTML = that.data.jsonObject.name;
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
     console.log("createdend");
   },
   methods: {
@@ -366,7 +312,7 @@ export default {
       this.$router.push("/report");
     },
     toenterpriseinfo() {
-      let that=this;
+      let that = this;
       that.$router.push({
         path: "/enterpriseinfo",
         query: {
@@ -379,29 +325,24 @@ export default {
     },
     submit(pass) {
       let that = this;
+      that.pass = pass;
       this.forEach(that);
       if (that.over) {
         that.$refs.alert2.alertshow();
       } else {
         that.$refs.alert1.alertshow();
       }
-      if (pass) {
-        console.log("通过");
-      } else {
-        console.log("不通过");
-      }
-      console.log(this.form);
     },
     forEach(that) {
       that.over = false;
-      for (let i = 0; i < that.form.length; i++) {
-        if (that.form[i].required) {
+      for (let i = 0; i < that.data.jsonObject.fields.length; i++) {
+        if (that.data.jsonObject.fields[i].required) {
           if (
-            that.form[i].value ||
-            that.form[i].optionValue ||
-            that.form[i].radioValue ||
-            ((that.form[i].checkValue && that.form[i].checkValue.length > 0) ||
-              that.form[i].anotherValue)
+            that.data.jsonObject.fields[i].value
+            // that.form[i].optionValue ||
+            // that.form[i].radioValue ||
+            // ((that.form[i].checkValue && that.form[i].checkValue.length > 0) ||
+            // that.form[i].anotherValue)
           ) {
             $(".approval .form>li")
               .eq(i)
@@ -423,8 +364,21 @@ export default {
         console.log(`不提交`);
       }
       if (choice.data == "right") {
-        console.log(`提交`);
-        console.log(that.form);
+        console.log(that.pass);
+        that
+          .$http({
+            method: "get",
+            header: "Content-Type:application/json",
+            url: "api/v1/flow/historic-task/" + ":taskId"
+          })
+          .then(function(res) {
+            console.log(res);
+            console.log("提交成功");
+          })
+          .catch(function(err) {
+            console.log(err);
+            console.log("提交失败");
+          });
       }
       that.$refs.alert1.alertclose();
       that.$refs.alert2.alertclose();

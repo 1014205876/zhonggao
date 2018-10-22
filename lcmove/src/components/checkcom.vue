@@ -20,7 +20,7 @@
           <li v-for='item in list.check' :key='item.id'>
             <label>
               {{item}}
-              <input :name='list.fieldType' type='checkbox' v-model='list.checkValue' :value='item' :disabled='list.readOnly'>
+              <input :name='list.fieldType' type='checkbox' v-model='list.value' :value='item' :disabled='list.readOnly'>
               <!-- <div class="after"></div> -->
             </label>
           </li>
@@ -55,8 +55,8 @@ export default {
   watch: {
     list: {
       handler(val, oldVal) {
-        this.num = val.checkValue.length;
-        if (val.checkValue.length == val.check.length) {
+        this.num = val.options.length;
+        if (val.value.length == val.options.length) {
           this.all = true;
         } else {
           this.all = false;
@@ -68,7 +68,7 @@ export default {
   methods: {
     allchange() {
       if (this.all) {
-        this.list.checkValue = this.list.check;
+        this.list.value = this.list.check;
       } else {
         this.list.checkValue = [];
       }

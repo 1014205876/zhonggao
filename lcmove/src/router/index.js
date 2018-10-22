@@ -14,13 +14,13 @@ const history = resolve => require(['@/page/history'], resolve);//历史记录
 const taskdetail = resolve => require(['@/page/taskdetail'], resolve);//任务详情
 const enterpriseinfo = resolve => require(['@/page/enterpriseinfo'], resolve);//企业详情
 // 审批页面approval文件夹
-const appointment = resolve => require(['@/page/approval/appointment'], resolve);//预约确认
+// const appointment = resolve => require(['@/page/approval/appointment'], resolve);//预约确认
 const risk = resolve => require(['@/page/risk'], resolve);//风控审批
-const comprehensive = resolve => require(['@/page/approval/comprehensive'], resolve);//综合审批
-const riskdirector = resolve => require(['@/page/approval/riskdirector'], resolve);//风控总监审批
-const regulations = resolve => require(['@/page/approval/regulations'], resolve);//合规审查
-const vicemanager = resolve => require(['@/page/approval/vicemanager'], resolve);//副总经理审批
-const manager = resolve => require(['@/page/approval/manager'], resolve);//总经理审批
+// const comprehensive = resolve => require(['@/page/approval/comprehensive'], resolve);//综合审批
+// const riskdirector = resolve => require(['@/page/approval/riskdirector'], resolve);//风控总监审批
+// const regulations = resolve => require(['@/page/approval/regulations'], resolve);//合规审查
+// const vicemanager = resolve => require(['@/page/approval/vicemanager'], resolve);//副总经理审批
+// const manager = resolve => require(['@/page/approval/manager'], resolve);//总经理审批
 
 const approvalRecord = resolve => require(['@/page/approvalRecord'], resolve);//审批记录
 // 三大报告页面report文件夹
@@ -72,74 +72,20 @@ export default new Router({
       },
     },
     {
-      path: '/enterpriseinfo',
-      component: enterpriseinfo,
-      meta: {
-        index: 5,
-        title: '企业详情',
-        auth: true
-      },
-    },
-    {
-      path: '/appointment',
-      component: appointment,
-      meta: {
-        index: 6,
-        title: '预约确认',
-        auth: true
-      },
-    },
-    {
       path: '/risk',
       component: risk,
       meta: {
         index: 7,
-        title: '风控审批',
+        title: '审批',
         auth: true
       },
     },
     {
-      path: '/comprehensive',
-      component: comprehensive,
+      path: '/enterpriseinfo',
+      component: enterpriseinfo,
       meta: {
-        index: 8,
-        title: '综合审批',
-        auth: true
-      },
-    },
-    {
-      path: '/riskdirector',
-      component: riskdirector,
-      meta: {
-        index: 9,
-        title: '风控总监审批',
-        auth: true
-      },
-    },
-    {
-      path: '/regulations',
-      component: regulations,
-      meta: {
-        index: 10,
-        title: '合规审批',
-        auth: true
-      },
-    },
-    {
-      path: '/vicemanager',
-      component: vicemanager,
-      meta: {
-        index: 11,
-        title: '副总经理审批',
-        auth: true
-      },
-    },
-    {
-      path: '/manager',
-      component: manager,
-      meta: {
-        index: 12,
-        title: '总经理审批',
+        index: 6,
+        title: '企业详情',
         auth: true
       },
     },
@@ -147,7 +93,7 @@ export default new Router({
       path: '/approvalRecord',
       component: approvalRecord,
       meta: {
-        index: 13,
+        index: 7,
         title: '审批记录',
         auth: true
       },
@@ -156,8 +102,8 @@ export default new Router({
       path: '/report',
       component: report,
       meta: {
-        index: 14,
-        title: '三大报告',
+        index: 8,
+        title: '报告',
         auth: true
       },
     },

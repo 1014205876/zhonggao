@@ -308,7 +308,6 @@ export default {
       ]
     };
   },
-
   computed: {
     movesumOrder: function() {
       return this.sumOrder.toFixed(2);
@@ -322,17 +321,26 @@ export default {
   },
   watch: {
     echart1: function(newValue) {
-      TweenLite.to(this.$data, 0.5, { sumOrder: newValue.sumOrder });
+      let that=this;
+      let time=setTimeout(function() {
+        TweenLite.to(that.$data, 0.5, { sumOrder: newValue.sumOrder });
+      }, 500);
     },
     echart2: function(newValue) {
-      TweenLite.to(this.$data, 0.5, {
-        sumApplyAmount: newValue.sumApplyAmount
-      });
+      let that=this;
+      let time=setTimeout(function() {
+        TweenLite.to(that.$data, 0.5, {
+          sumApplyAmount: newValue.sumApplyAmount
+        });
+      }, 500);
     },
     echart3: function(newValue) {
-      TweenLite.to(this.$data, 0.5, {
-        sumConsumeAmount: newValue.sumConsumeAmount
-      });
+      let that=this;
+      let time=setTimeout(function() {
+        TweenLite.to(that.$data, 0.5, {
+          sumConsumeAmount: newValue.sumConsumeAmount
+        });
+      }, 500);
     }
   },
   components: {

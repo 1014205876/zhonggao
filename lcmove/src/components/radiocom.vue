@@ -2,7 +2,7 @@
   <div class="check" v-on:click='alertshow'>
     <div class="name">{{list.name}}</div>
     <div class="label">
-      <div class="data" v-if='list.radioValue'>{{list.radioValue}}</div>
+      <div class="data" v-if='list.value'>{{list.value}}</div>
       <img src="static/img/icon/right_gray.png" alt="" class="right">
     </div>
     <div class="mengban" v-bind:class='{show:show}' v-on:click.stop.self='alertclose'>
@@ -17,10 +17,10 @@
           {{list.name}}
         </div> -->
         <ul class="bottom">
-          <li v-for='item in list.radio' :key='item.id'>
+          <li v-for='item in list.options' :key='item.id'>
             <label>
-              <span>{{item}}</span>
-              <input :name='list.fieldType' type='radio' v-model='list.radioValue' :value='item' :disabled='list.readOnly' @change='alertclose'>
+              <span>{{item.name}}</span>
+              <input :name='list.fieldType' type='radio' v-model='list.value' :value='item.name' :disabled='list.readOnly' @change='alertclose'>
               <!-- <div class="after"></div> -->
             </label>
           </li>

@@ -1,32 +1,24 @@
 <template>
   <div class="approvalRecord">
     <ul class='list'>
-      <li v-for='list in data' v-bind:key='list.id'>
+      <li v-for='list in data' v-bind:key='list.id' v-if='list.name'>
         <div class="top">
           <div class="name">
-            <img src="static/img/icon/task_blue.png" alt="">风控审批
+            <img src="static/img/icon/task_blue.png" alt="">{{list.name}}
           </div>
           <div class="time">
-            <span>2018-10-06</span>
+            <span>无时间</span>
           </div>
         </div>
         <ul class="bottom">
-          <li>
-            <span>征信是否符合要求</span>
-            <span class='data'>符合</span>
+          <li v-for="item in list.fields" :key='item.id' v-if='item.value&&item.name' :class='{remark:item.type=="multi-line-text"}'>
+            <span>{{item.name}}</span>
+            <span class='data'>{{item.value}}</span>
           </li>
-          <li>
-            <span>征信是否符合要求</span>
-            <span class='data no'>不符合</span>
-          </li>
-          <li>
-            <span>征信是否符合要求</span>
-            <span class='data'>符合</span>
-          </li>
-          <li>
+          <!-- <li>
             <span>备注</span>
           </li>
-          <div class="remark">备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注</div>
+          <div class="remark">备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注备注</div> -->
         </ul>
       </li>
     </ul>
@@ -38,11 +30,67 @@ export default {
   name: "approvalRecord",
   data() {
     return {
-      
-      data: 5
+      data: [
+        {
+          fields: [
+            {
+              fieldType: "OptionFormField",
+              hasEmptyValue: null,
+              id: "creditConformRequest",
+              layout: null,
+              name: "客户征信是否符合产品准入要求",
+              optionType: null,
+              options: [],
+              optionsExpression: "${conformity}",
+              overrideId: true,
+              placeholder: null,
+              readOnly: false,
+              required: true,
+              type: "radio-buttons",
+              value: "符合"
+            },
+            {
+              fieldType: "FormField",
+              id: "approveRemark",
+              layout: null,
+              name: "备注",
+              overrideId: true,
+              placeholder: null,
+              readOnly: false,
+              required: false,
+              type: "multi-line-text",
+              value: "132132333333333333333333333333333333333333333333333333333333333333333"
+            }
+          ],
+
+          key: "riskApprove",
+          name: "准入审核",
+          outcomes: [],
+          version: 0
+        }
+      ]
     };
   },
-  methods: {}
+  methods: {},
+  created() {
+    let that = this;
+    console.log("createdstart");
+    //获取审批记录
+    that
+      .$http({
+        method: "get",
+        header: "Content-Type:application/json",
+        url: "api/v1/flow/historic-task/" + "1073023"
+      })
+      .then(function(res) {
+        that.data = res.data.data;
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    console.log("createdend");
+  }
 };
 </script>
 
@@ -91,8 +139,14 @@ export default {
             color: #f35535;
           }
         }
-        .remark {
-          line-height: 0.5rem;
+        > li.remark {
+          display:block;
+          span{
+            display:block;
+            line-height:0.5rem;
+                  white-space: normal;
+                  word-break: break-all;
+          }
         }
       }
     }

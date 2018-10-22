@@ -20,7 +20,7 @@
         </li>
         <li>
           <span>注册时间:</span>
-          <span class='data'>无数据</span>
+          <span class='data'></span>
         </li>
       </ul>
     </div>
@@ -34,7 +34,7 @@
           </li>
           <li>
             <span>公司类型</span>
-            <span class="data">无数据</span>
+            <span class="data"></span>
           </li>
           <li>
             <span>注册资本</span>
