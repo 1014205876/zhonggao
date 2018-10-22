@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="bgimg" style='background-image:url(static/img/bgimg_index.jpg)'></div>
-    <div class='tanimate' @touchmove='touchmovet' @touchend='touchendt'>
+    <div class='tanimate' @touchstart='touchstartt' @touchmove='touchmovet' @touchend='touchendt'>
       <ul class="task">
         <li>
           <span>当前任务</span>
@@ -45,7 +45,7 @@
           </div>
         </li>
       </ul>
-      <div class="start" @touchstart='touchstartt'>
+      <div class="start">
         查看待审批任务
         <img src="static/img/icon/up.png" alt="">
       </div>
@@ -321,26 +321,26 @@ export default {
   },
   watch: {
     echart1: function(newValue) {
-      let that=this;
-      let time=setTimeout(function() {
+      let that = this;
+      let time = setTimeout(function() {
         TweenLite.to(that.$data, 0.5, { sumOrder: newValue.sumOrder });
-      }, 500);
+      }, 1000);
     },
     echart2: function(newValue) {
-      let that=this;
-      let time=setTimeout(function() {
+      let that = this;
+      let time = setTimeout(function() {
         TweenLite.to(that.$data, 0.5, {
           sumApplyAmount: newValue.sumApplyAmount
         });
-      }, 500);
+      }, 900);
     },
     echart3: function(newValue) {
-      let that=this;
-      let time=setTimeout(function() {
+      let that = this;
+      let time = setTimeout(function() {
         TweenLite.to(that.$data, 0.5, {
           sumConsumeAmount: newValue.sumConsumeAmount
         });
-      }, 500);
+      }, 800);
     }
   },
   components: {
@@ -357,46 +357,48 @@ export default {
       let that = this;
       if (that.canmove) {
         that.moveY = e.targetTouches[0].pageY;
-        $(".index .head .left").css({
-          transform:
-            "translateX(" +
-            (($(window).height() + that.moveY - that.startY) * -100) /
-              $(window).height() +
-            "%)",
-          transition: "none"
-        });
-        $(".index .head .right").css({
-          transform:
-            "translateX(" +
-            (($(window).height() + that.moveY - that.startY) * 100) /
-              $(window).height() +
-            "%)",
-          transition: "none"
-        });
-        $(".index .banimate").css({
-          transform:
-            "translateY(" +
-            (($(window).height() + that.moveY - that.startY) * 100) /
-              $(window).height() +
-            "%)",
-          transition: "none"
-        });
-        $(".index .tanimate").css({
-          transform:
-            "translateY(" +
-            ((that.moveY - that.startY) * 30) / $(window).height() +
-            "%)",
-          opacity:
-            (($(window).height() + that.moveY - that.startY) /
-              $(window).height()) *
-            0.7,
-          transition: "none"
-        });
+        if (that.moveY < that.startY) {
+          $(".index .head .left").css({
+            transform:
+              "translateX(" +
+              (($(window).height() + that.moveY - that.startY) * -100) /
+                $(window).height() +
+              "%)",
+            transition: "none"
+          });
+          $(".index .head .right").css({
+            transform:
+              "translateX(" +
+              (($(window).height() + that.moveY - that.startY) * 100) /
+                $(window).height() +
+              "%)",
+            transition: "none"
+          });
+          $(".index .banimate").css({
+            transform:
+              "translateY(" +
+              (($(window).height() + that.moveY - that.startY) * 100) /
+                $(window).height() +
+              "%)",
+            transition: "none"
+          });
+          $(".index .tanimate").css({
+            transform:
+              "translateY(" +
+              ((that.moveY - that.startY) * 30) / $(window).height() +
+              "%)",
+            opacity:
+              (($(window).height() + that.moveY - that.startY) /
+                $(window).height()) *
+              0.7,
+            transition: "none"
+          });
+        }
       }
     },
     touchendt(e) {
       this.canmove = false;
-      if (this.startY - this.moveY >= 200) {
+      if (this.startY - this.moveY >= 100) {
         this.start(this);
       } else {
         this.stop();
@@ -410,12 +412,6 @@ export default {
     forget() {
       localStorage.setItem("indexUrl", false);
     },
-    tohistory() {
-      this.$router.push("/history");
-    },
-    toappointment() {
-      this.$router.push("/appointment");
-    },
     torisk(processInsId) {
       this.$router.push({
         path: "/risk",
@@ -424,20 +420,13 @@ export default {
         }
       });
     },
-    tocomprehensive() {
-      this.$router.push("/comprehensive");
-    },
-    toriskdirector() {
-      this.$router.push("/riskdirector");
-    },
-    toregulations() {
-      this.$router.push("/regulations");
-    },
-    tovicemanager() {
-      this.$router.push("/vicemanager");
-    },
-    tomanager() {
-      this.$router.push("/manager");
+    tohistory() {
+      this.$router.push({
+        path: "/history",
+        query: {
+          processInsId: ""
+        }
+      });
     },
     start(that) {
       $(".index .banimate").animate({ scrollTop: 0 }, 0);
@@ -583,6 +572,7 @@ export default {
               that.echart1.chartsData[0].count
             ],
             lineStyle: {
+              width:2,
               color: {
                 type: "linear",
                 colorStops: [
@@ -1022,6 +1012,7 @@ export default {
         url: "api/v1/flow/task/ZXD"
       })
       .then(function(res) {
+        // that.task=res.data.data;
         console.log(res);
       })
       .catch(function(err) {
@@ -1145,7 +1136,7 @@ export default {
         span {
           line-height: 0.5rem;
           color: #cacaca;
-          font-size: 0.28rem;
+          font-size: 0.3rem;
         }
 
         .num {

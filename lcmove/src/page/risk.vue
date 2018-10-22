@@ -367,9 +367,11 @@ export default {
         console.log(that.pass);
         that
           .$http({
-            method: "get",
+            method: "post",
             header: "Content-Type:application/json",
-            url: "api/v1/flow/historic-task/" + ":taskId"
+            url: "api/v1/flow/historic-task/" + ":taskId",
+            url:"192.168.111.216:8040/peak-flow/v1/flow/task/:taskId",
+            data:that.data,
           })
           .then(function(res) {
             console.log(res);

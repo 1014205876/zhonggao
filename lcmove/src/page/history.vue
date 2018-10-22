@@ -1,7 +1,7 @@
 <template>
   <div class="history">
     <ul class='data'>
-      <li v-on:click='totask'>
+      <!-- <li v-on:click='totask'>
         <div class="left">
           <div class="name">江西省南昌市进贤县1111号</div>
           <div class="num">任务编号:6543213546132</div>
@@ -10,14 +10,14 @@
           <div class="time">2018-10-16</div>
           <div class="pass no">审批不通过</div>
         </div>
-      </li>
-      <li v-for='list in history' :key='list.id' v-on:click='totask'>
+      </li> -->
+      <li v-for='list in history.list' :key='list.id' v-on:click='totask'>
         <div class="left">
           <div class="name">{{list.entName}}</div>
-          <div class="num">任务编号:6543213546132</div>
+          <div class="num">任务编号:{{list.taskId}}</div>
         </div>
         <div class="right">
-          <div class="time">{{list.creatTime}}</div>
+          <div class="time">{{list.endTime}}</div>
           <div class="pass">{{list.actName}}</div>
         </div>
       </li>
@@ -40,46 +40,48 @@ export default {
   name: "History",
   data() {
     return {
+      processInsId: "",
       no: false,
-      history: [
-        {
-          actName: "状态",
-          entName: "企业/用户",
-          creatTime: "接收时间",
-          endTime: "已办时间"
-        },
-        {
-          actName: "状态",
-          entName: "企业/用户",
-          creatTime: "接收时间",
-          endTime: "已办时间"
-        },
-        {
-          actName: "状态",
-          entName: "企业/用户",
-          creatTime: "接收时间",
-          endTime: "已办时间"
-        },
-        {
-          actName: "状态",
-          entName: "企业/用户",
-          creatTime: "接收时间",
-          endTime: "已办时间"
-        },
-        {
-          actName: "状态",
-          entName: "企业/用户",
-          creatTime: "接收时间",
-          endTime: "已办时间"
-        }
-      ],
+      history: {
+        count: 38,
+        firstResult: 0,
+        list: [
+          {
+            actInsId: "1103639",
+            actName: "综合审批",
+            amount: 69,//申请金额
+            assignee: null,
+            creatTime: "2018-10-22 15:21:37",
+            endTime: "2018-10-22 15:22:12",
+            entName: "江西省琴岛传媒咨询服务有限公司9",
+            no: null,
+            operatorId: null,
+            operatorName: null,
+            processInsId: "1103539",
+            productId: null,
+            productName: "征信贷",
+            progress: "40%",//目前进度
+            projectNumber: null,
+            scope: null,
+            taskId: "1103640"
+          },
+        ],
+        maxResults: 10,
+        pageNo: 1,
+        pageSize: 10
+      },
       loading: false,
       switch: true
     };
   },
   methods: {
-    totask() {
-      this.$router.push("/taskdetail");
+    totask(processInstanceId) {
+      that.$router.push({
+        path: "/taskdetail",
+        query: {
+          processInstanceId: ""
+        }
+      });
     }
   },
   created() {
@@ -94,19 +96,23 @@ export default {
           "api/v1/flow/historic-task?pageSize=" +
           10 +
           "&pageNo=" +
-          2 +
+          1 +
           "&etpName=" +
-          1 +
+          // "客户名称" +
           "&createStartDate=" +
-          1 +
+          // 1 +
           "&createEndDate=" +
-          1 +
+          // 1 +
           "&productName=" +
-          1 +
           "ZXD"
       })
       .then(function(res) {
-        // that.companyinfo = res.data.data;
+        // that.history = res.data.data;
+        // if (res.data.data) {
+        //   that.no = false;
+        // } else {
+        //   that.no = true;
+        // }
         console.log(res);
       })
       .catch(function(err) {
@@ -149,11 +155,6 @@ export default {
       }
     ];
     $(document).on("scroll", function() {
-      console.log("滚动");
-      console.log($(document).scrollTop());
-      console.log($(window).height());
-      console.log($(document).height());
-      console.log($(document).scrollTop() + $(window).height());
       if (
         $(document).scrollTop() + $(window).height() >=
         $(document).height()
@@ -162,9 +163,7 @@ export default {
         if (that.switch) {
           that.switch = false;
           setTimeout(function() {
-            console.log("刷新");
             that.history = that.history.concat(newArr);
-            console.log(that.history);
             that.loading = false;
             that.switch = true;
           }, 2000);
@@ -188,7 +187,7 @@ export default {
       display: flex;
       justify-content: space-between;
       .left {
-        width: 3.6rem;
+        width: 4rem;
         .name {
           line-height: 0.5rem;
           font-size: 0.36rem;

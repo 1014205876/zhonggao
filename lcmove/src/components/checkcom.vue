@@ -17,7 +17,7 @@
           {{list.name}}
         </div> -->
         <ul class="bottom">
-          <li v-for='item in list.check' :key='item.id'>
+          <li v-for='item in list.options' :key='item.id'>
             <label>
               {{item}}
               <input :name='list.fieldType' type='checkbox' v-model='list.value' :value='item' :disabled='list.readOnly'>

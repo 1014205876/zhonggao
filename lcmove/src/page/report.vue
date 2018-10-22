@@ -61,10 +61,13 @@ export default {
       .$http({
         method: "get",
         header: "Content-Type:application/json",
-        url: "api/v1/flow/customer/1057470"
+        // url: "api/v1/flow/customer/1057470"
+        url: "api/v1/flow/collection/1057470"
+        // url: "api/v1/flow/comprehensive/1057470"
       })
       .then(function(res) {
         that.table = res.data.data;
+        // document.getElementById("titleId").innerHTML = that.data.jsonObject.name;
         console.log(res);
       })
       .catch(function(err) {
