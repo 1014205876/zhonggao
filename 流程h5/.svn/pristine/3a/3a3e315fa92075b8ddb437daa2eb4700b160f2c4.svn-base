@@ -1,0 +1,540 @@
+// 这个有radio，text,select
+{
+	"code": "200",
+	"msg": "success",
+	"data": {
+		"jsonObject": {
+			"outcomes": [],
+			"name": "综合审批",
+			"fields": [
+				{
+				"layout": null,
+				"name": "综合审查结论",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "syntheticalapproveconclusion",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": null,
+				"required": true
+			}, {
+				"readOnly": false,
+				"type": "dropdown",
+				"required": true,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": true,
+				"name": "客户评级",
+				"overrideId": true,
+				"options": [{
+					"name": "一级",
+					"type": "clientRating",
+					"value": "firstRank"
+				}, {
+					"name": "二级",
+					"type": "clientRating",
+					"value": "secondRank"
+				}, {
+					"name": "三级",
+					"type": "clientRating",
+					"value": "thirdRank"
+				}, {
+					"name": "四级",
+					"type": "clientRating",
+					"value": "forthRank"
+				}, {
+					"name": "五级",
+					"type": "clientRating",
+					"value": "fifthRank"
+				}],
+				"id": "ratingResult",
+				"placeholder": null,
+				"optionsExpression": "${clientRating}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}, {
+				"layout": null,
+				"name": "贷款金额（万）",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "loanAmount",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": "",
+				"required": true
+			}, {
+				"layout": null,
+				"name": "贷款期限（月）",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "loanTerm",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": "",
+				"required": true
+			}, {
+				"layout": null,
+				"name": "贷款利率（%）",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "borrowRate",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": null,
+				"required": true
+			}, {
+				"readOnly": false,
+				"type": "dropdown",
+				"required": false,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": true,
+				"name": "担保方式",
+				"overrideId": true,
+				"options": [{
+					"name": "I类担保",
+					"type": "guarantMode",
+					"value": "theFirstGuarante"
+				}, {
+					"name": "II类担保",
+					"type": "guarantMode",
+					"value": "theSecondGuarante"
+				}, {
+					"name": "III类担保",
+					"type": "guarantMode",
+					"value": "theThirdGuarante"
+				}, {
+					"name": "IV类担保",
+					"type": "guarantMode",
+					"value": "theForthGuarante"
+				}],
+				"id": "guarantMode",
+				"placeholder": null,
+				"optionsExpression": "${guarantMode}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}, {
+				"layout": null,
+				"name": "放款前提条件",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "loanPrecondition",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": null,
+				"required": true
+			}, {
+				"layout": null,
+				"name": "约束性条件",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "constraintCondition",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": null,
+				"required": true
+			}, {
+				"layout": null,
+				"name": "授后管理措施",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "postGrantManagementMeasure",
+				"placeholder": null,
+				"type": "text",
+				"fieldType": "FormField",
+				"value": null,
+				"required": true
+			}, {
+				"readOnly": false,
+				"type": "radio-buttons",
+				"required": true,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": null,
+				"name": "审批结果",
+				"overrideId": true,
+				"options": [{
+					"name": "通过",
+					"type": "loanApproveProposal",
+					"value": "getThrough"
+				}, {
+					"name": "不通过",
+					"type": "loanApproveProposal",
+					"value": "notPass"
+				}, {
+					"name": "通过，变更贷款建议",
+					"type": "loanApproveProposal",
+					"value": "passWithChange"
+				}],
+				"id": "syntheticalPassOrNot",
+				"placeholder": null,
+				"optionsExpression": "${loanApproveProposal}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}
+		],
+			"version": 0,
+			"key": "syntheticalApprove"
+		},
+		"claim": true
+	}
+}
+// 这个有radio，textarea
+{
+	"code": "200",
+	"msg": "success",
+	"data": {
+		"jsonObject": {
+			"outcomes": [],
+			"name": "准入审核",
+			"fields": [
+				{
+				"readOnly": false,
+				"type": "radio-buttons",
+				"required": true,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": null,
+				"name": "客户征信是否符合产品准入要求",
+				"overrideId": true,
+				"options": [{
+					"name": "符合",
+					"type": "conformity",
+					"value": "conform"
+				}, {
+					"name": "不符合",
+					"type": "conformity",
+					"value": "notConform"
+				}],
+				"id": "creditConformRequest",
+				"placeholder": null,
+				"optionsExpression": "${conformity}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}, {
+				"readOnly": false,
+				"type": "radio-buttons",
+				"required": true,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": null,
+				"name": "客户基本信息是否符合产品准入要求",
+				"overrideId": true,
+				"options": [{
+					"name": "符合",
+					"type": "conformity",
+					"value": "conform"
+				}, {
+					"name": "不符合",
+					"type": "conformity",
+					"value": "notConform"
+				}],
+				"id": "infoConformRequest",
+				"placeholder": null,
+				"optionsExpression": "${conformity}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}, {
+				"readOnly": false,
+				"type": "radio-buttons",
+				"required": true,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": null,
+				"name": "各项内推数据反映客户是否符合产品准入要求",
+				"overrideId": true,
+				"options": [{
+					"name": "符合",
+					"type": "conformity",
+					"value": "conform"
+				}, {
+					"name": "不符合",
+					"type": "conformity",
+					"value": "notConform"
+				}],
+				"id": "dateConformRequest",
+				"placeholder": null,
+				"optionsExpression": "${conformity}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}, {
+				"readOnly": false,
+				"type": "radio-buttons",
+				"required": true,
+				"layout": null,
+				"optionType": null,
+				"hasEmptyValue": null,
+				"name": "是否建议尽调",
+				"overrideId": true,
+				"options": [{
+					"name": "是",
+					"type": "yesOrNo",
+					"value": "yes"
+				}, {
+					"name": "否",
+					"type": "yesOrNo",
+					"value": "no"
+				}],
+				"id": "dueDiligenceProposal",
+				"placeholder": null,
+				"optionsExpression": "${yesOrNo}",
+				"fieldType": "OptionFormField",
+				"value": null
+			}, {
+				"layout": null,
+				"name": "备注",
+				"overrideId": true,
+				"readOnly": false,
+				"id": "approveRemark",
+				"placeholder": null,
+				"type": "multi-line-text",
+				"fieldType": "FormField",
+				"value": "少算",
+				"required": false
+			}
+		],
+			"version": 0,
+			"key": "riskApprove"
+		},
+		"claim": true
+	}
+}
+"data": [
+	{
+		"name": "项目基本信息",
+		"id": 1,
+		"type": "String",
+		"child": [
+			{
+				"name": "null",
+				"id": 1,
+				"type": "String",
+				"child": [
+					{
+						"name": "产品类型",
+						"id": 1,
+						"type": "String",
+						"value": "征信贷",
+						"key": "prodectType"
+					},
+					{
+						"name": "编号",
+						"id": 2,
+						"type": "String",
+						"value": "236317900170989568",
+						"key": "number"
+					},
+					{
+						"name": "企业名称",
+						"id": 3,
+						"type": "String",
+						"value": "江西省新新美容咨询服务有限公司",
+						"key": "loanEntName"
+					},
+					{
+						"name": "申请贷款金额",
+						"id": 4,
+						"type": "String",
+						"value": "12",
+						"key": "loanAmount"
+					},
+					{
+						"name": "还款方式",
+						"id": 5,
+						"type": "String",
+						"value": "按月付息，到期还本",
+						"key": "paymentMethod"
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "企业基本信息",
+		"id": 2,
+		"type": "String",
+		"child": [
+			{
+				"name": "null",
+				"id": 1,
+				"type": "String",
+				"child": [
+					{
+						"name": "企业名称",
+						"id": 1,
+						"type": "String",
+						"value": "江西省新新美容咨询服务有限公司",
+						"key": "loanEntName"
+					},
+					{
+						"name": "统一社会信用代码",
+						"id": 2,
+						"type": "String",
+						"value": "911401057480908051",
+						"key": "unifitedSocialCreditCode"
+					},
+					{
+						"name": "法定代表人",
+						"id": 3,
+						"type": "String",
+						"value": "李新宇",
+						"key": "legalRep"
+					},
+					{
+						"name": "财务负责人姓名",
+						"id": 4,
+						"type": "String",
+						"value": null,
+						"key": "corpTreasurerName"
+					},
+					{
+						"name": "财务负责人手机号",
+						"id": 5,
+						"type": "String",
+						"value": null,
+						"key": "corpTreasurerPhone"
+					},
+					{
+						"name": "",
+						"id": 6,
+						"type": "String",
+						"value": "",
+						"key": "legalPhone"
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "企业征信信息",
+		"id": 3,
+		"type": "String",
+		"child": [
+			{
+				"name": "null",
+				"id": 1,
+				"type": "String",
+				"child": [
+					{
+						"name": "",
+						"id": 1,
+						"type": "String",
+						"value": "",
+						"key": "reportDate"
+					},
+					{
+						"name": "银行存续贷款的合计余额(万)",
+						"id": 2,
+						"type": "String",
+						"value": "172.0",
+						"key": "totLoanBalance"
+					},
+					{
+						"name": "银行贷款额度三年变化",
+						"id": 3,
+						"type": "String",
+						"value": "20.0",
+						"key": "changeOfLoanIn3Y"
+					},
+					{
+						"name": "关注类贷款笔数（笔）",
+						"id": 4,
+						"type": "String",
+						"value": "1",
+						"key": "entSpecialLoanNum"
+					},
+					{
+						"name": "关注类贷款单笔最大金额(万)",
+						"id": 5,
+						"type": "String",
+						"value": "12.0",
+						"key": "entMaxSpecialLoan"
+					},
+					{
+						"name": "对外担保次数(次)",
+						"id": 6,
+						"type": "String",
+						"value": "3",
+						"key": "entExternalGuarantNum"
+					},
+					{
+						"name": "对外担保金额(万)",
+						"id": 7,
+						"type": "String",
+						"value": "25.0",
+						"key": "entExternalGuarantFinance"
+					}
+				]
+			}
+		]
+	},
+	{
+		"name": "实际控制人征信情况",
+		"id": 4,
+		"type": "String",
+		"child": [
+			{
+				"name": "null",
+				"id": 1,
+				"type": "String",
+				"child": [
+					{
+						"name": "",
+						"id": 1,
+						"type": "String",
+						"value": "",
+						"key": "controllerName"
+					},
+					{
+						"name": "关注类贷款笔数（笔）",
+						"id": 2,
+						"type": "String",
+						"value": "1",
+						"key": "perSpecialLoanNum"
+					},
+					{
+						"name": "关注类贷款单笔最大金额(万)",
+						"id": 3,
+						"type": "String",
+						"value": "12.0",
+						"key": "perMaxSpecialLoan"
+					},
+					{
+						"name": "信用卡单卡最高授信额度(万)",
+						"id": 4,
+						"type": "String",
+						"value": "0",
+						"key": "maximumOfSingleCreditCard"
+					},
+					{
+						"name": "信用卡已用额度(万)",
+						"id": 5,
+						"type": "String",
+						"value": "0",
+						"key": "usedCreditCardAmount"
+					},
+					{
+						"name": "对外担保次数(次)",
+						"id": 6,
+						"type": "String",
+						"value": "3",
+						"key": "entExternalGuarantNum"
+					},
+					{
+						"name": "对外担保金额(万)",
+						"id": 7,
+						"type": "String",
+						"value": "1.0",
+						"key": "perExternalGuarantFinance"
+					}
+				]
+			}
+		]
+	}
+]
