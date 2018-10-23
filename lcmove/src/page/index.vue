@@ -68,7 +68,7 @@
               </div>
               <div class="name">{{list.entName}}</div>
             </div>
-            <div class="btn" :class='{wait:list.assignee,ing:!list.assignee}'>{{list.assignee?'待开始':'进行中'}}</div>
+            <div class="btn" :class='{wait:!list.assignee,ing:list.assignee}'>{{list.assignee?'进行中':'待开始'}}</div>
           </div>
           <ul class="bottom">
             <li>
