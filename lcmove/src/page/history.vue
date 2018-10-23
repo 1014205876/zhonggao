@@ -76,7 +76,7 @@ export default {
   },
   methods: {
     totask(processInstanceId) {
-      that.$router.push({
+      this.$router.push({
         path: "/taskdetail",
         query: {
           processInstanceId: ""

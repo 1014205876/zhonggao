@@ -80,7 +80,7 @@ export default {
       .$http({
         method: "get",
         header: "Content-Type:application/json",
-        url: "api/v1/flow/historic-task/" + "1073023"
+        url: "api/v1/flow/historic-task/" + 1073023
       })
       .then(function(res) {
         that.data = res.data.data;

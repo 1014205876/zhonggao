@@ -39,6 +39,7 @@ export default new Router({
     {
       path: '/login',
       component: login,
+      //登录接口未写
       meta: {
         index: 1,
         title: '登录',
@@ -47,6 +48,7 @@ export default new Router({
     {
       path: '/index',
       component: index,
+      //具体任务接口无数据
       meta: {
         index: 2,
         title: '工作台',
@@ -56,6 +58,7 @@ export default new Router({
     {
       path: '/history',
       component: history,
+      //历史记录接口无数据
       meta: {
         index: 3,
         title: '历史任务',
@@ -65,6 +68,8 @@ export default new Router({
     {
       path: '/taskdetail',
       component: taskdetail,
+      //公司信息参数写死
+      //审批记录接口参数写死
       meta: {
         index: 4,
         title: '任务详情',
@@ -74,8 +79,10 @@ export default new Router({
     {
       path: '/risk',
       component: risk,
+      //公司信息参数写死
+      //审批表单参数写死
       meta: {
-        index: 7,
+        index: 5,
         title: '审批',
         auth: true
       },
@@ -83,6 +90,8 @@ export default new Router({
     {
       path: '/enterpriseinfo',
       component: enterpriseinfo,
+      //企业详情参数写死
+      //大部分字段没有
       meta: {
         index: 6,
         title: '企业详情',
@@ -92,6 +101,7 @@ export default new Router({
     {
       path: '/approvalRecord',
       component: approvalRecord,
+      //审批记录接口参数写死
       meta: {
         index: 7,
         title: '审批记录',
@@ -101,6 +111,7 @@ export default new Router({
     {
       path: '/report',
       component: report,
+      //三大报告参数写死，三大报告逻辑判定未写
       meta: {
         index: 8,
         title: '报告',

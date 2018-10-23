@@ -7,7 +7,7 @@
               <li v-for='two in one.child' :key='two.ids'>
               <div class="title" v-if='two.name!="null"'>{{two.name}}</div>
               <ul class="three">
-                <li v-for='three in two.child' :key='three.ids'>
+                <li v-for='three in two.child' :key='three.ids' :class='{image:(three.type=="image")}'>
                   <div class="left">
                     <div>{{three.name}}</div>
                   </div>
@@ -137,6 +137,24 @@ export default {
                   -webkit-box-orient: vertical;
                 }
               }
+            }
+            > li.image {
+              background: red;
+              display: block;
+              padding: 0 0.5rem;
+              border-top: none;
+              .left {
+                line-height: 0.5rem;
+              }
+              .right{
+                border-left: none;
+                img{
+                  display:block;
+                }
+              }
+            }
+            > li.image:first-child {
+              border-top: 1px solid #cacaca;
             }
           }
         }
