@@ -68,7 +68,7 @@
               </div>
               <div class="name">{{list.entName}}</div>
             </div>
-            <div class="btn wait">待开始</div>
+            <div class="btn" :class='{wait:!list.assignee,ing:list.assignee}'>{{list.assignee?'进行中':'待开始'}}</div>
           </div>
           <ul class="bottom">
             <li>
@@ -243,7 +243,7 @@ export default {
           endTime: null,
           operatorId: null,
           operatorName: "riskAssistant", //操作员
-          assignee: "riskAssistant",
+          assignee: "",
           no: null,
           scope: "江西省-南昌市-红谷港新区", //公司地址
           projectNumber: "229961043575705600" //项目编号
@@ -262,7 +262,7 @@ export default {
           endTime: null,
           operatorId: null,
           operatorName: "riskAssistant",
-          assignee: "riskAssistant",
+          assignee: null,
           no: null,
           scope: "江西省-南昌市-红谷港新区",
           projectNumber: "229961043575705600"
