@@ -163,7 +163,7 @@ export default {
         if (that.switch) {
           that.switch = false;
           setTimeout(function() {
-            that.history = that.history.concat(newArr);
+            that.history.list = that.history.list.concat(newArr);
             that.loading = false;
             that.switch = true;
           }, 2000);

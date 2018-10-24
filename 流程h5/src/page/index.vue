@@ -111,6 +111,7 @@ export default {
   name: "Index",
   data() {
     return {
+      over: 0,
       startY: 0, //手指开始y坐标
       moveY: 0, //手指滑动y坐标
       endY: 0, //手指结束y坐标
@@ -322,25 +323,25 @@ export default {
   watch: {
     echart1: function(newValue) {
       let that = this;
-      let time = setTimeout(function() {
-        TweenLite.to(that.$data, 0.5, { sumOrder: newValue.sumOrder });
-      }, 1000);
+      // let time = setTimeout(function() {
+      TweenLite.to(that.$data, 0.5, { sumOrder: newValue.sumOrder });
+      // }, 1000);
     },
     echart2: function(newValue) {
       let that = this;
-      let time = setTimeout(function() {
-        TweenLite.to(that.$data, 0.5, {
-          sumApplyAmount: newValue.sumApplyAmount
-        });
-      }, 900);
+      // let time = setTimeout(function() {
+      TweenLite.to(that.$data, 0.5, {
+        sumApplyAmount: newValue.sumApplyAmount
+      });
+      // }, 900);
     },
     echart3: function(newValue) {
       let that = this;
-      let time = setTimeout(function() {
-        TweenLite.to(that.$data, 0.5, {
-          sumConsumeAmount: newValue.sumConsumeAmount
-        });
-      }, 800);
+      // let time = setTimeout(function() {
+      TweenLite.to(that.$data, 0.5, {
+        sumConsumeAmount: newValue.sumConsumeAmount
+      });
+      // }, 800);
     }
   },
   components: {
@@ -572,7 +573,7 @@ export default {
               that.echart1.chartsData[0].count
             ],
             lineStyle: {
-              width:2,
+              width: 2,
               color: {
                 type: "linear",
                 colorStops: [
@@ -947,6 +948,7 @@ export default {
       .then(function(res) {
         that.echart0 = res.data.data;
         console.log("echart0");
+        that.over = that.over + 1;
       })
       .catch(function(err) {
         console.log(err);
@@ -963,6 +965,7 @@ export default {
         console.log("echart1");
         console.log(that.echart1);
         that.infoEchart1(that);
+        that.over = that.over + 1;
       })
       .catch(function(err) {
         console.log(err);
@@ -982,6 +985,7 @@ export default {
         $(".index .tanimate .box")
           .eq(1)
           .removeClass("active");
+        that.over = that.over + 1;
       })
       .catch(function(err) {
         console.log(err);
@@ -1001,6 +1005,7 @@ export default {
         $(".index .tanimate .box")
           .eq(2)
           .removeClass("active");
+        that.over = that.over + 1;
       })
       .catch(function(err) {
         console.log(err);
@@ -1054,21 +1059,23 @@ export default {
       $(window).height() - $(".index .head").height()
     );
     $(".index .tanimate .data li").click(function() {
-      $(".index .tanimate .data li").removeClass("active");
-      $(this).addClass("active");
-      $(".index .tanimate .box").removeClass("active");
-      $(".index .tanimate .box")
-        .eq($(this).index())
-        .addClass("active");
-      // console.log($(this).index())
-      if ($(this).index() == 0) {
-        that.infoEchart1(that);
-      }
-      if ($(this).index() == 1) {
-        that.infoEchart2(that);
-      }
-      if ($(this).index() == 2) {
-        that.infoEchart3(that);
+      if (that.over >= 4) {
+        $(".index .tanimate .data li").removeClass("active");
+        $(this).addClass("active");
+        $(".index .tanimate .box").removeClass("active");
+        $(".index .tanimate .box")
+          .eq($(this).index())
+          .addClass("active");
+        // console.log($(this).index())
+        if ($(this).index() == 0) {
+          that.infoEchart1(that);
+        }
+        if ($(this).index() == 1) {
+          that.infoEchart2(that);
+        }
+        if ($(this).index() == 2) {
+          that.infoEchart3(that);
+        }
       }
     });
     console.log("mountedend");

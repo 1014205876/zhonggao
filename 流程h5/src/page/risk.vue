@@ -51,13 +51,14 @@
           <!-- <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom> -->
           <div class="remarks" v-if='list.type=="multi-line-text"'>
             <div class="name">{{list.name}}</div>
-            <textarea rows="3" :placeholder='list.placeholder' v-model='list.value'></textarea>
+            <textarea rows="3" :placeholder='list.placeholder?list.placeholder:"请输入"' v-model='list.value'></textarea>
           </div>
         </li>
       </ul>
       <div class="submit">
-        <div class="btn nopass" @click='submit(false)'>不通过</div>
-        <div class="btn pass" @click='submit(true)'>通过</div>
+        <!-- <div class="btn pass" style='margin:0 auto' @click='submit(true)'>提交</div> -->
+        <!-- <div class="btn nopass" @click='submit(false)'>不通过</div>
+        <div class="btn pass" @click='submit(true)'>通过</div> -->
       <alert v-on:choice='choice' ref="alert1" v-bind:remind="'是否确定提交？'" v-bind:left="'取消'" v-bind:leftColor="'#333333'" v-bind:right="'确认'" v-bind:rightColor="'#3674B2'"></alert>
       <alert v-on:choice='choice' ref="alert2" v-bind:remind="'请补充完善信息'" v-bind:left="'确定'" v-bind:leftColor="'#3674B2'"></alert>
       </div>
@@ -315,6 +316,7 @@ export default {
       });
     },
     toapprovalRecord() {
+      let that = this;
       that.$router.push({
         path: "/approvalRecord",
         query: {
@@ -364,22 +366,23 @@ export default {
       }
       if (choice.data == "right") {
         console.log(that.pass);
-        that
-          .$http({
-            method: "post",
-            header: "Content-Type:application/json",
-            url: "api/v1/flow/historic-task/" + ":taskId",
-            url:"192.168.111.216:8040/peak-flow/v1/flow/task/:taskId",
-            data:that.data,
-          })
-          .then(function(res) {
-            console.log(res);
-            console.log("提交成功");
-          })
-          .catch(function(err) {
-            console.log(err);
-            console.log("提交失败");
-          });
+        console.log(that.data);
+        // that
+        //   .$http({
+        //     method: "post",
+        //     header: "Content-Type:application/json",
+        //     url: "api/v1/flow/historic-task/" + ":taskId",
+        //     url:"192.168.111.216:8040/peak-flow/v1/flow/task/:taskId",
+        //     data:that.data,
+        //   })
+        //   .then(function(res) {
+        //     console.log(res);
+        //     console.log("提交成功");
+        //   })
+        //   .catch(function(err) {
+        //     console.log(err);
+        //     console.log("提交失败");
+        //   });
       }
       that.$refs.alert1.alertclose();
       that.$refs.alert2.alertclose();

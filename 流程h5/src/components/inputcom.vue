@@ -2,7 +2,7 @@
   <div class="inputcom">
     <label>
       <div class="name">{{list.name}}</div>
-      <input type="text" placeholder='请输入' v-model='list.value' :disabled='list.readOnly'>
+      <input type="text" :placeholder='list.placeholder?list.placeholder:"请输入"' v-model='list.value' :disabled='list.readOnly'>
     </label>
   </div>
 </template>
