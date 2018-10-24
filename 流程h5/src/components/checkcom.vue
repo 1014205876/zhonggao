@@ -68,9 +68,9 @@ export default {
   methods: {
     allchange() {
       if (this.all) {
-        this.list.value = this.list.check;
+        this.list.value = this.list.options;
       } else {
-        this.list.checkValue = [];
+        this.list.value = [];
       }
     },
     alertshow() {

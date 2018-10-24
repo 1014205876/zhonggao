@@ -48,7 +48,7 @@
           <inputcom v-if='list.type=="text"' v-bind:list='list'></inputcom>
           <!-- <selectcom v-if='list.type=="dropdown"||list.type=="radio-buttons"' v-bind:list='list'></selectcom> -->
           <radiocom v-if='list.type=="dropdown"||list.type=="radio-buttons"' v-bind:list='list'></radiocom>
-          <!-- <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom> -->
+          <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
           <div class="remarks" v-if='list.type=="multi-line-text"'>
             <div class="name">{{list.name}}</div>
             <textarea rows="3" :placeholder='list.placeholder?list.placeholder:"请输入"' v-model='list.value'></textarea>
