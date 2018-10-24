@@ -7,7 +7,7 @@
             <img src="static/img/icon/task_blue.png" alt="">{{list.name}}
           </div>
           <div class="time">
-            <span>无时间</span>
+            <span></span>
           </div>
         </div>
         <ul class="bottom">
@@ -30,6 +30,7 @@ export default {
   name: "approvalRecord",
   data() {
     return {
+      processInsId: "",
       data: [
         {
           fields: [
@@ -59,10 +60,10 @@ export default {
               readOnly: false,
               required: false,
               type: "multi-line-text",
-              value: "132132333333333333333333333333333333333333333333333333333333333333333"
+              value:
+                "132132333333333333333333333333333333333333333333333333333333333333333"
             }
           ],
-
           key: "riskApprove",
           name: "准入审核",
           outcomes: [],
@@ -73,14 +74,21 @@ export default {
   },
   methods: {},
   created() {
-    let that = this;
     console.log("createdstart");
+    let that = this;
+    let token = localStorage.getItem("token");
+    that.processInsId = that.$route.query.processInsId;
     //获取审批记录
     that
       .$http({
-        method: "get",
-        header: "Content-Type:application/json",
-        url: "api/v1/flow/historic-task/" + 1073023
+        method: "post",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: token
+        },
+        url:
+          "api/peak-flow/v1/flow/historic-task/detail?processInstanceId" +
+          that.processInsId
       })
       .then(function(res) {
         that.data = res.data.data;
@@ -140,12 +148,12 @@ export default {
           }
         }
         > li.remark {
-          display:block;
-          span{
-            display:block;
-            line-height:0.5rem;
-                  white-space: normal;
-                  word-break: break-all;
+          display: block;
+          span {
+            display: block;
+            line-height: 0.5rem;
+            white-space: normal;
+            word-break: break-all;
           }
         }
       }

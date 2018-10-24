@@ -39,7 +39,6 @@ export default new Router({
     {
       path: '/login',
       component: login,
-      //登录接口未写
       meta: {
         index: 1,
         title: '登录',
@@ -48,7 +47,6 @@ export default new Router({
     {
       path: '/index',
       component: index,
-      //具体任务接口无数据
       meta: {
         index: 2,
         title: '工作台',
@@ -79,8 +77,7 @@ export default new Router({
     {
       path: '/risk',
       component: risk,
-      //公司信息参数写死
-      //审批表单参数写死
+      //表单提交接口未写
       meta: {
         index: 5,
         title: '审批',

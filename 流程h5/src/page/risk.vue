@@ -1,15 +1,15 @@
 <template>
   <div class="approval">
     <div class="companyinfo">
-      <div class="top" v-on:click='toreport'>
+      <div class="top" v-on:click='look'>
         <div class="name">{{companyinfo.entName}}</div>
         <div class="seereport">
           查看报告<img src="static/img/icon/right_gray.png" alt="">
         </div>
       </div>
-      <ul class='data' v-on:click='toenterpriseinfo'>
+      <ul class='data'>
         <li>
-          <span>企业法人 ：</span>{{companyinfo.legalRep}} {{companyinfo.legalName}}
+          <span>企业法人 ：</span>{{companyinfo.legalRep}}<!-- {{companyinfo.legalName}} -->
         </li>
         <li>
           <span>任务编号 ：</span>{{companyinfo.projectNumber}}
@@ -56,7 +56,7 @@
         </li>
       </ul>
       <div class="submit">
-        <!-- <div class="btn pass" style='margin:0 auto' @click='submit(true)'>提交</div> -->
+        <div class="btn pass" style='margin:0 auto' @click='submit(true)'>提交</div>
         <!-- <div class="btn nopass" @click='submit(false)'>不通过</div>
         <div class="btn pass" @click='submit(true)'>通过</div> -->
       <alert v-on:choice='choice' ref="alert1" v-bind:remind="'是否确定提交？'" v-bind:left="'取消'" v-bind:leftColor="'#333333'" v-bind:right="'确认'" v-bind:rightColor="'#3674B2'"></alert>
@@ -82,10 +82,13 @@ export default {
   name: "Risk",
   data() {
     return {
+      token:'',
+      taskId: "",
       processInsId: "",
       pass: false,
       // 动态表单数据
-      data: {// 动态表单数据
+      data: {
+        // 动态表单数据
         jsonObject: {
           outcomes: [],
           name: "综合审批",
@@ -218,7 +221,8 @@ export default {
         claim: true
       },
       //公司信息数据
-      companyinfo: {//公司信息数据
+      companyinfo: {
+        //公司信息数据
         entName: "江西省新新美容咨询服务有限公司1",
         legalRep: "李新宇",
         legalName: "李新宇",
@@ -272,12 +276,18 @@ export default {
   created() {
     let that = this;
     console.log("createdstart");
+    that.token = localStorage.getItem("token");
+    that.taskId = that.$route.query.taskId;
     that.processInsId = that.$route.query.processInsId;
+    // 获取公司信息
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
-        url: "api/v1/flow/process/" + that.processInsId + "/variables"
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: that.token
+        },
+        url: "api/peak-flow/v1/flow/process/" + that.processInsId + "/variables"
       })
       .then(function(res) {
         that.companyinfo = res.data.data;
@@ -289,12 +299,16 @@ export default {
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
-        url: "api/v1/flow/task/"+1073023+"/variables"
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: that.token
+        },
+        url: "api/peak-flow/v1/flow/task/" + that.taskId + "/variables"
       })
       .then(function(res) {
         that.data = res.data.data;
-        document.getElementById("titleId").innerHTML = that.data.jsonObject.name;
+        document.getElementById("titleId").innerHTML =
+          that.data.jsonObject.name;
         console.log(res);
       })
       .catch(function(err) {
@@ -303,10 +317,7 @@ export default {
     console.log("createdend");
   },
   methods: {
-    toreport() {
-      this.$router.push("/report");
-    },
-    toenterpriseinfo() {
+    look() {
       let that = this;
       that.$router.push({
         path: "/enterpriseinfo",
@@ -314,7 +325,17 @@ export default {
           processInsId: that.processInsId
         }
       });
+      this.$router.push("/report");
     },
+    // toenterpriseinfo() {
+    //   let that = this;
+    //   that.$router.push({
+    //     path: "/enterpriseinfo",
+    //     query: {
+    //       processInsId: that.processInsId
+    //     }
+    //   });
+    // },
     toapprovalRecord() {
       let that = this;
       that.$router.push({
@@ -367,22 +388,24 @@ export default {
       if (choice.data == "right") {
         console.log(that.pass);
         console.log(that.data);
-        // that
-        //   .$http({
-        //     method: "post",
-        //     header: "Content-Type:application/json",
-        //     url: "api/v1/flow/historic-task/" + ":taskId",
-        //     url:"192.168.111.216:8040/peak-flow/v1/flow/task/:taskId",
-        //     data:that.data,
-        //   })
-        //   .then(function(res) {
-        //     console.log(res);
-        //     console.log("提交成功");
-        //   })
-        //   .catch(function(err) {
-        //     console.log(err);
-        //     console.log("提交失败");
-        //   });
+        that
+          .$http({
+            method: "post",
+            headers: {
+              "Content-Type": "application/json;charset=utf-8",
+              authorization: that.token
+            },
+            url: "api/peak-flow/v1/flow/task/" + that.taskId,
+            data: that.data
+          })
+          .then(function(res) {
+            console.log(res);
+            console.log("提交成功");
+          })
+          .catch(function(err) {
+            console.log(err);
+            console.log("提交失败");
+          });
       }
       that.$refs.alert1.alertclose();
       that.$refs.alert2.alertclose();

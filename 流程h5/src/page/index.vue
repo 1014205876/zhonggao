@@ -60,7 +60,7 @@
         </div>
       </div> -->
       <ul class='task'>
-        <li v-for='list in task' :key='list.id' v-on:click='torisk(list.processInsId)'>
+        <li v-for='list in task' :key='list.id' v-on:click='torisk(list.processInsId,list.taskId)'>
           <div class="top">
             <div class="left">
               <div class="time">
@@ -411,22 +411,32 @@ export default {
       localStorage.setItem("indexUrl", true);
     },
     forget() {
-      localStorage.setItem("indexUrl", false);
+      // console.log('forget')
+      // localStorage.clear("indexUrl")
+      // localStorage.clear("account")
+      // localStorage.clear("password")
+      // sessionStorage.clear("indexUrl")
+      // sessionStorage.clear("account")
+      // sessionStorage.clear("password")
+      // localStorage.setItem("indexUrl", false);
+      // localStorage.setItem("account", false);
+      // localStorage.setItem("password", false);
+      // sessionStorage.setItem("indexUrl", false);
+      // sessionStorage.setItem("account", false);
+      // sessionStorage.setItem("password", false);
     },
-    torisk(processInsId) {
+    torisk(processInsId, taskId) {
       this.$router.push({
         path: "/risk",
         query: {
-          processInsId: processInsId
+          processInsId: processInsId,
+          taskId: taskId
         }
       });
     },
     tohistory() {
       this.$router.push({
         path: "/history",
-        query: {
-          processInsId: ""
-        }
       });
     },
     start(that) {
@@ -919,35 +929,43 @@ export default {
 
       myChart.clear();
       myChart.setOption(option);
-      // $(".index .tanimate .data li").click(function() {
-      //   $(".index .tanimate .data li").removeClass("active");
-      //   $(this).addClass("active");
-      //   myChart.clear();
-      //   myChart.setOption(option[$(this).index()]);
-      // });
     }
   },
   // 获取后端数据
   beforeCreate() {
     let that = this;
-    console.log("beforeCreatestart");
-    console.log("beforeCreateend");
+    // console.log("beforeCreatestart");
+    // console.log("beforeCreateend");
   },
   // 修改数据
   created() {
+    // console.log("createdstart");
     let that = this;
-    console.log("createdstart");
+    let token = localStorage.getItem("token");
+    console.log(token);
+    let account =
+      localStorage.getItem("account") || sessionStorage.getItem("account");
+    console.log(account);
+    // let password =
+    //   localStorage.getItem("password") || sessionStorage.getItem("password");
+    // console.log(password);
     //调取后台数据
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: token
+        },
         url:
-          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=0"
+          "api/peak-flow/v1/flow/index?assignee=" +
+          account +
+          "&productName=ZXD&interfaceid=0"
       })
       .then(function(res) {
-        that.echart0 = res.data.data;
         console.log("echart0");
+        console.log(res);
+        that.echart0 = res.data.data;
         that.over = that.over + 1;
       })
       .catch(function(err) {
@@ -956,14 +974,20 @@ export default {
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: token
+        },
         url:
-          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=1"
+          "api/peak-flow/v1/flow/index?assignee=" +
+          account +
+          "&productName=ZXD&interfaceid=1"
       })
       .then(function(res) {
-        that.echart1 = res.data.data;
         console.log("echart1");
-        console.log(that.echart1);
+        console.log(res);
+        that.echart1 = res.data.data;
+        // console.log(that.echart1);
         that.infoEchart1(that);
         that.over = that.over + 1;
       })
@@ -973,14 +997,20 @@ export default {
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
+        headers: {
+          "Content-Type": "application/json;charset=utf-8",
+          authorization: token
+        },
         url:
-          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=2"
+          "api/peak-flow/v1/flow/index?assignee=" +
+          account +
+          "&productName=ZXD&interfaceid=2"
       })
       .then(function(res) {
-        that.echart2 = res.data.data;
         console.log("echart2");
-        console.log(that.echart2);
+        console.log(res);
+        that.echart2 = res.data.data;
+        // console.log(that.echart2);
         that.infoEchart2(that);
         $(".index .tanimate .box")
           .eq(1)
@@ -993,14 +1023,22 @@ export default {
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
+        header: {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        headers: {
+          authorization: token
+        },
         url:
-          "api/v1/flow/index?assignee=riskAssistant&productName=ZXD&interfaceid=3"
+          "api/peak-flow/v1/flow/index?assignee=" +
+          account +
+          "&productName=ZXD&interfaceid=3"
       })
       .then(function(res) {
-        that.echart3 = res.data.data;
         console.log("echart3");
-        console.log(that.echart3);
+        console.log(res);
+        that.echart3 = res.data.data;
+        // console.log(that.echart3);
         that.infoEchart3(that);
         $(".index .tanimate .box")
           .eq(2)
@@ -1013,12 +1051,18 @@ export default {
     that
       .$http({
         method: "get",
-        header: "Content-Type:application/json",
-        url: "api/v1/flow/task/ZXD"
+        header: {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        headers: {
+          authorization: token
+        },
+        url: "api/peak-flow/v1/flow/task/ZXD"
       })
       .then(function(res) {
-        // that.task=res.data.data;
+        console.log("task");
         console.log(res);
+        that.task = res.data.data;
       })
       .catch(function(err) {
         console.log(err);
@@ -1039,18 +1083,12 @@ export default {
       // that.dayArr.push(nowDate);
       that.xArr.push(xDate);
     }
-    let account =
-      localStorage.getItem("account") || sessionStorage.getItem("account");
-    console.log(account);
-    let password =
-      localStorage.getItem("password") || sessionStorage.getItem("password");
-    console.log(password);
-    console.log("createdend");
+    // console.log("createdend");
   },
   // 操作dome
   mounted() {
     let that = this;
-    console.log("mountedstart");
+    // console.log("mountedstart");
     $(".index").css("height", $(window).height());
     $(".index .bgimg").css("height", $(window).height());
     $(".index .tanimate").css("height", $(window).height());
@@ -1078,7 +1116,7 @@ export default {
         }
       }
     });
-    console.log("mountedend");
+    // console.log("mountedend");
   }
 };
 </script>

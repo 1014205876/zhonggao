@@ -87,16 +87,23 @@ export default {
   created() {
     let that = this;
     console.log("createdstart");
-    that.processInsId = that.$route.query.processInsId;
+    let token = localStorage.getItem("token");
+    console.log(token)
     that
       .$http({
-        method: "get",
-        header: "Content-Type:application/json",
+        method: "post",
+        header: {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        headers: {
+          authorization: token
+        },
         url:
-          "api/v1/flow/historic-task?pageSize=" +
-          10 +
+          "api/peak-flow/v1/flow/historic-task?"+
+          "pageSize=" +
+          5 +
           "&pageNo=" +
-          1 +
+          0 +
           "&etpName=" +
           // "客户名称" +
           "&createStartDate=" +
@@ -104,7 +111,8 @@ export default {
           "&createEndDate=" +
           // 1 +
           "&productName=" +
-          "ZXD"
+          "ZXD",
+          // 'pageSize=10&pageNo=1&etpName=&createStartDate=&createEndDate=&productName=ZXD'
       })
       .then(function(res) {
         // that.history = res.data.data;

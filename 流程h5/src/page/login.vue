@@ -32,29 +32,55 @@ export default {
   name: "Login",
   data() {
     return {
-      account: 123,
-      password: 123,
+      account: "riskDirector",
+      password: 123456,
       remember: false
     };
   },
   //函数盒子
   methods: {
     signIn() {
-      console.log(this.remember);
+      let that = this;
+      console.log(that.remember);
       localStorage.setItem("indexUrl", this.remember);
       sessionStorage.setItem("loging", true);
-      if (this.account == 123 && this.password == 123) {
-        if (this.remember) {
-          localStorage.setItem("account", this.account);
-          localStorage.setItem("password", this.password);
-        } else {
-          sessionStorage.setItem("account", this.account);
-          sessionStorage.setItem("password", this.password);
-        }
-        this.$router.push("/index");
-      } else {
-        alert("用户名或密码错误");
-      }
+      let userInfos = { loginName: that.account, password: that.password };
+      that
+        .$http({
+          url: "logins/login",
+          method: "post",
+          headers: {
+            "Content-Type": "application/json;charset=utf-8"
+          },
+          data: userInfos
+        })
+        .then(function(res) {
+          console.log(res.data.result.token);
+          localStorage.setItem("token", res.data.result.token);
+          console.log(res);
+          if (that.remember) {
+            localStorage.setItem("account", that.account);
+          } else {
+            sessionStorage.setItem("account", that.account);
+          }
+          that.$router.push("/index");
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+
+      // if (this.account == 123 && this.password == 123) {
+      //   if (this.remember) {
+      //     localStorage.setItem("account", this.account);
+      //     localStorage.setItem("password", this.password);
+      //   } else {
+      //     sessionStorage.setItem("account", this.account);
+      //     sessionStorage.setItem("password", this.password);
+      //   }
+      //   this.$router.push("/index");
+      // } else {
+      //   alert("用户名或密码错误");
+      // }
     }
   },
   // 获取后端数据
@@ -128,7 +154,8 @@ export default {
       color: #999999;
       font-size: 0.3rem;
     }
-    input::-webkit-input-placeholder {//手机端
+    input::-webkit-input-placeholder {
+      //手机端
       color: #999999;
       font-size: 0.3rem;
     }
