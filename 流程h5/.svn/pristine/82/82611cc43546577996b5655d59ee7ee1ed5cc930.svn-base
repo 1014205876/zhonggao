@@ -2,7 +2,7 @@
   <div class="check" v-on:click='alertshow'>
     <div class="name">{{list.name}}</div>
     <div class="label">
-      <div class="data" v-if='list.value'>{{list.value}}</div>
+      <div class="data" v-if='num'>选择{{num}}项</div>
       <img src="static/img/icon/right_gray.png" alt="" class="right">
     </div>
     <div class="mengban" v-bind:class='{show:show}' v-on:click.stop.self='alertclose'>
@@ -19,11 +19,19 @@
         <ul class="bottom">
           <li v-for='item in list.options' :key='item.id'>
             <label>
-              <span>{{item.name}}</span>
-              <input :name='list.fieldType' type='radio' :value='item.value' v-model='list.value' :disabled='list.readOnly' @change='alertclose'>
+              {{item}}
+              <input :name='list.fieldType' type='checkbox' v-model='list.value' :value='item' :disabled='list.readOnly'>
               <!-- <div class="after"></div> -->
             </label>
           </li>
+          <li v-if='list.another'>
+            <label>
+              其他
+              <input name='another' type='checkbox' v-model='another'>
+              <!-- <div class="after"></div> -->
+            </label>
+          </li>
+          <textarea v-if='another' v-model='list.anotherValue' name="another" rows="2" class="another" placeholder='请输入'></textarea>
         </ul>
       </div>
     </div>
@@ -34,14 +42,37 @@
 // 引入jq
 import $ from "jquery";
 export default {
-  name: "Radio",
+  name: "Checkcom",
   data() {
     return {
+      all: false,
+      another: false,
+      num: 0,
       show: false
     };
   },
   props: ["list"],
+  watch: {
+    list: {
+      handler(val, oldVal) {
+        this.num = val.options.length;
+        if (val.value.length == val.options.length) {
+          this.all = true;
+        } else {
+          this.all = false;
+        }
+      },
+      deep: true
+    }
+  },
   methods: {
+    allchange() {
+      if (this.all) {
+        this.list.value = this.list.options;
+      } else {
+        this.list.value = [];
+      }
+    },
     alertshow() {
       this.show = true;
       $("body").css({ height: $(window).height(), overflow: "hidden" });
@@ -64,11 +95,11 @@ export default {
   > .name {
     width: 3.8rem;
     line-height: 0.4rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   > .label {
     width: 3rem;
@@ -77,13 +108,7 @@ export default {
       font-size:0.28rem;
       color:#cacaca;
       width: 2.6rem;
-      height: 0.4rem;
       line-height: 0.4rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 1;
-      -webkit-box-orient: vertical;
     }
     .right {
       position: absolute;
@@ -119,7 +144,7 @@ export default {
       right: 0;
       margin: auto;
       background: #fff;
-      // text-align: center;
+      text-align: center;
       font-size: 0.3rem;
       // .after {
       //   width: 100%;
@@ -155,19 +180,39 @@ export default {
         overflow: auto;
         max-height: 4.5rem;
         border-radius: 0.2rem;
-        background: #f3f3f3;
         > li {
+          background: #f3f3f3;
           height: 0.9rem;
           line-height: 0.9rem;
           padding: 0 0.2rem;
           label {
-            line-height: 0.4rem;
             display: flex;
             width: 100%;
             height: 100%;
             align-items: center;
             justify-content: space-between;
           }
+        }
+        > li:last-of-type {
+          border-radius: 0 0 0.2rem 0.2rem;
+        }
+        textarea {
+          -moz-box-sizing: border-box;
+          /*Firefox3.5+*/
+          -webkit-box-sizing: border-box;
+          /*Safari3.2+*/
+          -o-box-sizing: border-box;
+          /*Opera9.6*/
+          -ms-box-sizing: border-box;
+          /*IE8*/
+          display: block;
+          margin-top: 0.2rem;
+          width: 100%;
+          border: 1px solid #cacaca;
+          border-radius: 0.2rem;
+          padding: 0.1rem 0.2rem;
+          line-height: 0.5rem;
+          font-size: 0.3rem;
         }
       }
     }
