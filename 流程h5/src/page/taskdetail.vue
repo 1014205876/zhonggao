@@ -39,8 +39,8 @@
         <ul class="bottom">
           <!-- <li v-for="item in list.fields" :key='item.id' :class='{remark:item.type=="multi-line-text"}'> -->
           <li v-for="item in list.fields" :key='item.id'>
-            <span>{{item.name}}</span>
-            <span class='data'>{{item.value}}</span>
+            <span class='left'>{{item.name}}</span>
+            <span class='right'>{{item.value}}</span>
           </li>
           <!-- <li>
             <span>备注</span>
@@ -53,8 +53,6 @@
 </template>
 
 <script>
-// 引入公司详情组件
-import companyinfo from "@/components/companyinfo";
 export default {
   name: "taskdetail",
   data() {
@@ -62,6 +60,7 @@ export default {
       actName: "",
       taskId: "",
       processInstanceId: "",
+      // 获取公司信息
       companyinfo: {
         // legalPhone: "13697919058",
         // legalRep: "李新宇",
@@ -151,9 +150,7 @@ export default {
       item: []
     };
   },
-  components: {
-    companyinfo
-  },
+  components: {}, //引入组件
   methods: {
     look() {
       let that = this;
@@ -165,7 +162,7 @@ export default {
           path: "/enterpriseinfo", //企业信息页面
           query: {
             entName: that.companyinfo.entName,
-            processInstanceId: that.processInstanceId
+            // processInstanceId: that.processInstanceId
           }
         });
       } else {
@@ -203,10 +200,10 @@ export default {
     },
     find(that) {
       // let that = this;
-      console.log(that.item)
+      console.log(that.item);
       for (let i = 0; i < that.item.length; i++) {
         if (that.item[i].taskId == that.taskId) {
-          console.log(that.item[i].actName)
+          console.log(that.item[i].actName);
           that.actName = that.item[i].actName;
         }
       }
@@ -389,13 +386,19 @@ export default {
           line-height: 0.64rem;
           display: flex;
           justify-content: space-between;
-          span {
+          .left {
+            width: 3.4rem;
+            line-height:0.5rem;
+            padding:0.07rem 0;
             color: #999999;
           }
-          .data {
+          .right {
+            width:2rem;
+            line-height:0.5rem;
+            padding:0.07rem 0;
             color: #333333;
           }
-          .data.no {
+          .right.no {
             color: #f35535;
           }
         }

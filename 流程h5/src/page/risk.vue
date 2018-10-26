@@ -72,13 +72,11 @@
 import $ from "jquery";
 // 引入弹窗组件
 import alert from "@/components/alert";
-// 引入公司详情组件
-import companyinfo from "@/components/companyinfo";
 // 引入表单组件
 import inputcom from "@/components/inputcom";
 import datecom from "@/components/datecom";
 import radiocom from "@/components/radiocom";
-import selectcom from "@/components/selectcom";
+// import selectcom from "@/components/selectcom";
 import checkcom from "@/components/checkcom";
 export default {
   name: "Risk",
@@ -263,10 +261,9 @@ export default {
   },
   components: {
     alert,
-    companyinfo,
     inputcom,
     datecom,
-    selectcom,
+    // selectcom,
     radiocom,
     checkcom
   },
@@ -345,7 +342,7 @@ export default {
           path: "/enterpriseinfo", //企业信息页面
           query: {
             entName: that.companyinfo.entName,
-            processInstanceId: that.processInsId
+            // processInstanceId: that.processInsId
           }
         });
       } else {

@@ -170,7 +170,7 @@ export default {
     return {
       processInsId: "",
       entName: "",
-      companyinfo: {
+      // companyinfo: {
         // legalPhone: "13697919058",
         // legalRep: "李新宇",
         // legalSex: "男",
@@ -204,7 +204,7 @@ export default {
         // assignee: "riskAssistant",
         // register: "unfinish",
         // status: "未完成"
-      },
+      // },
       icbc: {
         address: "无数据",
         businessFinish: null,
@@ -234,30 +234,30 @@ export default {
     let token = localStorage.getItem("token");
     // that.companyinfo = that.$route.query.companyinfo;
     // let entName=encodeURIComponent(that.companyinfo.entName,"UTF-8");
-    that.processInstanceId = that.$route.query.processInstanceId;
+    // that.processInstanceId = that.$route.query.processInstanceId;
     that.entName = that.$route.query.entName;
     //获取公司信息
-    that
-      .$http({
-        method: "get",
-        header: {
-          "Content-Type": "application/json;charset=utf-8"
-        },
-        headers: {
-          authorization: token
-        },
-        url:
-          "api/peak-flow/v1/flow/process/" +
-          that.processInstanceId +
-          "/variables"
-      })
-      .then(function(res) {
-        that.companyinfo = res.data.data;
-        console.log(res);
-      })
-      .catch(function(err) {
-        console.log(err);
-      });
+    // that
+    //   .$http({
+    //     method: "get",
+    //     header: {
+    //       "Content-Type": "application/json;charset=utf-8"
+    //     },
+    //     headers: {
+    //       authorization: token
+    //     },
+    //     url:
+    //       "api/peak-flow/v1/flow/process/" +
+    //       that.processInstanceId +
+    //       "/variables"
+    //   })
+    //   .then(function(res) {
+    //     that.companyinfo = res.data.data;
+    //     console.log(res);
+    //   })
+    //   .catch(function(err) {
+    //     console.log(err);
+    //   });
     // 获取工商信息
     that
       .$http({

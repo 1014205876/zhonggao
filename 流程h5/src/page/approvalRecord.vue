@@ -14,8 +14,8 @@
         <ul class="bottom">
           <!-- <li v-for="item in list.fields" :key='item.id' v-if='item.value&&item.name' :class='{remark:item.type=="multi-line-text"}'> -->
           <li v-for="item in list.fields" :key='item.id' v-if='item.value&&item.name'>
-            <span>{{item.name}}</span>
-            <span class='data'>{{item.value}}</span>
+            <span class='left'>{{item.name}}</span>
+            <span class='right'>{{item.value}}</span>
           </li>
           <!-- <li>
             <span>备注</span>
@@ -145,13 +145,19 @@ export default {
           line-height: 0.64rem;
           display: flex;
           justify-content: space-between;
-          span {
+          .left {
+            width: 3.4rem;
+            line-height:0.5rem;
+            padding:0.07rem 0;
             color: #999999;
           }
-          .data {
+          .right {
+            width:2rem;
+            line-height:0.5rem;
+            padding:0.07rem 0;
             color: #333333;
           }
-          .data.no {
+          .right.no {
             color: #f35535;
           }
         }
