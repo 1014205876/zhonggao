@@ -32,7 +32,12 @@ export default {
   name: "Login",
   data() {
     return {
-      account: "loanApprover",
+      account: "regionManager",//预约确认
+      // account: "loanApprover",//风控审批
+      // account: "riskDirector",//风控总监审批
+      // account: "complianceAssistant",//-合规审查
+      // account: "vicePresident",//副总经理审批
+      // account: "president",//总经理审批
       password: 123456,
       remember: false
     };
@@ -69,6 +74,7 @@ export default {
         })
         .catch(function(err) {
           console.log(err);
+          alert('用户名或密码错误')
         });
 
       // if (this.account == 123 && this.password == 123) {

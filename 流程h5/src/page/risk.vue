@@ -278,10 +278,8 @@ export default {
   },
   created() {
     let that = this;
-    // console.log("createdstart");
     that.token = localStorage.getItem("token");
     that.taskId = that.$route.query.taskId;
-    that.actName = that.$route.query.actName;
     that.processInsId = that.$route.query.processInsId;
     // that.processInstanceId = that.$route.query.processInstanceId;
     // 获取公司信息
@@ -320,7 +318,7 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
-    //用途未知
+    //将待执行变为进行中
     that
       .$http({
         method: "post",
@@ -332,9 +330,6 @@ export default {
         data: { action: "claim" }
       })
       .then(function(res) {
-        // that.data = res.data.data;
-        // document.getElementById("titleId").innerHTML =
-        //   that.data.jsonObject.name;
         console.log(res);
       })
       .catch(function(err) {
@@ -345,18 +340,16 @@ export default {
   methods: {
     look() {
       let that = this;
-      let name = localStorage.getItem("name");
-      console.log(name);
-      if (name == "预约确认") {
+      if (that.data.jsonObject.name == "预约确认") {
         that.$router.push({
           path: "/enterpriseinfo", //企业信息页面
           query: {
-            entName:that.companyinfo.entName,
+            entName: that.companyinfo.entName,
             processInstanceId: that.processInsId
           }
         });
       } else {
-        if (name == "风控审批") {
+        if (that.data.jsonObject.name == "风控审批") {
           that.$router.push({
             path: "/report", //客户信息报告页面
             query: {
@@ -366,7 +359,7 @@ export default {
             }
           });
         } else {
-          if (name == "综合审批") {
+          if (that.data.jsonObject.name == "综合审批") {
             that.$router.push({
               path: "/report", //信息采集报告页面
               query: {
@@ -445,6 +438,16 @@ export default {
           form[that.data.jsonObject.fields[i].id] =
             that.data.jsonObject.fields[i].value;
         }
+        let what = {
+          action: "complete",
+          appointConfirmRemark: "1",
+          appointTime: "2018-10-31 14:00:00",
+          contactAddress: "1",
+          contactPhone: "13767060145",
+          contactor: "1"
+        };
+        // console.log(form);
+        // console.log(what);
         that
           .$http({
             method: "post",
@@ -457,6 +460,7 @@ export default {
           })
           .then(function(res) {
             console.log(res);
+            that.$router.push("/index");
             console.log("提交成功");
           })
           .catch(function(err) {

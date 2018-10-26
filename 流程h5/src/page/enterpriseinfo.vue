@@ -206,24 +206,24 @@ export default {
         // status: "未完成"
       },
       icbc: {
-        // address: "江西省南昌市红谷滩新区",
-        // businessFinish: null,
-        // businessScope: "美容业",
-        // businessStart: null,
-        // businessStartFinish: "2018-04-17-2018-04-17",
-        // checkDate: "2018-04-04",
-        // city: "南昌市",
-        // creditCode: "360106210063619",
-        // etpBranch: [],
-        // etpSeniorManager: [],
-        // etpShareholder: [],
-        // industry: null,
-        // legalRep: "余佳莹",
-        // regCapital: "1000",
-        // regDate: "2018-04-17",
-        // regOffice: "南昌高新技术产业开发区市场和质量监督管理局",
-        // regState: "存续（在营、开业、在册）",
-        // type: "有限责任公司(自然人投资或控股)"
+        address: "无数据",
+        businessFinish: null,
+        businessScope: "无数据",
+        businessStart: null,
+        businessStartFinish: "无数据",
+        checkDate: "无数据",
+        city: "无数据",
+        creditCode: "无数据",
+        etpBranch: [],
+        etpSeniorManager: [],
+        etpShareholder: [],
+        industry: null,
+        legalRep: "无数据",
+        regCapital: "无数据",
+        regDate: "无数据",
+        regOffice: "无数据",
+        regState: "无数据",
+        type: "无数据"
       }
     };
   },
@@ -271,7 +271,7 @@ export default {
         url: "api/etp-provider/etp/" + that.entName
       })
       .then(function(res) {
-        that.icbc = res.data.data;
+        that.icbc = res.data;
         console.log(res);
       })
       .catch(function(err) {

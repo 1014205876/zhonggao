@@ -107,7 +107,6 @@ export default {
         // legalNation: "汉",
         // controllerUrl:
         //   "https://masspick-1255853614.cos-website.ap-shanghai.myqcloud.com/masspick/develop/peak-guest/0ef685a3-e90b-46d5-9f94-24a9a696a1f2.jpg",
-
         // register: "unfinish",
         // status: "未完成"
       },
@@ -148,7 +147,8 @@ export default {
         //     }
         //   ],
         // }
-      ]
+      ],
+      item: []
     };
   },
   components: {
@@ -157,18 +157,19 @@ export default {
   methods: {
     look() {
       let that = this;
-      let name = localStorage.getItem("name");
-      console.log(name);
-      if (name == "预约确认") {
+      that.find(that);
+      // let name = localStorage.getItem("name");
+      // console.log(name);
+      if (that.actName == "预约确认") {
         that.$router.push({
           path: "/enterpriseinfo", //企业信息页面
           query: {
-            entName:that.companyinfo.entName,
+            entName: that.companyinfo.entName,
             processInstanceId: that.processInstanceId
           }
         });
       } else {
-        if (name == "风控审批") {
+        if (that.actName == "风控审批") {
           that.$router.push({
             path: "/report", //客户信息报告页面
             query: {
@@ -178,7 +179,7 @@ export default {
             }
           });
         } else {
-          if (name == "综合审批") {
+          if (that.actName == "综合审批") {
             that.$router.push({
               path: "/report", //信息采集报告页面
               query: {
@@ -200,6 +201,17 @@ export default {
         }
       }
     },
+    find(that) {
+      // let that = this;
+      console.log(that.item)
+      for (let i = 0; i < that.item.length; i++) {
+        if (that.item[i].taskId == that.taskId) {
+          console.log(that.item[i].actName)
+          that.actName = that.item[i].actName;
+        }
+      }
+      console.log(that.actName);
+    },
     toenterpriseinfo() {
       let that = this;
     }
@@ -209,7 +221,7 @@ export default {
     // console.log("createdstart");
     let token = localStorage.getItem("token");
     that.taskId = that.$route.query.taskId;
-    that.actName = that.$route.query.actName;
+    // that.actName = that.$route.query.actName;
     // that.processInsId = that.$route.query.processInsId;
     that.processInstanceId = that.$route.query.processInstanceId;
     //获取公司信息
@@ -248,6 +260,27 @@ export default {
       })
       .then(function(res) {
         that.data = res.data.data;
+        console.log(res);
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+    //获取审批记录节点
+    that
+      .$http({
+        method: "get",
+        header: {
+          "Content-Type": "application/json;charset=utf-8"
+        },
+        headers: {
+          authorization: token
+        },
+        url:
+          "api/peak-flow/v1/flow/historic-task/detail?processInstanceId=" +
+          that.processInstanceId
+      })
+      .then(function(res) {
+        that.item = res.data.data;
         console.log(res);
       })
       .catch(function(err) {

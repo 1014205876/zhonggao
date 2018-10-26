@@ -89,7 +89,7 @@
     </div>
     <div class="head">
       <div class="left" v-on:click='forget'>
-        <img src="static/img/headimg_no.png" alt="">未登录
+        <img src="static/img/headimg_no.png" alt="">{{name}}
       </div>
       <div class="right" @click='stop'>
         数据统计<img src="static/img/icon/echart.png" alt="">
@@ -120,6 +120,8 @@ export default {
       sumOrder: 0, //订单数字动画
       sumApplyAmount: 0, //申请数字动画
       sumConsumeAmount: 0, //居间费数字动画
+      name: "未登录",
+      // let name = localStorage.getItem("name");
       //请求到的后台数据
       echart0: {
         //任务数量
@@ -888,10 +890,12 @@ export default {
     console.log(token);
     let account = localStorage.getItem("account");
     console.log(account);
+    that.name = localStorage.getItem("name");
     // let password =
     //   localStorage.getItem("password") || sessionStorage.getItem("password");
     // console.log(password);
     //调取后台数据
+    //调取当前任务和已办任务数
     that
       .$http({
         method: "get",
@@ -913,6 +917,7 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
+    // 调取订单总数图表信息
     that
       .$http({
         method: "get",
@@ -936,6 +941,7 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
+    //调取申请总金额图表信息
     that
       .$http({
         method: "get",
@@ -962,6 +968,7 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
+    // 调取居间费总金额图表信息
     that
       .$http({
         method: "get",
@@ -990,6 +997,7 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
+    //查询当前任务
     that
       .$http({
         method: "get",
