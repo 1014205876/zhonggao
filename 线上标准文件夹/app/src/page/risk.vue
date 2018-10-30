@@ -25,18 +25,18 @@
         </li>
       </ul>
     </div>
-    <div class="shenpi" v-on:click='toapprovalRecord'>
+    <div class="shenpi" v-on:click='toapprovalRecord' v-if='cant'>
       <div class="left">
         <img src="static/img/icon/task_gray.png" alt="">审批记录
       </div>
       <img src="static/img/icon/right_gray.png" alt="" class="right">
     </div>
-    <div class="shenpi">
+    <div class="shenpi" v-if='cant'>
       <div class="left">
         <img src="static/img/icon/task_gray.png" alt="">{{data.jsonObject.name}}
       </div>
     </div>
-    <form>
+    <form v-if='cant'>
       <ul class="form">
         <!-- <li v-for='list in form' :key='list.id'>
           <inputcom v-if='list.type=="input"' v-bind:list='list'></inputcom>
@@ -86,6 +86,7 @@ export default {
       taskId: "",
       processInsId: "",
       pass: false,
+      cant:true,
       // 动态表单数据
       data: {
         // 动态表单数据
@@ -298,7 +299,6 @@ export default {
         that.companyinfo = res.data.data;
         that.change();
         // console.log(that.companyinfo.appointTime);
-        // companyinfo.appointTime
         console.log(res);
       })
       .catch(function(err) {
@@ -318,6 +318,9 @@ export default {
         that.data = res.data.data;
         document.getElementById("titleId").innerHTML =
           that.data.jsonObject.name;
+          if(that.data.jsonObject.name=='征信拆解'||that.data.jsonObject.name=='资产推送'){
+            that.cant=false;
+          }
         console.log(res);
       })
       .catch(function(err) {
@@ -340,7 +343,6 @@ export default {
       .catch(function(err) {
         console.log(err);
       });
-    // console.log("createdend");
   },
   methods: {
     change() {
