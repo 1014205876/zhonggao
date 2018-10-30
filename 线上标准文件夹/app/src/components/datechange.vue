@@ -14,22 +14,26 @@ export default {
   methods: {
     change(value) {
       let newvalue = "";
-      let stopTime = new Date(value.replace(/-/g, '/')).getTime();
-      let date = new Date(stopTime);
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      let hour = date.getHours();
-      if (month < 10) {
-        month = "0" + month;
-      }
-      if (day < 10) {
-        day = "0" + day;
-      }
-      if (hour <= 12) {
-        newvalue = year + "-" + month + "-" + day + " " + "AM";
-      } else {
-        newvalue = year + "-" + month + "-" + day + " " + "PM";
+      if (value) {
+      console.log("replace");
+        let stopTime = new Date(value.replace(/-/g, "/")).getTime();
+        let date = new Date(stopTime);
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        if (month < 10) {
+          month = "0" + month;
+        }
+        if (day < 10) {
+          day = "0" + day;
+        }
+        if (hour <= 12) {
+          newvalue = year + "-" + month + "-" + day + " " + "AM";
+        } else {
+          newvalue = year + "-" + month + "-" + day + " " + "PM";
+        }
+        return newvalue
       }
     }
   },
