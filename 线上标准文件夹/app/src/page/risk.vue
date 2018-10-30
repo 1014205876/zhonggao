@@ -297,7 +297,7 @@ export default {
       .then(function(res) {
         that.companyinfo = res.data.data;
         that.change();
-        console.log(that.companyinfo.appointTime);
+        // console.log(that.companyinfo.appointTime);
         // companyinfo.appointTime
         console.log(res);
       })
