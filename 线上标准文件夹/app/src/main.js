@@ -26,9 +26,6 @@ router.beforeEach((to, from, next) => {//路由跳转之前执行
   }
   let logingwangzheng = sessionStorage.getItem('logingwangzheng');
   let indexUrlwangzheng = localStorage.getItem('indexUrlwangzheng');
-  console.log(logingwangzheng)
-  console.log(indexUrlwangzheng)
-  // console.log(to.matched.some(m => m.meta.auth))
   if (logingwangzheng != null) {
     console.log('本次登陆过')
     next()

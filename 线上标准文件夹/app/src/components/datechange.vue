@@ -13,10 +13,8 @@ export default {
   props: ["date"],
   methods: {
     change(value) {
-      console.log(value);
       let newvalue = "";
       let stopTime = new Date(value.replace(/-/g, '/')).getTime();
-      console.log(stopTime)
       let date = new Date(stopTime);
       let year = date.getFullYear();
       let month = date.getMonth() + 1;
@@ -33,8 +31,6 @@ export default {
       } else {
         newvalue = year + "-" + month + "-" + day + " " + "PM";
       }
-      console.log(newvalue);
-      return newvalue;
     }
   },
   watch: {
