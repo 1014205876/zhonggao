@@ -55,6 +55,7 @@ export default {
           alert("请输入密码");
         } else {
           let userInfos = { loginName: that.account, password: that.password };
+          document.activeElement.blur();
           that
             .$http({
               url: "/api/auth/login",
