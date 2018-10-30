@@ -1,0 +1,18 @@
+version: '3'
+services:
+  app:
+    image: ccr.ccs.tencentyun.com/bjd_bigdata/peak-flow-h5-front:${VERSION}
+    environment:
+      - CAS_SERVER=http://auth.e-masspick.com
+      - API_SERVER=http://zuul:8040
+      - AUTH_ID=6c3a7833-16a1-42fb-905f-4e94b8985b79
+      - NODE_PORT=8080
+      - NODE_SERVER=http://flowH5.e-masspick.com
+    ports:
+      - "9210:8080"
+    networks:
+      - springcloud-overlay
+networks:
+  springcloud-overlay:
+    external:
+      name: springcloud-overlay
