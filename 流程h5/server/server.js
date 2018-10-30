@@ -15,10 +15,10 @@ app.use(bodyParser.json({limit:'50mb'}));
 
 app.use(bodyParser.urlencoded({ extended: true,limit:'50mb'}));
 // console.log('node start')
-app.post('/auth\*', function (appReq, res) {
+app.post('/api/auth/login', function (appReq, res) {
     //用户名+密码 发送给后台
-    console.log('login');
-    console.log(appReq.body)
+    // console.log('login');
+    // console.log(appReq.body)
     userInfos = {"loginName":appReq.body.loginName,"password":appReq.body.password};
     // console.log(JSON.stringify(userInfos));
     var content = JSON.stringify(userInfos);
