@@ -50,10 +50,11 @@
           <datecom v-if='list.type=="dayTime"' v-bind:list='list'></datecom>
           <radiocom v-if='list.type=="dropdown"||list.type=="radio-buttons"' v-bind:list='list'></radiocom>
           <checkcom v-if='list.type=="check"' v-bind:list='list'></checkcom>
-          <div class="remarks" v-if='list.type=="multi-line-text"'>
+          <textcom v-if='list.type=="multi-line-text"' v-bind:list='list'></textcom>
+          <!-- <div class="remarks" v-if='list.type=="multi-line-text"'>
             <div class="name">{{list.name}}</div>
-            <textarea rows="3" :placeholder='list.placeholder?list.placeholder:"请输入"' v-model='list.value'></textarea>
-          </div>
+            <textarea rows="3" :placeholder='list.placeholder?list.placeholder:"请输入"' v-model='textarea'></textarea>
+          </div> -->
         </li>
       </ul>
       <div class="submit">
@@ -78,6 +79,7 @@ import datecom from "@/components/datecom";
 import radiocom from "@/components/radiocom";
 // import selectcom from "@/components/selectcom";
 import checkcom from "@/components/checkcom";
+import textcom from "@/components/textcom";
 export default {
   name: "Risk",
   data() {
@@ -86,7 +88,7 @@ export default {
       taskId: "",
       processInsId: "",
       pass: false,
-      cant:true,
+      cant: true,
       // 动态表单数据
       data: {
         // 动态表单数据
@@ -158,8 +160,8 @@ export default {
               placeholder: null,
               optionsExpression: "${clientRating}",
               fieldType: "OptionFormField",
-              value: 'secondRank'
-            },
+              value: "secondRank"
+            }
             // {
             //   fieldType: "FormField08",
             //   name:
@@ -278,7 +280,8 @@ export default {
     datecom,
     // selectcom,
     radiocom,
-    checkcom
+    checkcom,
+    textcom
   },
   created() {
     let that = this;
@@ -318,9 +321,12 @@ export default {
         that.data = res.data.data;
         document.getElementById("titleId").innerHTML =
           that.data.jsonObject.name;
-          if(that.data.jsonObject.name=='征信拆解'||that.data.jsonObject.name=='资产推送'){
-            that.cant=false;
-          }
+        if (
+          that.data.jsonObject.name == "征信拆解" ||
+          that.data.jsonObject.name == "资产推送"
+        ) {
+          that.cant = false;
+        }
         console.log(res);
       })
       .catch(function(err) {
@@ -465,7 +471,7 @@ export default {
           form[that.data.jsonObject.fields[i].id] =
             that.data.jsonObject.fields[i].value;
         }
-        console.log(form)
+        console.log(form);
         that
           .$http({
             method: "post",
@@ -576,31 +582,6 @@ export default {
       }
       > li.no {
         background: #ffe0da;
-      }
-      .remarks {
-        textarea {
-          padding: 0.1rem 0;
-          width: 100%;
-          line-height: 0.5rem;
-          font-size: 0.3rem;
-        }
-        textarea:-ms-input-placeholder {
-          color: #999999;
-          font-size: 0.3rem;
-        }
-        textarea::-moz-placeholder {
-          color: #999999;
-          font-size: 0.3rem;
-        }
-        textarea:-moz-placeholder {
-          color: #999999;
-          font-size: 0.3rem;
-        }
-        textarea::-webkit-input-placeholder {
-          //手机端
-          color: #999999;
-          font-size: 0.3rem;
-        }
       }
     }
     .submit {
