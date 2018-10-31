@@ -4,10 +4,13 @@
       <li v-for='list in history.list' :key='list.id' v-on:click='totask(list.taskId,list.processInsId)'>
         <div class="left">
           <div class="name">{{list.entName}}</div>
-          <div class="num">任务编号:{{list.taskId}}</div>
+          <div class="num">任务编号:{{list.projectNumber}}</div>
         </div>
         <div class="right">
-          <div class="time">{{list.endTime}}</div>
+          <div class="time">
+              <datechange v-bind:date='list.endTime' v-bind:noon='false'></datechange>
+            <!-- {{list.endTime}} -->
+          </div>
           <div class="pass">{{list.actName}}</div>
         </div>
       </li>
@@ -29,6 +32,8 @@
 <script>
 // 引入jq
 import $ from "jquery";
+// 引入时间标准化组件
+import datechange from "@/components/datechange";
 export default {
   name: "History",
   data() {
@@ -70,6 +75,9 @@ export default {
       }
     };
   },
+  components: {
+    datechange
+  }, //引入组件
   methods: {
     totask(taskId, processInstanceId) {
       this.$router.push({
@@ -186,16 +194,17 @@ export default {
       display: flex;
       justify-content: space-between;
       .left {
-        width: 4rem;
+        width: 4.8rem;
         .name {
-          height:1rem;
+          // height:1rem;
+          height:0.5rem;
           line-height: 0.5rem;
-          font-size: 0.36rem;
+          font-size: 0.3rem;
           color: #333333;
           overflow: hidden;
           text-overflow: ellipsis;
           display: -webkit-box;
-          -webkit-line-clamp: 2;
+          -webkit-line-clamp: 1;
           -webkit-box-orient: vertical;
         }
         .num {
@@ -213,10 +222,10 @@ export default {
       .right {
         text-align: right;
         .time {
-          padding:0.14rem 0;
-          width:1.6rem;
-          line-height: 0.36rem;
-          // line-height: 0.5rem;
+          // padding:0.14rem 0;
+          // width:1.6rem;
+          // line-height: 0.36rem;
+          line-height: 0.5rem;
           font-size: 0.28rem;
           color: #c6c6c6;
         }

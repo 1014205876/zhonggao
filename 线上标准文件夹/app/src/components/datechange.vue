@@ -10,12 +10,11 @@ export default {
       newdate: ""
     };
   },
-  props: ["date"],
+  props: ["date", "noon"],
   methods: {
     change(value) {
       let newvalue = "";
       if (value) {
-      console.log("replace");
         let stopTime = new Date(value.replace(/-/g, "/")).getTime();
         let date = new Date(stopTime);
         let year = date.getFullYear();
@@ -28,12 +27,17 @@ export default {
         if (day < 10) {
           day = "0" + day;
         }
-        if (hour <= 12) {
-          newvalue = year + "-" + month + "-" + day + " " + "AM";
+        console.log(this.noon)
+        if (this.noon) {
+          if (hour <= 12) {
+            newvalue = year + "-" + month + "-" + day + " " + "AM";
+          } else {
+            newvalue = year + "-" + month + "-" + day + " " + "PM";
+          }
         } else {
-          newvalue = year + "-" + month + "-" + day + " " + "PM";
+          newvalue = year + "-" + month + "-" + day;
         }
-        return newvalue
+        return newvalue;
       }
     }
   },

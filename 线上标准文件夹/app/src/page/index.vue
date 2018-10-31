@@ -76,7 +76,7 @@
           <ul class="bottom">
             <li>
               <span>地址</span>
-              <span class='data'>{{list.scope}}</span>
+              <span class='data' v-if='list.address'>{{list.address}}</span>
             </li>
             <li>
               <span>企业类型</span>

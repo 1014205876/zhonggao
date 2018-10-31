@@ -19,7 +19,7 @@
           <li v-for="item in list.fields" :key='item.id' v-if='item.value&&item.name'>
             <span class='left'>{{item.name}}</span>
             <span class='right' v-if='item.type=="dayTime"'>
-              <datechange v-bind:date='item.value'></datechange>
+              <datechange v-bind:date='item.value' v-bind:noon='true'></datechange>
             </span>
             <span class='right' v-else>{{item.value}}</span>
           </li>

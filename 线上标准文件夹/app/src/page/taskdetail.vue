@@ -21,7 +21,7 @@
           <span>贷款期限 ：</span>{{companyinfo.term}}个月
         </li>
         <li>
-          <span>预约时间 ：</span><datechange v-bind:date='companyinfo.appointTime' style='color:#000'></datechange>
+          <span>预约时间 ：</span><datechange v-bind:date='companyinfo.appointTime' v-bind:noon='true' style='color:#000'></datechange>
         </li>
       </ul>
     </div>
@@ -41,7 +41,7 @@
           <li v-for="item in list.fields" :key='item.id'>
             <span class='left'>{{item.name}}</span>
             <span class='right' v-if='item.type=="dayTime"'>
-              <datechange v-bind:date='item.value'></datechange>
+              <datechange v-bind:date='item.value' v-bind:noon='true'></datechange>
             </span>
             <span class='right' v-else>{{item.value}}</span>
           </li>
