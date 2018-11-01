@@ -1033,7 +1033,7 @@ export default {
       });
     for (let i = 0; i < 7; i++) {
       // 将时间格式化（防止跨月出现11.0-6这种）
-      let date01 = new Date();
+      let date01 = new Date('2018,10,01');
       let year01 = date01.getFullYear();
       let month01 = date01.getMonth();
       let day01 = date01.getDate() - 7 + i;
@@ -1056,13 +1056,13 @@ export default {
   // 操作dome
   mounted() {
     let that = this;
-    // $(".index").css("height", $(window).height());
-    // $(".index .bgimg").css("height", $(window).height());
-    // $(".index .tanimate").css("height", $(window).height());
-    // $(".index .banimate").css(
-    //   "height",
-    //   $(window).height() - $(".index .head").height()
-    // );
+    $(".index").css("height", $(window).height());
+    $(".index .bgimg").css("height", $(window).height());
+    $(".index .tanimate").css("height", $(window).height());
+    $(".index .banimate").css(
+      "height",
+      $(window).height() - $(".index .head").height()
+    );
     $(".index .tanimate .data li").click(function() {
       if (that.over >= 4) {
         $(".index .tanimate .data li").removeClass("active");
@@ -1089,7 +1089,6 @@ export default {
 <style lang="less" scoped>
 .index {
   width: 100%;
-  height:100%;
   position: relative;
   overflow: hidden;
   .bgimg {
@@ -1102,7 +1101,6 @@ export default {
   }
   .tanimate {
     width: 100%;
-    height:100%;
     background-position: center center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -1278,7 +1276,6 @@ export default {
     top: 1.8rem;
     z-index: 20;
     width: 100%;
-    height:100%;
     overflow: auto;
     // padding-top: 1.8rem;
     transform: translateY(100%);

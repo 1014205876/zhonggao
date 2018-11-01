@@ -91,17 +91,17 @@ export default {
   mounted() {
     let that=this;
     $(".login").css("height", $(window).height());
-    // let winHeight = $(window).height(); //获取当前页面高度
-    // $(window).resize(function() {
-    //   let thisHeight = $(this).height();
-    //   if (winHeight - thisHeight > 50) {
-    //     //当软键盘弹出，在这里面操作
-    //     that.disabled=true
-    //   } else {
-    //     //当软键盘收起，在此处操作
-    //     that.disabled=false
-    //   }
-    // });
+    let winHeight = $(window).height(); //获取当前页面高度
+    $(window).resize(function() {
+      let thisHeight = $(this).height();
+      if (winHeight - thisHeight > 50) {
+        //当软键盘弹出，在这里面操作
+        that.disabled=true
+      } else {
+        //当软键盘收起，在此处操作
+        that.disabled=false
+      }
+    });
   }
 };
 </script>

@@ -423,7 +423,6 @@ export default {
       that.over = false;
       for (let i = 0; i < that.data.jsonObject.fields.length; i++) {
         if (that.data.jsonObject.fields[i].required) {
-        console.log(that.data.jsonObject.fields[i].value)
           if (
             that.data.jsonObject.fields[i].value
             // that.form[i].optionValue ||
