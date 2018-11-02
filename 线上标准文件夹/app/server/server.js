@@ -14,11 +14,10 @@ const server = app.listen(3200);
 app.use(bodyParser.json({limit:'50mb'}));
 
 app.use(bodyParser.urlencoded({ extended: true,limit:'50mb'}));
-// console.log('node start')
+
 app.post('/api/auth/login', function (appReq, res) {
     //用户名+密码 发送给后台
-    // console.log('login');
-    // console.log(appReq.body)
+
     userInfos = {"loginName":appReq.body.loginName,"password":appReq.body.password};
     // console.log(JSON.stringify(userInfos));
     var content = JSON.stringify(userInfos);
@@ -39,7 +38,6 @@ app.post('/api/auth/login', function (appReq, res) {
             //根据后端返回值，判断用户名和密码
             user=JSON.parse(user);
             console.log("user",user)
-            console.log(user.result.name)
             if(user.code == "200"){
                 // 将用户名通过jwt加密token
                 var token = jwt.sign({ name: appReq.body.loginName }, 'secret', {
@@ -49,7 +47,6 @@ app.post('/api/auth/login', function (appReq, res) {
                     "code": "200",
                     "reason": "",
                     "result": {
-                        'name':user.result.name,
                         "token": token
                     }
                 });
@@ -73,7 +70,6 @@ app.post('/api/auth/login', function (appReq, res) {
 
 //拦截所有/api请求添加头信息后转发
 app.all('/api\*', function (req, res) {
-    // console.log('api');
     let appId = process.env.AUTH_ID;
     let token = req.headers.authorization;
     if(token){
@@ -119,7 +115,6 @@ app.all('/api\*', function (req, res) {
         .set('AUTH_USER', req.decoded.name)
         .pipe(res)
         .on('end', function () {
-            console.log(req.decoded);
             console.log(`请求${path}已完成！`);
         });
 });

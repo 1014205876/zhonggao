@@ -175,7 +175,7 @@ export default {
           }
           .right {
             text-align: right;
-            width: 2.2rem;
+            width: 2.3rem;
             line-height: 0.5rem;
             padding: 0.07rem 0;
             color: #333333;
