@@ -467,16 +467,13 @@ export default {
             that.remind = "请补充完善信息";
           }
         }
-        if (
-          that.data.jsonObject.fields[i].params &&
-          that.data.jsonObject.fields[i].value
-        ) {
+        if (that.data.jsonObject.fields[i].params) {
           if (that.data.jsonObject.fields[i].params.regexPattern) {
             console.log(that.data.jsonObject.fields[i].params.regexPattern);
-            console.log(that.data.jsonObject.fields[i].value - 0);
+            console.log(that.data.jsonObject.fields[i].value);
             console.log(
-              /((13[0-9])|(14[5|7])|(15([0-3]|[0-9]))|(17[0-9])|(18[0-9])|(19[0-9]))\d{8}/.test(
-                that.data.jsonObject.fields[i].value - 0
+              /that.data.jsonObject.fields[i].params.regexPattern/.test(
+                that.data.jsonObject.fields[i].value
               )
             );
             // if (
