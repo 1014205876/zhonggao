@@ -130,32 +130,34 @@ export class AuthCheckComponent implements OnInit {
   sure(e){
   }
 
-  formSubmitted(form: any){
+  formSubmitted(obj){
+    console.log(obj.form);
+    console.log(obj.num);
     // let count = 0;
-    // for (let key in form.controls) {
-    //   if (form.controls[key].errors) {
+    // for (let key in obj.form.controls) {
+    //   if (obj.form.controls[key].errors) {
     //     this.warningBlock.show();
-    //     if (form.controls[key].errors.hasOwnProperty('required') || form.controls[key].errors.hasOwnProperty('hasValue')) {
+    //     if (obj.form.controls[key].errors.hasOwnProperty('required') || obj.form.controls[key].errors.hasOwnProperty('hasValue')) {
     //       this.warning = this.config[count].name + "不得为空";
-    //     } else if (form.controls[key].errors.hasOwnProperty('pattern')) {
+    //     } else if (obj.form.controls[key].errors.hasOwnProperty('pattern')) {
     //       this.warning = this.config[count].name + "格式有误";
     //     }
     //     return false;
     //   }
     //   count++;
     // }
-    this.authItems.allowOrNot=form.value.allowOrNot;
-    this.authItems.approveRemark=form.value.approveRemark;
-    if(!form.value.allowOrNot) {
-      this.mask=true;
-      this.confirmMsg='请填写审批结果';
-    }else if(form.value.allowOrNot=='reject'){
-      this.mask=true;
-      this.confirmMsg='是否驳回该客户的申请？';
-    }else {
-      this.save();
-      this.router.navigate(['/app/present/selfDis'],{queryParams:{'taskId':this.pageState.taskId,'processInsId':this.pageState.processInsId,'type':this.pageState.type, 'product': this.product}})
-    }
+    // this.authItems.allowOrNot=obj.form.value.allowOrNot;
+    // this.authItems.approveRemark=obj.form.value.approveRemark;
+    // if(!obj.form.value.allowOrNot) {
+    //   this.mask=true;
+    //   this.confirmMsg='请填写审批结果';
+    // }else if(obj.form.value.allowOrNot=='reject'){
+    //   this.mask=true;
+    //   this.confirmMsg='是否驳回该客户的申请？';
+    // }else {
+    //   this.save();
+    //   this.router.navigate(['/app/present/selfDis'],{queryParams:{'taskId':this.pageState.taskId,'processInsId':this.pageState.processInsId,'type':this.pageState.type, 'product': this.product}})
+    // }
   }
 
 }

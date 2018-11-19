@@ -20,6 +20,11 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     // 接口联调时，删除代码
     // this.form = this.createGroup();
   }
+  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
+    if (!changes['config'].firstChange) {
+      this.form = this.createGroup();
+    }
+  }
   createGroup() {
     const group = this.fb.group({});
     this.config.forEach(control => {
@@ -51,11 +56,6 @@ export class DynamicFormComponent implements OnInit, OnChanges {
     return null;
   }
 
-  ngOnChanges(changes: { [propName: string]: SimpleChange }) {
-    if (!changes['config'].firstChange) {
-      this.form = this.createGroup();
-    }
-  }
 
   cal(){
     window.history.back()

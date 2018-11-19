@@ -34,7 +34,7 @@ export class HttpService {
 		this.headers = new Headers({
 			Authorization: this.auth.getAuthorization(state.cookieName),
 			'Content-Type': 'application/json',
-			// 'AUTH_USER': 'zxcj'
+			'AUTH_USER': 'zxcj'
 		})
 	}
 

@@ -18,6 +18,7 @@
             <td>项目编号</td>
             <td>所在区域</td>
             <td>申请金额</td>
+            <td>审请期限（月）</td>
             <td>产品名称</td>
             <td>推广人员</td>
             <td>操作员</td>
@@ -51,6 +52,7 @@
             <td>{{item.projectNumber}}</td>
             <td>{{item.scope}}</td>
             <td>{{item.amount+'万元'}}</td>
+            <td>12</td>
             <td>{{item.productName}}</td>
             <td>{{item.insStaffName?item.insStaffName:'无'}}</td>
             <td>{{item.assignee}}</td>
@@ -58,8 +60,8 @@
             <td class="authHide" [appResource]="{authName: 'post/auth/info/pass'}">
               <a class='blue' *ngIf="!item.assignee&&item.actName=='预约确认'" (click)="row=item;mask=true;">领取任务</a>
               <a class='blue' *ngIf="!item.assignee&&item.actName!='预约确认'" (click)="row=item;claim();">领取任务</a>
-              <a class="blue" [routerLink]="['/app/present/authCheck']" *ngIf="item.actName=='征信拆解'&&item.assignee" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':item.actName,'product': product}">审批</a>
-              <a class="blue" [routerLink]="['/app/present/presentTable']" *ngIf="item.actName!='征信拆解'&&item.assignee" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':item.actName,'product': product}">审批</a>
+              <a class="blue" [routerLink]="['/app/present/authCheck']" *ngIf="item.actName=='征信拆解'&&item.assignee" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':item.actName,'product': product}">处理</a>
+              <a class="blue" [routerLink]="['/app/present/presentTable']" *ngIf="item.actName!='征信拆解'&&item.assignee" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':item.actName,'product': product}">处理</a>
             </td>
           </tr>
         </tbody>
