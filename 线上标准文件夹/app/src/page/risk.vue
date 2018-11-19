@@ -63,10 +63,10 @@
         </li>
       </ul>
       <div class="submit">
-        <div class="btn pass" style='margin:0 auto' @click='submit(true)'>提交</div>
-        <!-- <div class="btn nopass" @click='submit(false)'>不通过</div>
-        <div class="btn pass" @click='submit(true)'>通过</div> -->
-      <alert v-on:choice='choice' ref="alert1" v-bind:remind="'是否确定提交？'" v-bind:left="'取消'" v-bind:leftColor="'#333333'" v-bind:right="'确认'" v-bind:rightColor="'#3674B2'"></alert>
+        <!-- <div class="btn pass" style='margin:0 auto' @click='submit(true)'>提交</div> -->
+        <div class="btn nopass" @click='submit(false)'>不通过</div>
+        <div class="btn pass" @click='submit(true)'>通过</div>
+      <alert v-on:choice='choice' ref="alert1" v-bind:remind="pass" v-bind:left="'取消'" v-bind:leftColor="'#333333'" v-bind:right="'确认'" v-bind:rightColor="'#3674B2'"></alert>
       <alert v-on:choice='choice' ref="alert2" v-bind:remind="remind" v-bind:left="'确定'" v-bind:leftColor="'#3674B2'"></alert>
       </div>
     </form>
@@ -95,10 +95,11 @@ export default {
       token: "",
       taskId: "",
       processInsId: "",
-      pass: false,
       cant: true,
       no: true,
       remind: "请补充完善信息",
+      pass:'是否确定提交?',
+      over:false,
       // 动态表单数据
       data: {
         // 动态表单数据
@@ -346,14 +347,14 @@ export default {
         that.data = res.data.data;
         document.getElementById("titleId").innerHTML =
           that.data.jsonObject.name;
-        if (
-          that.data.jsonObject.name == "征信拆解" ||
-          that.data.jsonObject.name == "资产推送"
-        ) {
-          that.cant = false;
-        } else {
-          that.cant = true;
-        }
+        // if (
+        //   that.data.jsonObject.name == "征信拆解" ||
+        //   that.data.jsonObject.name == "资产推送"
+        // ) {
+        //   that.cant = false;
+        // } else {
+        //   that.cant = true;
+        // }
         if (
           that.data.jsonObject.name == "风控审批" ||
           that.data.jsonObject.name == "准入审核"
@@ -443,11 +444,16 @@ export default {
     },
     submit(pass) {
       let that = this;
-      that.pass = pass;
       this.forEach(that);
+      console.log(that.over)
       if (that.over) {
         that.$refs.alert2.alertshow();
       } else {
+        if(pass){
+          that.pass='是否确定通过？'
+        }else{
+          that.pass='是否确定拒绝？'
+        }
         that.$refs.alert1.alertshow();
       }
     },
@@ -497,9 +503,7 @@ export default {
       }
     },
     choice(choice) {
-      console.log("选择是否通过");
       let that = this;
-      console.log(`点击${choice.data}`);
       if (choice.data == "left") {
         console.log(`不提交`);
       }
@@ -511,25 +515,25 @@ export default {
             that.data.jsonObject.fields[i].value;
         }
         console.log(form);
-        that
-          .$http({
-            method: "post",
-            headers: {
-              "Content-Type": "application/json;charset=utf-8",
-              authorization: that.token
-            },
-            url: "api/peak-flow/v1/flow/task/" + that.taskId,
-            data: form
-          })
-          .then(function(res) {
-            console.log(res);
-            that.$router.push("/index");
-            console.log("提交成功");
-          })
-          .catch(function(err) {
-            console.log(err);
-            console.log("提交失败");
-          });
+        // that
+        //   .$http({
+        //     method: "post",
+        //     headers: {
+        //       "Content-Type": "application/json;charset=utf-8",
+        //       authorization: that.token
+        //     },
+        //     url: "api/peak-flow/v1/flow/task/" + that.taskId,
+        //     data: form
+        //   })
+        //   .then(function(res) {
+        //     console.log(res);
+        //     that.$router.push("/index");
+        //     console.log("提交成功");
+        //   })
+        //   .catch(function(err) {
+        //     console.log(err);
+        //     console.log("提交失败");
+        //   });
       }
       that.$refs.alert1.alertclose();
       that.$refs.alert2.alertclose();
