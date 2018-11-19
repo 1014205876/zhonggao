@@ -1,0 +1,11 @@
+
+<div class="col_5" [formGroup]="group">
+  <div class="key">
+    <span title='{{config.name}}'>{{config.name}}：</span>
+  </div>
+  <div class="value">
+    <input type="date" [attr.placeholder]="config.placeholder" [formControlName]="config.id" (keydown)='ban($event)' (change)="getDay($event)" min="" max="9999-12-31">
+  </div>
+</div>
+
+<app-warning #warningBlock [warning]="warning"></app-warning>

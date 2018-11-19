@@ -1,0 +1,16 @@
+.btn{
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 20px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+.btn.sure{
+    background-color: #589af8;
+    color: #fff;
+}
+.btn.cal{
+    background-color: #f26666;
+    color: #fff;
+}

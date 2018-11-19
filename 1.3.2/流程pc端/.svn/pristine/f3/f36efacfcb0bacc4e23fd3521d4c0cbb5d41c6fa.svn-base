@@ -1,0 +1,5 @@
+<div class='box'>
+    <img src="{{src}}" class='small' alt="" (click)='show=true'>
+    <img src="{{src}}" class='big' alt="" *ngIf='show' (click)='show=false'>
+</div>
+<div class='mask' *ngIf='show' (click)='show=false'></div>

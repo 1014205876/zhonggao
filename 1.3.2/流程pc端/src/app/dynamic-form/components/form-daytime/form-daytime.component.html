@@ -1,0 +1,29 @@
+<div class="col_5">
+  <div class="key">
+    <span title='{{config.name}}'>{{config.name}}：</span>
+  </div>
+  <div class="value">
+    <input type="date" [attr.placeholder]="config.placeholder" [(ngModel)]="date" (change)="getDay($event)" min="" max="9999-12-31">
+    <select [(ngModel)]="time" class="select" (click)="getTime()">
+      <option value=""></option>
+      <option name="time" value="08:00:00">AM</option>
+      <option name="time" value="14:00:00">PM</option>
+    </select>
+  </div>
+</div>
+
+<div class="warnBox" *ngIf='isShow'>
+  <div class='con'>
+    <div class='header'>
+      <span class='close' (click)='hide()'>&times;</span>
+    </div>
+    <div class='body'>
+      <span>{{warning}}</span>
+    </div>
+    <div class='footer'>
+      <button type="button" (click)='hide()'>确定</button>
+    </div>
+  </div>
+</div>
+<div class='mask' *ngIf='isShow'></div>
+<!-- <app-warning #warningBlock [warning]="warning"></app-warning> -->

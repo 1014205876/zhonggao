@@ -1,0 +1,22 @@
+<div *ngIf='obj'>
+  <div class='tit'>
+    <h4>
+      材料审核结果
+    </h4>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <td>是否通过</td>
+        <td>
+          <span *ngIf="obj.allowOrNot=='pass'">通过</span>
+          <span *ngIf="obj.allowOrNot=='reject'">不通过</span>
+        </td>
+      </tr>
+      <tr>
+        <td>备注</td>
+        <td>{{obj.approveRemark}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

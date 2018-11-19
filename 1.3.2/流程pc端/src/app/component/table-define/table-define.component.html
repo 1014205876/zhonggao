@@ -1,0 +1,19 @@
+<table class="gridtable" *ngIf="list && list.length > 0">
+  <ng-container *ngFor="let item of list;let i=index">
+    <tr *ngIf="i % col === 0">
+      <ng-container *ngFor="let j of cols">
+        <ng-container *ngIf="(i+j)<list.length">
+          <td>{{list[i+j].label||list[i+j].name}}</td>
+          <td>
+            <span *ngIf="list[i+j].type && list[i+j].type!=='image'" title='{{list[i+j].value}}'>{{list[i+j].value}}</span>
+            <img-watcher *ngIf="list[i+j].type && list[i+j].type==='image'" [src]='list[i+j].value'></img-watcher>
+          </td>
+        </ng-container>
+        <ng-container *ngIf="(i+j)>=list.length">
+          <td></td>
+          <td></td>
+        </ng-container>
+      </ng-container>
+    </tr>
+  </ng-container>
+</table>

@@ -1,0 +1,830 @@
+<div *ngIf='obj'>
+  <div class='big_tit'>
+    <h3>
+      企业征信报告
+    </h3>
+  </div>
+  <div class="tit">
+    <h3>基本信息</h3>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th title='名称'>名称</th>
+        <th title='报告日期'>报告日期</th>
+        <th title='中征码'>中征码</th>
+      </tr>
+      <tr>
+        <td title='{{obj.entName}}'>{{obj.entName}}</td>
+        <td title='{{obj.reportDate}}'>{{obj.reportDate}}</td>
+        <td title='{{obj.eigenCode}}'>{{obj.eigenCode}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+      <h3>一、信息概要</h3>
+    <h4>当前负债信息概要</h4>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th title='由资产管理公司处置的债务' colspan='3'>由资产管理公司处置的债务</th>
+        <th title='欠息汇总' colspan='2'>欠息汇总</th>
+      </tr>
+      <tr>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+        <th title='最近一次处置完成日期'>最近一次处置完成日期</th>
+        <th title='笔数'>笔数</th>
+        <th title='余额（元）'>余额（元）</th>
+      </tr>
+      <tr>
+        <td title='{{obj.summary.currentAssetDebt.byAssetComHandleCount}}'>{{obj.summary.currentAssetDebt.byAssetComHandleCount}}</td>
+        <td title='{{obj.summary.currentAssetDebt.byAssetComHandleFee}}'>{{obj.summary.currentAssetDebt.byAssetComHandleFee}}</td>
+        <td title='{{obj.summary.currentAssetDebt.byAssetComHandleDate}}'>{{obj.summary.currentAssetDebt.byAssetComHandleDate}}</td>
+        <td title='{{obj.summary.currentAssetDebt.oweInterestCount}}'>{{obj.summary.currentAssetDebt.oweInterestCount}}</td>
+        <td title='{{obj.summary.currentAssetDebt.oweInterestFee}}'>{{obj.summary.currentAssetDebt.oweInterestFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <tbody>
+      <tr>
+        <th title='垫款' colspan='2'>垫款</th>
+        <th title='担保及第三方代偿的债务' colspan='3'>担保及第三方代偿的债务</th>
+      </tr>
+      <tr>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+        <th title='最近一次还款日期'>最近一次还款日期</th>
+      </tr>
+      <tr>
+        <td title='{{obj.summary.currentAssetDebt.advanceCount}}'>{{obj.summary.currentAssetDebt.advanceCount}}</td>
+        <td title='{{obj.summary.currentAssetDebt.advanceFee}}'>{{obj.summary.currentAssetDebt.advanceFee}}</td>
+        <td title='{{obj.summary.currentAssetDebt.guaranteeCount}}'>{{obj.summary.currentAssetDebt.guaranteeCount}}</td>
+        <td title='{{obj.summary.currentAssetDebt.guaranteeFee}}'>{{obj.summary.currentAssetDebt.guaranteeFee}}</td>
+        <td title='{{obj.summary.currentAssetDebt.guaranteeClearDate}}'>{{obj.summary.currentAssetDebt.guaranteeClearDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <table>
+    <tbody>
+      <tr>
+        <th rowspan="2">类型</th>
+        <th title='正常类汇总' colspan='2'>正常类汇总</th>
+        <th title='关注类汇总' colspan='2'>关注类汇总</th>
+        <th title='不良/违约类汇总' colspan='2'>不良/违约类汇总</th>
+      </tr>
+      <tr>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.summary.currentLoanDebtList'>
+        <th>{{item.category}}</th>
+        <td title='{{item.normalCount}}'>{{item.normalCount}}</td>
+        <td title='{{item.normalBalance}}'>{{item.normalBalance}}</td>
+        <td title='{{item.attentionCount}}'>{{item.attentionCount}}</td>
+        <td title='{{item.attentionBalance}}'>{{item.attentionBalance}}</td>
+        <td title='{{item.problemCount}}'>{{item.problemCount}}</td>
+        <td title='{{item.problemBalance}}'>{{item.problemBalance}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h4>已还清债务信息概要</h4>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th>类型</th>
+        <th title='不良/违约类笔数'>不良/违约类笔数</th>
+        <th title='关注类笔数'>关注类笔数</th>
+        <th title='正常类笔数'>正常类笔数</th>
+      </tr>
+      <tr *ngFor='let item of obj.summary.clearedLoanDebtList'>
+        <th>{{item.category}}</th>
+        <td title='{{item.problemCount}}'>{{item.problemCount}}</td>
+        <td title='{{item.attentionCount}}'>{{item.attentionCount}}</td>
+        <td title='{{item.normalCount}}'>{{item.normalCount}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h4>对外担保信息概要</h4>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th rowspan="2">类型</th>
+        <th title='笔数' rowspan="2">笔数</th>
+        <th title='担保金额' rowspan="2">担保金额</th>
+        <th title='所担保主业务余额' colspan='3'>所担保主业务余额</th>
+      </tr>
+      <tr>
+        <th title='正常'>正常</th>
+        <th title='关注'>关注</th>
+        <th title='不良'>不良</th>
+      </tr>
+      <tr *ngFor='let item of obj.summary.guaranteeStatsList'>
+        <th>{{item.category}}</th>
+        <td title='{{item.count}}'>{{item.count}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.normalFee}}'>{{item.normalFee}}</td>
+        <td title='{{item.attentionFee}}'>{{item.attentionFee}}</td>
+        <td title='{{item.problemFee}}'>{{item.problemFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h4>负债变化历史</h4>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th title='时间'>时间</th>
+        <th title='全部负债余额'>全部负债余额</th>
+        <th title='不良负债余额'>不良负债余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.summary.debitHistoryList'>
+        <td title='{{item.reportDate}}'>{{item.reportDate}}</td>
+        <td title='{{item.totalDebitFee}}'>{{item.totalDebitFee}}</td>
+        <td title='{{item.abnormalDebitFee}}'>{{item.abnormalDebitFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h3>二、信贷记录明细</h3>
+    <h4>当前负债</h4>
+    <h5 *ngIf='obj.currentDebt.abnormalLoan.loanList.length||obj.currentDebt.abnormalLoan.otherLoanList.length||obj.currentDebt.abnormalLoan.tradeFinancingList.length||obj.currentDebt.abnormalLoan.factoringList.length||obj.currentDebt.abnormalLoan.bankAcceptanceList.length||obj.currentDebt.abnormalLoan.letterCredit.length||obj.currentDebt.abnormalLoan.guaranteeLetter.length'>不良和违约类债务</h5>
+    <span *ngIf='obj.currentDebt.abnormalLoan.loanList.length>0'>贷款</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.loanList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='币种'>币种</th>
+        <th title='借据金额'>借据金额</th>
+        <th title='借据余额'>借据余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.loanList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.curType}}'>{{item.curType}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.abnormalLoan.otherLoanList.length'>
+    <span>类贷款</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.otherLoanList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类/交易状态'>五级分类/交易状态</th>
+        <th title='业务种类'>业务种类</th>
+        <th title='币种'>币种</th>
+        <th title='融资金额'>融资金额</th>
+        <th title='余额'>余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.otherLoanList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.bussType}}'>{{item.bussType}}</td>
+        <td title='{{item.curType}}'>{{item.curType}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.abnormalLoan.tradeFinancingList.length>0'>
+    <span>贸易融资</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.tradeFinancingList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='融资金额'>融资金额</th>
+        <th title='融资余额'>融资余额</th>
+        <th title='放款日期'>放款日期</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='担保'>担保</th>
+        <th title='展期'>展期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.tradeFinancingList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.startDate}}'>{{item.startDate}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.abnormalLoan.factoringList.length>0'>
+    <span>保理</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.factoringList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='叙做金额'>叙做金额</th>
+        <th title='叙做余额'>叙做余额</th>
+        <th title='担保'>担保</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.factoringList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.advances}}'>{{item.advances}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.abnormalLoan.bankAcceptanceList.length>0'>
+    <span>银行承兑汇票</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.bankAcceptanceList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='出票金额'>出票金额</th>
+        <th title='保证金比例（%）'>保证金比例（%）</th>
+        <th title='担保'>担保</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.bankAcceptanceList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.bailRate}}'>{{item.bailRate}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.advances}}'>{{item.advances}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.abnormalLoan.letterCredit.length>0'>
+    <span>信用证</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.letterCredit.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='保证金比例（%）'>保证金比例（%）</th>
+        <th title='开证金额'>开证金额</th>
+        <th title='可用余额'>可用余额</th>
+        <th title='担保'>担保</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.letterCredit'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.bailRate}}'>{{item.bailRate}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.advances}}'>{{item.advances}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.abnormalLoan.guaranteeLetter.length>0'>
+    <span>保函</span>
+  </div>
+  <table *ngIf='obj.currentDebt.abnormalLoan.guaranteeLetter.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='保证金比例（%）'>保证金比例（%）</th>
+        <th title='金额'>金额</th>
+        <th title='余额'>余额</th>
+        <th title='担保'>担保</th>
+        <th title='展期'>展期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.abnormalLoan.guaranteeLetter'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.bailRate}}'>{{item.bailRate}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h5 *ngIf='obj.currentDebt.attentionLoan.loanList.length||obj.currentDebt.attentionLoan.tradeFinancingList.length||obj.currentDebt.attentionLoan.factoringList.length||obj.currentDebt.attentionLoan.bankAcceptanceList.length||obj.currentDebt.attentionLoan.letterCredit.length||obj.currentDebt.attentionLoan.guaranteeLetter.length||obj.currentDebt.attentionLoan.billDiscountedList.length'>关注类债务</h5>
+    <span *ngIf='obj.currentDebt.attentionLoan.loanList.length>0'>贷款</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.loanList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='种类'>种类</th>
+        <th title='借据金额'>借据金额</th>
+        <th title='借据余额'>借据余额</th>
+        <th title='到期日期'>到期日期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.loanList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.bussType}}'>{{item.bussType}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.attentionLoan.tradeFinancingList.length>0'>
+    <span>贸易融资</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.tradeFinancingList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='融资金额'>融资金额</th>
+        <th title='融资余额'>融资余额</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='展期'>展期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.tradeFinancingList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.attentionLoan.factoringList.length>0'>
+    <span>保理</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.factoringList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='叙做金额'>叙做金额</th>
+        <th title='叙做余额'>叙做余额</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.factoringList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.advances}}'>{{item.advances}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.attentionLoan.billDiscountedList.length>0'>
+    <span>票据贴现</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.billDiscountedList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='贴现金额'>贴现金额</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='五级分类'>五级分类</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.billDiscountedList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.attentionLoan.bankAcceptanceList.length>0'>
+    <span>银行承兑汇票</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.bankAcceptanceList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='出票金额'>出票金额</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='保证金比例（%）'>保证金比例（%）</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.bankAcceptanceList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.bailRate*100}}'>{{item.bailRate*100}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.attentionLoan.letterCredit.length>0'>
+    <span>信用证</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.letterCredit.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='开证金额'>开证金额</th>
+        <th title='可用余额'>可用余额</th>
+        <th title='保证金比例（%）'>保证金比例（%）</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.letterCredit'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.bailRate*100}}'>{{item.bailRate*100}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.attentionLoan.guaranteeLetter.length>0'>
+    <span>保函</span>
+  </div>
+  <table *ngIf='obj.currentDebt.attentionLoan.guaranteeLetter.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='金额'>金额</th>
+        <th title='余额'>余额</th>
+        <th title='保证金比例（%）'>保证金比例（%）</th>
+        <th title='五级分类'>五级分类</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.attentionLoan.guaranteeLetter'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.bailRate*100}}'>{{item.bailRate*100}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h5 *ngIf='obj.currentDebt.normalLoan.loanList.length||obj.currentDebt.normalLoan.otherLoanList.length||obj.currentDebt.normalLoan.tradeFinancingList.length||obj.currentDebt.normalLoan.factoringList.length||obj.currentDebt.normalLoan.billDiscountedList.length||obj.currentDebt.normalLoan.bankAcceptanceList.length||obj.currentDebt.normalLoan.letterCredit.length||obj.currentDebt.normalLoan.guaranteeLetter.length'>正常类债务</h5>
+    <span *ngIf='obj.currentDebt.normalLoan.loanList.length>0'>贷款</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.loanList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='借据金额'>融资金额</th>
+        <th title='借据余额'>融资余额</th>
+        <th title='放款日期'>放款日期</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='担保'>担保</th>
+        <th title='展期'>展期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.loanList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.startDate}}'>{{item.startDate}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <span *ngIf='obj.currentDebt.normalLoan.otherLoanList.length>0'>类贷款</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.otherLoanList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='借据金额'>融资金额</th>
+        <th title='余额'>余额</th>
+        <th title='放款日期'>放款日期</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='担保'>担保</th>
+        <th title='延期'>延期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.otherLoanList'>
+          <td title='{{item.institution}}'>{{item.institution}}</td>
+          <td title='{{item.fee}}'>{{item.fee}}</td>
+          <td title='{{item.overFee}}'>{{item.overFee}}</td>
+          <td title='{{item.startDate}}'>{{item.startDate}}</td>
+          <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+          <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+          <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <span *ngIf='obj.currentDebt.normalLoan.tradeFinancingList.length>0'>贸易融资</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.tradeFinancingList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='融资金额'>融资金额</th>
+        <th title='融资余额'>融资余额</th>
+        <th title='放款日期'>放款日期</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='担保'>担保</th>
+        <th title='展期'>展期</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.tradeFinancingList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.startDate}}'>{{item.startDate}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.extension}}'>{{item.extension}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.normalLoan.factoringList.length>0'>
+    <span>保理</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.factoringList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='叙做金额'>叙做金额</th>
+        <th title='叙做余额'>叙做余额</th>
+        <th title='叙做日期'>叙做日期</th>
+        <th title='担保'>担保</th>
+        <th title='垫款'>垫款</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.factoringList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+        <td title='{{item.financeDate}}'>{{item.financeDate}}</td>
+        <td title='{{item.guarantee}}'>{{item.guarantee}}</td>
+        <td title='{{item.advances}}'>{{item.advances}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.normalLoan.billDiscountedList.length>0'>
+    <span>票据贴现</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.billDiscountedList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='笔数'>笔数</th>
+        <th title='余额'>余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.billDiscountedList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.count}}'>{{item.count}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.normalLoan.bankAcceptanceList.length>0'>
+    <span>银行承兑</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.bankAcceptanceList.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='笔数'>笔数</th>
+        <th title='到期日<30天余额'>到期日&lt;30天余额</th>
+        <th title='到期日<60天余额'>到期日&lt;60天余额</th>
+        <th title='到期日<90天余额'>到期日&lt;90天余额</th>
+        <th title='到期日>90天余额'>到期日&gt;90天余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.bankAcceptanceList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.count}}'>{{item.count}}</td>
+        <td title='{{item.thirtyOverFee}}'>{{item.thirtyOverFee}}</td>
+        <td title='{{item.sixtyOverFee}}'>{{item.sixtyOverFee}}</td>
+        <td title='{{item.ninetyOverFee}}'>{{item.ninetyOverFee}}</td>
+        <td title='{{item.greaterNinetyOverFee}}'>{{item.greaterNinetyOverFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.normalLoan.letterCredit.length>0'>
+    <span>信用证</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.letterCredit.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='笔数'>笔数</th>
+        <th title='开证金额'>开证金额</th>
+        <th title='可用金额'>可用金额</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.letterCredit'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.count}}'>{{item.count}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.currentDebt.normalLoan.guaranteeLetter.length>0'>
+    <span>保函</span>
+  </div>
+  <table *ngIf='obj.currentDebt.normalLoan.guaranteeLetter.length>0'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='笔数'>笔数</th>
+        <th title='金额'>金额</th>
+        <th title='余额'>余额</th>
+      </tr>
+      <tr *ngFor='let item of obj.currentDebt.normalLoan.guaranteeLetter'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.count}}'>{{item.count}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.overFee}}'>{{item.overFee}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h4>已还清债务</h4>
+    <span *ngIf='obj.clearDebt.guarantee.length'>担保及第三方代偿信息</span>
+  </div>
+  <table *ngIf='obj.clearDebt.guarantee.length'>
+    <tbody>
+      <tr>
+        <th title='代偿机构'>代偿机构</th>
+        <th title='最近代偿日期'>最近代偿日期</th>
+        <th title='累计代偿金额'>累计代偿金额</th>
+        <th title='结清日期'>结清日期</th>
+      </tr>
+      <tr *ngFor='let item of obj.clearDebt.guarantee'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.lastCompensatoryDate}}'>{{item.lastCompensatoryDate}}</td>
+        <td title='{{item.totalCompensatoryFee}}'>{{item.totalCompensatoryFee}}</td>
+        <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.clearDebt.interest.length'>
+    <span>欠息</span>
+  </div>
+  <table *ngIf='obj.clearDebt.interest.length'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='历史最高欠息金额（元）'>历史最高欠息金额（元）</th>
+        <th title='欠息日期'>欠息日期</th>
+        <th title='结清日期'>结清日期</th>
+      </tr>
+      <tr *ngFor='let item of obj.clearDebt.interest'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.maxFee}}'>{{item.maxFee}}</td>
+        <td title='{{item.financeDate}}'>{{item.financeDate}}</td>
+        <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.clearDebt.advances.length'>
+    <span>垫款</span>
+  </div>
+  <table *ngIf='obj.clearDebt.advances.length'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='垫款金额'>垫款金额</th>
+        <th title='垫款日期'>垫款日期</th>
+        <th title='结清日期'>结清日期</th>
+        <th title='五级分类'>五级分类</th>
+      </tr>
+      <tr *ngFor='let item of obj.clearDebt.advances'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.advancesOverFee}}'>{{item.advancesOverFee}}</td>
+        <td title='{{item.advancesDate}}'>{{item.advancesDate}}</td>
+        <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.clearDebt.clearedLoan.loanList.length'>
+    <span>贷款</span>
+  </div>
+  <table *ngIf='obj.clearDebt.clearedLoan.loanList.length'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='金额'>金额</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='结清日期'>结清日期</th>
+        <th title='还款方式'>还款方式</th>
+        <th title='五级分类'>五级分类</th>
+      </tr>
+      <tr *ngFor='let item of obj.clearDebt.clearedLoan.loanList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+        <td title='{{item.settledMethod}}'>{{item.settledMethod}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.clearDebt.clearedLoan.otherLoanList.length'>
+    <span>类贷款</span>
+  </div>
+  <table *ngIf='obj.clearDebt.clearedLoan.otherLoanList.length'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='业务种类'>业务种类</th>
+        <th title='融资金额'>融资金额</th>
+        <th title='到期日'>到期日</th>
+        <th title='结清日期'>结清日期</th>
+        <th title='五级分类/交易状态'>五级分类/交易状态</th>
+      </tr>
+      <tr *ngFor='let item of obj.clearDebt.clearedLoan.otherLoanList'>
+          <td title='{{item.institution}}'>{{item.institution}}</td>
+          <td title='{{item.bussType}}'>{{item.bussType}}</td>
+          <td title='{{item.fee}}'>{{item.fee}}</td>
+          <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+          <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+          <td title='{{item.classify}}'>{{item.classify}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.clearDebt.clearedLoan.tradeFinancingList.length'>
+    <span>贸易融资</span>
+  </div>
+  <table *ngIf='obj.clearDebt.clearedLoan.tradeFinancingList.length'>
+    <tbody>
+      <tr>
+        <th title='授信机构'>授信机构</th>
+        <th title='融资金额'>融资金额</th>
+        <th title='到期日期'>到期日期</th>
+        <th title='结清日期'>结清日期</th>
+        <th title='还款方式'>还款方式</th>
+        <th title='五级分类'>五级分类</th>
+      </tr>
+      <tr *ngFor='let item of obj.clearDebt.clearedLoan.tradeFinancingList'>
+        <td title='{{item.institution}}'>{{item.institution}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.expiredDate}}'>{{item.expiredDate}}</td>
+        <td title='{{item.settledDate}}'>{{item.settledDate}}</td>
+        <td title='{{item.settledMethod}}'>{{item.settledMethod}}</td>
+        <td title='{{item.classify}}'>{{item.classify}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit" *ngIf='obj.guaranteeRecordList.length'>
+    <span>对外担保记录</span>
+  </div>
+  <table *ngIf='obj.guaranteeRecordList.length'>
+    <tbody>
+      <tr>
+        <th title='类型'>类型</th>
+        <th title='被担保人'>被担保人</th>
+        <th title='证件类型'>证件类型</th>
+        <th title='担保金额'>担保金额</th>
+        <th title='担保形式'>担保形式</th>
+      </tr>
+      <tr *ngFor='let item of obj.guaranteeRecordList'>
+        <td title='{{item.bussType}}'>{{item.bussType}}</td>
+        <td title='{{item.guarantor}}'>{{item.guarantor}}</td>
+        <td title='{{item.cardType}}'>{{item.cardType}}</td>
+        <td title='{{item.guaranteeFee}}'>{{item.guaranteeFee}}</td>
+        <td title='{{item.guaranteeMethod}}'>{{item.guaranteeMethod}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="tit">
+    <h3>三、公共信息明细</h3>
+    <h4>欠税记录</h4>
+  </div>
+  <table>
+    <tbody>
+      <tr>
+        <th title='主管税务机关'>主管税务机关</th>
+        <th title='欠税总额（元）'>欠税总额（元）</th>
+        <th title='欠税统计日期'>欠税统计日期</th>
+      </tr>
+      <tr *ngFor='let item of obj.common.taxOwedList'>
+        <td title='{{item.office}}'>{{item.office}}</td>
+        <td title='{{item.fee}}'>{{item.fee}}</td>
+        <td title='{{item.recordTime}}'>{{item.recordTime}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

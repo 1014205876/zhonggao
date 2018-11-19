@@ -1,0 +1,5 @@
+@import url(../../dynamic-form.css);
+@import url(../../../shared/component/warning/warning.component.css);
+.value select {
+  width: 120px;
+}

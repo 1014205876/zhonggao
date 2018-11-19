@@ -1,0 +1,14 @@
+
+<div class="col_5" [formGroup]="group">
+  <div class="key">
+    <span title='{{config.name}}'>{{config.name}}：</span>
+  </div>
+  <div class="value">
+    <select [formControlName]="config.id">
+      <option value="">{{ config.placeholder }}</option>
+      <option *ngFor="let option of config.options" value="{{option.value}}">
+        {{ option.name }}
+      </option>
+    </select>
+  </div>
+</div>

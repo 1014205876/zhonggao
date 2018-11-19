@@ -1,0 +1,47 @@
+.row:after{
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.col_5{
+    width: 50%;
+    float: left;
+}
+.key{
+    width: calc(50% + 1px );
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.value{
+    width: calc(50% + 1px );
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.value input{
+    width: 240px;
+}
+.value span {
+    display: block;
+    width: 90%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.key,.value{
+    margin: -1px 0 0 -1px;
+    padding-left: 10px;
+    float: left;
+    height: 52px;
+    line-height: 52px;
+    font-size: 14px;
+    border: 1px solid #e2e2e2;
+}
+.tit{
+    padding-bottom: 20px;
+}
+.tit h5{
+    font-size: 20px;
+}

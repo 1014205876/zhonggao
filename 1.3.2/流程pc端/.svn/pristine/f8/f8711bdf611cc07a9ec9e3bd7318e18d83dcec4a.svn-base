@@ -1,0 +1,97 @@
+<app-crumb></app-crumb>
+<div class='white_bg mb30 pb30' style="height:calc(100% - 50px);overflow-y: hidden;">
+  <div class="search_box">
+    <div class="input_row clearfix">
+      <div class="g_input">
+        <div class="label">
+          <span>客户：</span>
+          <input type="text" placeholder="请输入客户名称" [(ngModel)]='searchObj.etpName'>
+        </div>
+      </div>
+      <div class="g_input has_date">
+        <div class="label">
+          <span>接收时间：</span>
+          <div class="calendar_box">
+            <app-calendar [placeholder]="''" (inputText)='searchObj.createStartDate=$event'></app-calendar>~~
+            <app-calendar [placeholder]="''" (inputText)='searchObj.createEndDate=$event' [minDate]='searchObj.createStartDate'></app-calendar>
+          </div>
+        </div>
+      </div>
+      <button class="btn pri_btn" (click)='pn.reSetCurPage();changePage(pn.currentPage)' style='margin:30px 0 0 40px;'>查询</button>
+      <!-- <a *ngIf="product=='QK'" class='fr' style='display: block;margin:30px 30px 0 0; height: 38px;line-height: 38px;' [routerLink]="['/app/presentQK']"
+        [queryParams]="{'from':'1','product': product}">
+        <img src="../../../../assets/images/toLeft_03.png" alt="">
+      </a>
+      <a *ngIf="product=='ZXD'" class='fr' style='display: block;margin:30px 30px 0 0; height: 38px;line-height: 38px;' [routerLink]="['/app/presentZXD']"
+        [queryParams]="{'from':'1','product': product}">
+        <img src="../../../../assets/images/toLeft_03.png" alt="">
+      </a> -->
+      <a class='fr' style='display: block;margin:30px 30px 0 0; height: 38px;line-height: 38px;' [routerLink]="['/app/present']"
+        [queryParams]="{'from':'1','product': product}">
+        <img src="../../../../assets/images/toLeft_03.png" alt="">
+      </a>
+    </div>
+  </div>
+  <div class="cur_table" [ngStyle]="{'height':totalPage>1?'calc(100% - 153px)':'calc(100% - 103px)'}">
+  <div class="rowsNull" *ngIf="rows.length==0" style="position:absolute;left:50%;top:40%;transform:rotateX(50%);">暂无数据！</div>
+    <table width="100%" border="0" *ngIf="rows.length>0">
+      <thead>
+        <tr>
+          <td>状态</td>
+          <td>客户</td>
+          <td>申请金额</td>
+          <td>产品名称</td>
+          <td>接收时间</td>
+          <td>已办时间</td>
+          <td>当前进度</td>
+          <td>操作</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of rows">
+          <td>
+            <span class="block block1" *ngIf="item.actName=='征信拆解'">征信拆解</span>
+            <span class="block block2" *ngIf="item.actName=='预约确认'">预约确认</span>
+            <span class="block block3" *ngIf="item.actName=='指派风控'">指派风控</span>
+            <span class="block block4" *ngIf="item.actName=='尽职调查'">尽职调查</span>
+            <span class="block block5" *ngIf="item.actName=='合规审批+自动发标'">合规审批+自动发标</span>
+            <span class="block block5" *ngIf="item.actName=='自动发标+合规审批'">自动发标+合规审批</span>
+            <span class="block block5" *ngIf="item.actName=='审批登记'">审批登记</span>
+            <span class="block block5" *ngIf="item.actName=='自动发标'">自动发标</span>
+            <span class="block block6" *ngIf="item.actName=='合规审批'">合规审批</span>
+            <span class="block block7" *ngIf="item.actName=='已完成'">已完成</span>
+            <span class="block block8" *ngIf="item.actName=='终止'">终止</span>
+            <span class="block block3" *ngIf="item.actName=='风控审批'">风控审批</span>
+            <span class="block block4" *ngIf="item.actName=='综合审批'">综合审批</span>
+            <span class="block block5" *ngIf="item.actName=='风控总监审批'">风控总监审批</span>
+            <span class="block block6" *ngIf="item.actName=='合规审查'">合规审查</span>
+            <span class="block block7" *ngIf="item.actName=='副总经理审批'">副总经理审批</span>
+            <span class="block block8" *ngIf="item.actName=='总经理审批'">总经理审批</span>
+            <span class="block block9" *ngIf="item.actName=='资产推送'">资产推送</span>
+            <span class="block block7" *ngIf="item.actName=='准入审核'">准入审核</span>
+          </td>
+          <td>
+            <a class="blue txtOverflow" [routerLink]="['/app/present/pastTable']" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':1}">{{item.entName}}</a>
+          </td>
+          <td>{{item.amount+'万元'}}</td>
+          <td>{{item.productName}}</td>
+          <td>{{item.creatTime}}</td>
+          <td>{{item.endTime}}</td>
+          <td>
+            <div class="progress_box">
+              <div class="progress">
+                <div [ngStyle]="{'width':item.progress}"></div>
+              </div>
+              <span>{{item.progress}}</span>
+            </div>
+          </td>
+          <td>
+            <a class="blue" [routerLink]="['/app/present/pastInfo']" [queryParams]="{'id':item.processInsId,'taskId':item.taskId}">查看详情</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <app-page-nav #pn (getCurrentPage)="changePage($event)" [totalPage]='totalPage'></app-page-nav>
+</div>
+<loading [loading]='loading'></loading>

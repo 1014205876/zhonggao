@@ -1,0 +1,18 @@
+<div class='tit'>
+  <h2>{{config.name}}</h2>
+</div>
+<ng-container *ngFor='let item of config.sheets'>
+  <div class='sheet'>
+    <h4>{{item.name}}</h4>
+  </div>
+  <ng-container>
+    <div class='s_tit'>
+      <h6>报告信息</h6>
+    </div>
+    <div class="table">
+      <table>
+        <tr></tr>
+      </table>
+    </div>
+  </ng-container>
+</ng-container>

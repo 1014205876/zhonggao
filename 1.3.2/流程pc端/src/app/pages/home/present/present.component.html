@@ -1,0 +1,85 @@
+<div class='box' style="height:100%;">
+  <app-crumb></app-crumb>
+  <div class='table_row white_bg' style="height:calc(100% - 50px);">
+    <div class='g_tit mb20 clearfix'>
+      <h5>当前流程：{{rows.length+'个'}}</h5>
+      <a class='fr' [routerLink]="['/app/present/past']" [queryParams]="{'from':'1','product': product}">
+        <img src="../../../../assets/images/toRight_03.png" alt="">
+        <!-- <i>24</i> -->
+      </a>
+    </div>
+    <div class="cur_table">
+      <div class="rowsNull" *ngIf="!rows.length||rows.length==0" style="position:absolute;left:50%;top:40%;transform:rotateX(50%);">暂无数据！</div>
+      <table width="100%" border="0" *ngIf="rows.length>0">
+        <thead>
+          <tr>
+            <td>状态</td>
+            <td>客户</td>
+            <td>项目编号</td>
+            <td>所在区域</td>
+            <td>申请金额</td>
+            <td>产品名称</td>
+            <td>推广人员</td>
+            <td>操作员</td>
+            <td>申请时间</td>
+            <td class="authHide" [appResource]="{authName: 'post/auth/info/pass'}">操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of rows">
+            <td>
+              <!-- <span class="block">{{item.actName}}</span> -->
+              <span class="block block1" *ngIf="item.actName=='征信拆解'">征信拆解</span>
+              <span class="block block2" *ngIf="item.actName=='预约确认'">预约确认</span>
+              <span class="block block3" *ngIf="item.actName=='尽职调查'">尽职调查</span>
+              <span class="block block4" *ngIf="item.actName=='审批登记'">审批登记</span>
+              <span class="block block5" *ngIf="item.actName=='合规审批'">合规审批</span>
+              <span class="block block6" *ngIf="item.actName=='自动发标'">自动发标</span>
+
+              <span class="block block3" *ngIf="item.actName=='风控审批'">风控审批</span>
+              <span class="block block4" *ngIf="item.actName=='综合审批'">综合审批</span>
+              <span class="block block5" *ngIf="item.actName=='风控总监审批'">风控总监审批</span>
+              <span class="block block6" *ngIf="item.actName=='合规审查'">合规审查</span>
+              <span class="block block7" *ngIf="item.actName=='副总经理审批'">副总经理审批</span>
+              <span class="block block8" *ngIf="item.actName=='总经理审批'">总经理审批</span>
+              <span class="block block9" *ngIf="item.actName=='资产推送'">资产推送</span>
+              <span class="block block7" *ngIf="item.actName=='准入审核'">准入审核</span>
+            </td>
+            <td>
+              <a class="blue txtOverflow" style="display: block;" [routerLink]="['/app/present/presentTable']" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':'1','product': product}">{{item.entName}}</a>
+            </td>
+            <td>{{item.projectNumber}}</td>
+            <td>{{item.scope}}</td>
+            <td>{{item.amount+'万元'}}</td>
+            <td>{{item.productName}}</td>
+            <td>{{item.insStaffName?item.insStaffName:'无'}}</td>
+            <td>{{item.assignee}}</td>
+            <td>{{item.creatTime}}</td>
+            <td class="authHide" [appResource]="{authName: 'post/auth/info/pass'}">
+              <a class='blue' *ngIf="!item.assignee&&item.actName=='预约确认'" (click)="row=item;mask=true;">领取任务</a>
+              <a class='blue' *ngIf="!item.assignee&&item.actName!='预约确认'" (click)="row=item;claim();">领取任务</a>
+              <a class="blue" [routerLink]="['/app/present/authCheck']" *ngIf="item.actName=='征信拆解'&&item.assignee" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':item.actName,'product': product}">审批</a>
+              <a class="blue" [routerLink]="['/app/present/presentTable']" *ngIf="item.actName!='征信拆解'&&item.assignee" [queryParams]="{'taskId':item.taskId,'processInsId':item.processInsId,'type':item.actName,'product': product}">审批</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<loading [loading]='loading'></loading>
+
+<div class="mask" *ngIf="mask"></div>
+<div class='confirm' *ngIf="mask">
+  <div class="head">
+    <span>提示</span>
+  </div>
+  <div class="body">
+    <span>是否领取该任务，领取后其他人不可见？</span>
+  </div>
+  <div class="footer">
+    <button class="btn sure" (click)='claim();mask=false'>领取任务</button>
+    <button class="btn cal" (click)='mask=false;row=null'>取消</button>
+  </div>
+</div>

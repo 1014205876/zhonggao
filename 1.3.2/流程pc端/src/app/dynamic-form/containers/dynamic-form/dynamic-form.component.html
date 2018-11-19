@@ -1,0 +1,10 @@
+<form [formGroup]="form" (ngSubmit)="submitted.emit(form);" *ngIf='config.length>0'>
+  <div class="row clearfix">
+    <ng-container *ngFor="let field of config;" dynamicField [config]="field" [group]="form">
+    </ng-container>
+  </div>
+  <div class="btn_row">
+    <button class="btn sure" type="submit">提交</button>
+    <a class="btn cal" (click)='cal()'>返回</a>
+  </div>
+</form>

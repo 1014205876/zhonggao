@@ -1,0 +1,83 @@
+<app-crumb [list]="['征信拆解']"></app-crumb>
+
+<div class="box white_bg" style='padding:0 30px 30px;'>
+  <div class='g_tit mb20 task clearfix' style='position:relative;'>
+    <h5>当前流程：征信拆解</h5>
+    <h5>操作人：{{operator}}</h5>
+    <h5>状态：进行中</h5>
+  </div>
+  <div class='dis_tit'>
+    <span>1.材料审核&nbsp; &rarr; &nbsp;2.拆解个人征信报告&nbsp; &rarr; &nbsp;3.拆解企业征信报告&nbsp; &rarr; &nbsp;4.确认、提交</span>
+  </div>
+  <div class="white_bg mb30">
+    <div class="cur_table">
+      <div class='g_tit' style="border: 0;">
+        <h5>材料审核</h5>
+      </div>
+      <!-- <div class="rowsNull" *ngIf="rows.length==0">暂无数据！</div> -->
+      <table width="100%" border="0" *ngIf="rows">
+        <thead>
+          <tr>
+            <th>材料名称</th>
+            <th>材料信息</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>企业信息采集授权书</td>
+            <td>授权书编号：{{rows.infoAuthNum}}</td>
+            <td><a class="blue" target="_blank" href="{{rows.authUrl}}">查看</a></td>
+          </tr>
+          <tr>
+            <td>法人手持企业信息采集授权书照片</td>
+            <td>企业法人：{{rows.legalName}}（身份证号{{rows.legalCardNo}}）</td>
+            <td><a class="blue" target="_blank" href="{{rows.bodyUrl}}">查看</a></td>
+          </tr>
+          <tr>
+            <td>大股东或实际控制人征信查询授权书</td>
+            <td>大股东/实际控制人：{{rows.controllerName}}（身份证号{{rows.controllerIdCode}}）</td>
+            <td><a class="blue" target="_blank" href="{{rows.controllerUrl}}">查看</a></td>
+          </tr>
+          <tr>
+            <td>企业征信报告</td>
+            <td>{{rows.entName}}</td>
+            <td>
+              <a class="blue" href="{{rows.corporateCreditUrls}}" style="margin: 0 5px;">下载</a>
+            </td>
+          </tr>
+          <tr>
+            <td>个人征信报告</td>
+            <td>{{rows.controllerName}}</td>
+            <td><a  class="blue" href="{{rows.controllerCreditUrls}}" style="margin: 0 5px;">下载</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <disassembly-etp [obj]='authObj'></disassembly-etp> -->
+  <div class="white_bg mb30" style="padding: 0 30px 30px 30px;">
+    <div class='g_tit' style="border: 0;">
+      <h5>审批</h5>
+    </div>
+    <dynamic-form [config]="config" (submitted)="formSubmitted($event)">
+    </dynamic-form>
+  </div>
+</div>
+
+<div class="mask" *ngIf="mask"></div>
+<div class='confirm' *ngIf="mask">
+  <div class="head">
+    <span>提示</span>
+  </div>
+  <div class="body">
+    <span>{{confirmMsg}}</span>
+  </div>
+  <div class="footer">
+    <button class="btn sure" *ngIf="!authItems.allowOrNot" (click)='mask=false'>确定</button>
+    <button class="btn sure" *ngIf="authItems.allowOrNot=='reject'" (click)='claim();mask=false'>确定</button>
+    <button class="btn cal" (click)='cal();mask=false'>取消</button>
+  </div>
+</div>
+
+<app-warning #warningBlock [warning]="warning"></app-warning>

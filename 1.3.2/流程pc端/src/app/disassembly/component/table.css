@@ -1,0 +1,23 @@
+table{table-layout: fixed;margin-top: -1px;}
+table,table tr th, table tr td {border:1px solid #e2e2e2;line-height: 48px;}
+table{ width: 100%; text-align: center; border-collapse: collapse;}
+table tr th,table tr td{ white-space: nowrap;overflow: hidden;text-overflow: ellipsis;height: 48px;}
+table tr td{height: 52px;}
+table tr th{background-color: #e5f4fb;}
+.btn{
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 10px;
+}
+.btn.sure{
+    background-color: #589af8;
+    color: #fff;
+}
+.btn.cal{
+    background-color: #f26666;
+    color: #fff;
+}

@@ -1,0 +1,62 @@
+<div class="box">
+  <app-crumb [list]="['当前流程']"></app-crumb>
+  <div class="white_bg" style="height:calc(100% - 50px);">
+    <div class="input_row clearfix">
+      <div class="g_input">
+        <div class="label">
+          <span>项目编号：</span>
+          <input type="text" placeholder="请输入项目编号" [(ngModel)]='searchObj.projectNumber'>
+        </div>
+      </div>
+      <div class="g_input">
+        <div class="label">
+          <span>企业名称：</span>
+          <input type="text" placeholder="请输入企业名称" [(ngModel)]='searchObj.entName'>
+        </div>
+      </div>
+      <button class="btn pri_btn" style='margin:30px 0 0 40px;' (click)='search()'>查询</button>
+    </div>
+    <div class="cur_table" style="height: calc(100% - 153px);overflow-x: hidden;">
+      <div class="rowsNull" *ngIf="list.length==0" style="position:absolute;left:50%;top:40%;transform:translateX(-50%);">暂无数据！</div>
+      <table width="100%" border="0">
+        <thead>
+          <tr>
+            <td>序号</td>
+            <td>项目编号</td>
+            <td>企业名称</td>
+            <td>当前流程节点</td>
+            <td>流程开始时间</td>
+            <td>操作</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let item of list;let i=index;'>
+            <td>{{i+1>=10?i+1+((curPage-1)*10):(curPage-1?curPage-1:'')+''+(i+1)}}</td>
+            <td>{{item.projectNumber}}</td>
+            <td>{{item.entName}}</td>
+            <td>{{item.currentNode}}</td>
+            <td>{{item.creatTime}}</td>
+            <td>
+              <a class="blue" (click)='processInsId=item.processInsId;mask=true;'>终止流程</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <app-page-nav #pn (getCurrentPage)="changePage($event)" [totalPage]='totalPage'></app-page-nav>
+  </div>
+</div>
+
+<div class="mask" *ngIf="mask"></div>
+<div class='confirm' *ngIf="mask">
+  <div class="head">
+    <span>提示</span>
+  </div>
+  <div class="body">
+    <span>该操作是一个不可逆操作，终止流程即整个流程直接结束，客户借款申请失败，请确认是否终止该流程？</span>
+  </div>
+  <div class="footer">
+    <button class="btn sure" (click)='stopFlow();mask=false'>确定</button>
+    <button class="btn cal" (click)='mask=false'>取消</button>
+  </div>
+</div>

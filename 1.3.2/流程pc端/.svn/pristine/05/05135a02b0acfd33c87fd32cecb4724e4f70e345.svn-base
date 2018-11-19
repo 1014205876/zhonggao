@@ -1,0 +1,210 @@
+<div class="row" *ngIf='!info&&item'>
+  <div class="tit">
+    <h5>客户申请信息</h5>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>企业名称：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.entName'>{{item.entName}}</span>
+    </div>
+  </div>
+  <!-- <div class="col_5">
+    <div class="key">
+      <span>客户类型：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.customerType'>{{item.customerType}}</span>
+    </div>
+  </div> -->
+  <div class="col_5">
+    <div class="key">
+      <span>贷款金额：</span>
+    </div>
+    <div class="value">
+      <span>{{item.amount+'万元'}}</span>
+      <!-- <span *ngIf="item.loanAmount&&!(this.pageState.type=='征信拆解'||this.pageState.type=='预约确认'||this.pageState.type=='尽职调查'||this.pageState.type=='审批登记')">{{item.loanAmount+'万元'}}</span>
+      <span *ngIf="!item.loanAmount&&!(this.pageState.type=='征信拆解'||this.pageState.type=='预约确认'||this.pageState.type=='尽职调查'||this.pageState.type=='审批登记')">{{item.amount+'万元'}}</span>
+      <span *ngIf="this.pageState.type=='征信拆解'||this.pageState.type=='预约确认'||this.pageState.type=='尽职调查'||this.pageState.type=='审批登记'">{{item.amount+'万元'}}</span> -->
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>贷款期限：</span>
+    </div>
+    <div class="value">
+      <span>{{item.term+'个月'}}</span>
+      <!-- <span *ngIf="item.loanTerm&&!(this.pageState.type=='征信拆解'||this.pageState.type=='预约确认'||this.pageState.type=='尽职调查'||this.pageState.type=='审批登记')">{{item.loanTerm+'个月'}}</span>
+      <span *ngIf="!item.loanTerm&&!(this.pageState.type=='征信拆解'||this.pageState.type=='预约确认'||this.pageState.type=='尽职调查'||this.pageState.type=='审批登记')">{{item.term+'个月'}}</span>
+      <span *ngIf="this.pageState.type=='征信拆解'||this.pageState.type=='预约确认'||this.pageState.type=='尽职调查'||this.pageState.type=='审批登记'">{{item.term+'个月'}}</span> -->
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>法人：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalRep'>{{item.legalRep}}</span>
+    </div>
+  </div>
+  <!-- <div class="col_5">
+    <div class="key">
+      <span>法人地址：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalAddress'>{{item.legalAddress}}</span>
+    </div>
+  </div> -->
+</div>
+<div class="row" *ngIf='info&&item'>
+  <div class="tit clearfix">
+    <h5 class='fl'>客户基本信息</h5>
+    <button class='btn sure fr' (click)='regOutcom()' *ngIf="item.register=='finished'" style='margin:10px 0 0 10px;'>导出融资登记报告</button>
+    <button class='btn sure fr' (click)='ddOutcom()' *ngIf="item.ddTask=='finished'" style='margin-top:10px;'>导出尽调报告</button>
+    <!-- <a class='btn sure fr' [routerLink]="['/app/present/pastTable']" *ngIf='item.creditTaskId'  [queryParams]="{'taskId':item.creditTaskId,'processInsId':pageState.processInsId,'type':'征信拆解'}" style='margin-top:12px;'>征信报告</a> -->
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>企业名称：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.entName'>{{item.entName}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>客户类型：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.customerType'>{{item.customerType}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>法人：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalRep'>{{item.legalRep}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>法人电话：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalPhone'>{{item.legalPhone}}</span>
+    </div>
+  </div>
+  <!-- <div class="col_5">
+    <div class="key">
+      <span>法人身份证：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalCardNo'>{{item.legalCardNo}}</span>
+    </div>
+  </div> -->
+  <div class="col_5">
+    <div class="key">
+      <span>法人性别：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalSex'>{{item.legalSex}}</span>
+    </div>
+  </div>
+  <!-- <div class="col_5">
+    <div class="key">
+      <span>法人生日：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalBirth'>{{item.legalBirth}}</span>
+    </div>
+  </div> -->
+  <div class="col_5">
+    <div class="key">
+      <span>法人地址：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.legalAddress'>{{item.legalAddress}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>推广机构：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.insName?item.insName:""'>{{item.insName?item.insName:"无"}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>推广人员：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.insStaffName?item.insStaffName:""'>{{item.insStaffName?item.insStaffName:"无"}}</span>
+    </div>
+  </div>
+</div>
+<div class="row" *ngIf='info&&item'>
+  <div class="tit">
+    <h5>贷款信息</h5>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>项目编号：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.projectNumber'>{{item.projectNumber}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>贷款产品：</span>
+    </div>
+    <div class="value">
+      <span>{{item.productName}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>贷款金额：</span>
+    </div>
+    <div class="value">
+      <span>{{item.amount+'万元'}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>贷款周期：</span>
+    </div>
+    <div class="value">
+      <span>{{item.term+'个月'}}</span>
+    </div>
+  </div>
+  <div class="col_5">
+    <div class="key">
+      <span>预约时间：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.appointTime'>{{getAppoint(item.guestAppointTime,item.timeQuantum)}}</span>
+    </div>
+  </div>
+  <!-- <div class="col_5">
+    <div class="key">
+      <span>产品ID</span>
+    </div>
+    <div class="value">
+      <span [title]='item.productId'>{{item.productId}}</span>
+    </div>
+  </div> -->
+  <div class="col_5">
+    <div class="key">
+      <span>还款方式：</span>
+    </div>
+    <div class="value">
+      <span [title]='item.replyMethod'>{{item.replyMethod}}</span>
+    </div>
+  </div>
+
+
+</div>

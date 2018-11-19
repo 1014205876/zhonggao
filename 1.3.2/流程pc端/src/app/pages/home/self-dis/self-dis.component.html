@@ -1,0 +1,36 @@
+<app-crumb [list]="['征信拆解']"></app-crumb>
+<div class="box white_bg" style='padding:0 30px 30px;'>
+  <div class='g_tit mb20 task clearfix' style='position:relative;'>
+    <h5>当前流程：征信拆解</h5>
+    <h5>操作人：{{operator}}</h5>
+    <h5>状态：进行中</h5>
+    <a class='btn sure' href="{{downCreditUrl}}" style='position:absolute;right:0;top:10px;'>下载照片</a>
+  </div>
+  <div class='dis_tit'>
+    <span>1.材料审核&nbsp; &rarr; &nbsp;2.拆解个人征信报告&nbsp; &rarr; &nbsp;3.拆解企业征信报告&nbsp; &rarr; &nbsp;4.确认、提交</span>
+  </div>
+  <div class="con clearfix">
+    <disassembly [config]='config' (valideChange)='getValide($event)'></disassembly>
+  </div>
+  <div class="btn_row">
+    <button class="btn sure" (click)='save()'>保存</button>
+    <button class="btn sure" (click)='sure()' [disabled]='!valide' [ngStyle]="{'cursor':valide?'pointer':'not-allowed'}">下一步</button>
+    <a class="btn cal" (click)="cal()">返回</a>
+  </div>
+</div>
+
+<div class="mask" *ngIf="mask"></div>
+<div class='confirm' *ngIf="mask">
+  <div class="head">
+    <span>提示</span>
+  </div>
+  <div class="body">
+    <span>是否领取该任务？</span>
+  </div>
+  <div class="footer">
+    <button class="btn sure" (click)='claim();mask=false'>领取任务</button>
+    <button class="btn cal" (click)='mask=false'>取消</button>
+  </div>
+</div>
+
+<loading [loading]='loading'></loading>

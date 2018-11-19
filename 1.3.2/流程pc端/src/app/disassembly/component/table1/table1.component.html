@@ -1,0 +1,20 @@
+<div style='position:relative;margin-bottom:24px;'>
+  <table>
+    <tbody>
+      <tr *ngFor='let tds of trs;let i=index;'>
+        <ng-container *ngFor='let td of tds;let j=index'>
+          <th *ngIf="td.ele=='th'" [title]='td.name' [attr.colspan]='td.colspan' [attr.rowspan]='td.rowspan'>{{td.name}}</th>
+          <td *ngIf="td.ele=='td'" [attr.colspan]='td.colspan' [attr.rowspan]='td.rowspan' style="position:relative;">
+            <text-input [obj]='td.value' [reg]='td.reg' [placeholder]='td.placeholder' (textChange)='td.value=$event;hasKeyDown($event)' *ngIf="td.input=='text'"></text-input>{{td.reg}}
+            <date-input [obj]='td.value' (textChange)='td.value=$event;hasKeyDown($event)' *ngIf="td.input=='date'"></date-input>
+            <num-input [obj]='td.value' (textChange)='td.value=$event;hasKeyDown($event)' *ngIf="td.input=='num'"></num-input>
+            <app-select [obj]='td.value' (textChange)='td.value=$event;hasKeyDown($event)' *ngIf="td.input=='select'" [options]='td.options'><button *ngIf='i>1' (click)='delete(i)'>X</button></app-select>
+            <app-radio [obj]='td' [key]='td.key' [options]='td.options' (textChange)='td.value=$event;hasKeyDown($event)' *ngIf="td.input=='radio'"></app-radio>
+            <button *ngIf='i>=1&&j>=tds.length-1&&trs.length>2' (click)='delete(i)' style="position:absolute;right:0;top:0;">X</button>
+          </td>
+        </ng-container>
+      </tr>
+    </tbody>
+  </table>
+  <button (click)='add()' style='position:absolute;left:50%;bottom:-24px;margin:0 0 0 -50px;width:100px;height:24px;line-height:24px;font-size:14px;'>+</button>
+</div>

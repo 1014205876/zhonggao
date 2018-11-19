@@ -1,0 +1,6 @@
+<div class='box'>
+    <table>
+        <tbody #tbody></tbody>
+    </table>
+    <button (click)='add()'>add</button>
+</div>

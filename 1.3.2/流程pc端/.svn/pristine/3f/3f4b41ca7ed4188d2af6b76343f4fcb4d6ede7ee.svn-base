@@ -1,0 +1,9 @@
+<div class="loading" *ngIf="loading">
+  <div class="loading_box">
+    <h6>请勿关闭页面</h6>
+    <div class="loding_con">
+      <img src="../../../assets/images/loading_03.png" alt="">
+      <span *ngIf="true" style="margin-left:10px;">正在加载数据......</span>
+    </div>
+  </div>
+</div>

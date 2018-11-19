@@ -1,0 +1,9 @@
+.box{padding: 0 30px;}
+table{table-layout: fixed;margin-top: -1px;}
+td{position: relative;}
+table,table tr th, table tr td {border:1px solid #e2e2e2;line-height: 48px;}
+table{ width: 100%; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;}
+table tr th,table tr td{white-space: nowrap;text-overflow: ellipsis;height: 48px;}
+table tr th{background-color: #e5f4fb;}
+input{border: none;width: 100%;height: 100%;}
+.deleteBtn{width: 32px;height: 32px;line-height: 32px;text-align: center; position: absolute;right: -32px;top: 5px;}

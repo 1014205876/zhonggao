@@ -1,0 +1,54 @@
+<div class='tit'>
+  <h2>{{config.name}}</h2>
+</div>
+<ng-container *ngFor='let sheet of config.sheets;let i=index'>
+  <div class='sheet_tit'>
+    <h2 *ngIf='sheet.name'>{{sheet.name}}</h2>
+    <div class='sheet_tit' *ngIf='sheet.g_name'>
+        <h2>{{sheet.g_name}}</h2>
+      </div>
+      <div class='class_tit' *ngIf='sheet.g_class_name'>
+        <h2>{{sheet.g_class_name}}</h2>
+      </div>
+      <div class='tit' *ngIf='sheet.class_name'>
+        <h6>{{sheet.class_name}}</h6>
+      </div>
+    <button (click)='sheet.treeShow=true;tree_mask=true' *ngIf='sheet.ztree' style="position:absolute;right:0;bottom:0;z-index:100;" class='btn sure'>添加</button>
+    <div [ngStyle]="{'display':sheet.treeShow?'block':'none'}" style="width:280px;padding:20px 0 10px; background:#fff;border-radius:4px; border:1px solid #e2e2e2; position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:10000;">
+      <select style="height:200px;" size='10' style="display:block;width:240px;margin:0 auto;border:1px solid #e2e2e2;">
+        <ng-container *ngFor='let opt of sheet.tables'>
+          <option [value]="opt" (click)='getObj(opt)' *ngIf='!opt.checked'>{{opt.name||opt.g_class_name}}</option>
+        </ng-container>
+      </select>
+      <div style="text-align:center;background-color:#fff;padding-top:10px;">
+        <button (click)='sheet.treeShow=false;tree_mask=false;checkTree()' class='btn sure'>确定</button>
+        <button (click)='sheet.treeShow=false;tree_mask=false;' class='btn cal'>取消</button>
+      </div>
+    </div>
+  </div>
+  <ng-container *ngFor='let table of sheet.tables;let j=index'>
+    <div class='sheet_tit' *ngIf='table.g_name&&table.checked'>
+      <h2>{{table.g_name}}</h2>
+    </div>
+    <div class='class_tit' *ngIf='table.g_class_name&&table.checked'>
+      <h2>{{table.g_class_name}}</h2>
+    </div>
+    <div class='tit' *ngIf='table.class_name&&table.checked'>
+      <h6>{{table.class_name}}</h6>
+    </div>
+    <div class='s_tit' *ngIf='table.name&&table.checked'>
+      <h6>{{table.name}}</h6>
+    </div>
+    <div class="table" style="position:relative;margin:20px 0;" [ngStyle]="{'display':table.checked?'block':'none'}">
+      <button style="position:absolute;left:100%;top:0;z-index:99;padding:0 10px;margin:0;height: 30px;line-height: 30px;" (click)='table.checked=false;valide($event)'
+        class='btn cal' *ngIf='table.delete'>&times;</button>
+      <!-- <app-table [trs]='table.trs' [sheetIndex]='i' [tableIndex]='j' (addBtn)='addRow($event)' (deleteBtn)='deleteBtn($event)'></app-table> -->
+      <app-table1 *ngIf="table.tableType=='list'" [trs]='table.trs' (trsChange)='table.trs=$event;valide($event)'></app-table1>
+      <normal-table *ngIf="table.tableType=='normal'" [trs]='table.trs' (trsChange)='table.trs=$event;valide($event)'></normal-table>
+      <add-table *ngIf="table.tableType=='loan'" [tables]='table.tables' (tableChange)='valide($event)' (_hasOverdue)='hasOverdue($event,i,j);valide($event)'
+        (_addTable)='addTable($event,i,j);valide($event)' (getBottom)='hideLoanTable(table)'></add-table>
+    </div>
+  </ng-container>
+</ng-container>
+<div class='tree_mask' *ngIf='tree_mask'></div>
+<!-- <button (click)='sure()'>确定</button> -->

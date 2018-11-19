@@ -1,0 +1,14 @@
+<div class="row" *ngIf="info" style="padding-top: 20px;">
+  <div class="tit">
+    <h5>{{info.name}}</h5>
+  </div>
+  <div class="col_5" *ngFor="let fieldItem of info.fields">
+    <div class="key">
+      <span>{{fieldItem.name}}：</span>
+    </div>
+    <div class="value">
+      <span [title]='fieldItem.value' *ngIf="fieldItem.id!='appointConfirmTime'">{{fieldItem.value}}</span>
+      <span *ngIf="fieldItem.id=='appointConfirmTime'">{{time}}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+<select [(ngModel)]='obj' required>
+  <option  *ngFor='let option of options;let i=index' [value]="option.val" [selected]="i==0">{{option.name}}</option>
+</select>

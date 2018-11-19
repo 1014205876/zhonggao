@@ -1,0 +1,27 @@
+.table_row{
+    padding: 0 20px 20px;
+}
+.txtOverflow{
+    width: 300px;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.g_tit{
+    overflow: hidden;
+}
+.g_tit h5{float: left;}
+.g_tit a.fr{
+    display: block;
+    height: 58px;
+    line-height: 58px;
+}
+
+.search_box{padding-bottom: 30px;}
+.cur_table{
+    position: relative;
+    overflow:auto;
+    overflow-x:hidden;
+}
+.cur_table table{border-top: 1px solid #e2e2e2;}

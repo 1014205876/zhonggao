@@ -1,0 +1,37 @@
+<ul class='menu_con'>
+  <!-- 第一层菜单 -->
+  <li class="pcodedItem" *ngFor="let item of menuItem; let i=index;" [ngClass]="{'active':currentProduct == item.state}">
+    <a *ngIf="item.type=='link'" [routerLink]="[item.url]" [queryParams]="{'product': item.state}" 
+      [routerLinkActive]="['active']" (click)="showList(i)"
+     >
+      <span class="{{item.icon}}"></span>
+      {{item.name}}
+    </a>
+    <a class="rightIcon" *ngIf="item.type=='sub'" (click)="showList(i)">
+      <span class="{{item.icon}}"></span> {{item.name}}
+
+      <!-- <img src="../../../assets/images/menu_xsj_03.png" alt="" class='xsj'> -->
+    </a>
+    <!-- 第二层菜单 -->
+    <ul *ngIf="item.type=='sub'">
+      <li class="subItem" *ngFor='let itemChild of item.children; let j=index;' [ngClass]="{'active':currentProduct === itemChild.state}">
+        <a class="leftIcon" *ngIf="itemChild.type=='link'" [routerLink]="[itemChild.url]" [queryParams]="{'product': itemChild.state}"
+          [routerLinkActive]="['active']">
+          <span class="{{itemChild.icon}}"></span>
+          {{itemChild.name}}
+        </a>
+        <a class="rightIcon" *ngIf="itemChild.type=='sub'" (click)="showList(i,j)">
+          <span class="{{itemChild.icon}}"></span> {{itemChild.name}}
+          <!-- <img src="../../../assets/images/menu_xsj_03.png" alt="" class='xsj'> -->
+        </a>
+        <!-- 第三层菜单 -->
+        <ul *ngIf="item.type=='sub'">
+          <li *ngFor="let asideChild of itemChild.children" [ngClass]="{'active':currentProduct === itemChild.state}">
+            <a class="leftIcon" *ngIf="asideChild.type=='link'" [routerLink]="[asideChild.url]" [queryParams]="{'product': asideChild.state}"
+              [routerLinkActive]="['active']">{{asideChild.name}}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>

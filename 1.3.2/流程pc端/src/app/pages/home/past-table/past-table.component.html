@@ -1,0 +1,58 @@
+<app-crumb [list]='navData'></app-crumb>
+
+<div class="white_bg" style='padding:0 30px 30px;margin-bottom:30px;' *ngIf="pageState.type=='1'&&pageState.type!='征信拆解'">
+  <customer-info [info]='1'></customer-info>
+  <div style='text-align:center;padding-top: 20px;'>
+    <a class='btn cal' style='margin-left:12px;' onclick='history.back();'>返回</a>
+  </div>
+</div>
+
+
+<div class="white_bg" style='padding:0 30px 30px;margin-bottom:30px;' *ngIf="pageState.type!='征信拆解'&&pageState.type!='1'">
+  <div class='g_tit mb20 task clearfix'>
+    <h5>当前流程：{{navData[navData.length-1]}}</h5>
+    <h5>操作人：{{assignee}}</h5>
+    <h5>状态：{{status}}</h5>
+    <!-- <div style='position:absolute;right:0;top:12px;' *ngIf="pageState.type=='尽职调查'">
+      <button class='btn sure' (click)='ddOutcom()'>导出尽调报告</button>
+      <a class='btn sure' href="{{'http://dd.e-masspick.com/task/resultInfo?processId='+pageState.processInsId}}" target="_blank"
+       >尽调报告</a>
+    </div> -->
+    <!-- <div style='position:absolute;right:0;top:12px;' *ngIf="pageState.type=='自动发标'">
+      <button class='btn sure' (click)='regOutcom()'>导出融资登记报告</button>
+    </div> -->
+
+    <div style='position:absolute;right:0;top:12px;' *ngIf="!reportShow && (pageState.type!='风控审批')&&(pageState.type!='预约确认')&&(pageState.type!='尽职调查')&&(pageState.type!='自动发标')">
+      <!-- <a class='btn sure' href="" target="_blank">查看征信报告</a> -->
+      <button class='btn sure' [routerLink]="['/app/present/pastTable']" [queryParams]="{'taskId':pageState.taskId,'processInsId':pageState.processInsId,'type':'征信拆解'}">查看征信报告</button>
+      <a class='btn sure' href="{{'http://dd.e-masspick.com/task/resultInfo?processId='+pageState.processInsId}}"
+        target="_blank">查看尽调报告</a>
+    </div>
+    <div *ngIf="reportShow" style='position:absolute;right:0;top:12px;'>
+      <button class='btn sure' [routerLink]="['/app/present/report']" [queryParams]="{'taskId':pageState.taskId,'processId':pageState.processInsId,'reportType':reportType,'type': pageState.type}">查看报告</button>
+    </div>
+  </div>
+  <customer-info></customer-info>
+  <div *ngFor="let item of list">
+    <app-step-result [info]="item" *ngIf="item.fields"></app-step-result>
+  </div>
+  <!-- <read-only-block [list]='list'></read-only-block> -->
+  <div style='text-align:center;padding-top: 20px;'>
+    <a class='btn cal' style='margin-left:12px;' onclick='history.back();'>返回</a>
+  </div>
+</div>
+
+<div class="white_bg" style='padding:0 30px 30px;margin-bottom:30px;' *ngIf="pageState.type=='征信拆解'">
+  <div class='g_tit mb20 task clearfix'>
+    <h5>当前流程：{{navData[navData.length-1]}}</h5>
+    <h5>操作人：{{assignee}}</h5>
+    <h5>状态：{{status}}</h5>
+  </div>
+  <!-- <customer-info></customer-info> -->
+  <disassembly-block [obj]='selfObj'></disassembly-block>
+  <disassembly-etp [obj]='etpObj'></disassembly-etp>
+  <app-disassembly-auth [obj]='authObj'></app-disassembly-auth>
+  <div style='text-align:center;padding-top: 20px;'>
+    <a class='btn cal' style='margin-left:12px;' onclick='history.back();'>返回</a>
+  </div>
+</div>

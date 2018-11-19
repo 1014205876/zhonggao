@@ -1,0 +1,6 @@
+@import url(../self-dis/self-dis.component.css);
+table{table-layout: fixed;margin-top: -1px;}
+table,table tr th, table tr td {border:1px solid #e2e2e2;line-height: 48px;}
+table{ width: 100%; min-height: 25px; line-height: 25px; text-align: center; border-collapse: collapse;}
+table tr th,table tr td{padding: 0 5px; white-space: nowrap;overflow: hidden;text-overflow: ellipsis;height: 48px; text-align: center;}
+table tr th{background-color: #e5f4fb;}

@@ -1,0 +1,8 @@
+<div class="col_5" [formGroup]="group">
+  <div class="key">
+    <span title='{{config.name}}'>{{config.name}}：</span>
+  </div>
+  <div class="value">
+    <input type="datetime-local" [attr.placeholder]="config.placeholder" [formControlName]="config.id">
+  </div>
+</div>

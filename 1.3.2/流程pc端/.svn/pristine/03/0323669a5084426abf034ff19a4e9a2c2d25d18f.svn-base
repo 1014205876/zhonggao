@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col_5" *ngFor='let item of list'>
+    <div class="key">
+      <span title='{{item.name}}'>{{item.name}}</span>
+    </div>
+    <div class="value">
+      <span *ngIf="item.type && item.type!=='image'" title='{{item.value}}'>{{item.value}}</span>
+      <img-watcher *ngIf="item.type && item.type==='image'" [src]='item.value' ></img-watcher>
+      <!-- <a href="" *ngIf="getType(item.type)=='url'" style="color:blue;">asd</a>
+      <img-watcher [src]='item.src' *ngIf="getType(item.type)=='image'"></img-watcher> -->
+    </div>
+  </div>
+  <div *ngIf="list.length % 2 === 1" class="col_5">
+      <div class="key">
+          <span></span>
+        </div>
+        <div class="value">
+          <span></span>
+        </div>
+  </div>
+</div>

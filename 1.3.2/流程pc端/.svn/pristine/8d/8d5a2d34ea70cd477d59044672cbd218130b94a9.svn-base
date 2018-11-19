@@ -1,0 +1,8 @@
+<div class="col_10" [formGroup]="group">
+  <div class="key">
+    <span title='{{config.name}}'>{{config.name}}：</span>
+  </div>
+  <div class="value">
+    <label *ngFor='let option of config.options' title='{{option.name}}'><input type="radio" [value]="option.value" [formControlName]="config.id">{{option.name}}</label>
+  </div>
+</div>

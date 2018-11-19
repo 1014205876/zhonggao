@@ -1,0 +1,82 @@
+<app-crumb [list]='navData'></app-crumb>
+
+<div class="white_bg" style='padding:0 30px 30px;margin-bottom:30px;' *ngIf="pageState.type=='1'">
+  <customer-info [info]='1'></customer-info>
+  <div style='text-align:center;padding-top: 20px;'>
+    <a class='btn cal' [routerLink]="['/app/present']" [queryParams]="{'form':'1','product': product}">返回</a>
+  </div>
+</div>
+
+<!-- <div class='white_bg' style='padding:30px;'>
+  <read-only-block [list]='obj'></read-only-block>
+</div> -->
+
+<div class="white_bg" style='padding:0 30px 30px;' *ngIf="pageState.type=='征信拆解'">
+  <div class='g_tit mb20 task clearfix'>
+    <h5>当前流程：{{navData[navData.length-1]}}</h5>
+    <h5>操作人：{{operator}}</h5>
+    <h5>状态：进行中</h5>
+  </div>
+  <div class='dis_tit'>
+    <span>1.材料审核&nbsp; &rarr; &nbsp;2.拆解个人征信报告&nbsp; &rarr; &nbsp;3.拆解企业征信报告&nbsp; &rarr; &nbsp;4.确认、提交</span>
+  </div>
+  <disassembly-block [obj]='selfObj'></disassembly-block>
+  <disassembly-etp [obj]='etpObj'></disassembly-etp>
+  <div class="btn_row txtCen">
+    <button class="btn sure" (click)="mask=true;confirmMsg='是否确定提交?'">确定</button>
+    <a class="btn cal" onclick='history.back();'>返回</a>
+  </div>
+  <!-- <div class="app" style="padding-top:50px;">
+    <dynamic-form [config]="config" (submitted)="formSubmitted($event)">
+    </dynamic-form>
+  </div> -->
+</div>
+
+<div class="white_bg" style='padding:0 30px 30px;' *ngIf="pageState.type!='征信拆解'&&pageState.type!='1'">
+  <div class='g_tit mb20 task clearfix'>
+    <h5>当前流程：{{navData[0]}}</h5>
+    <h5>操作人：{{operator}}</h5>
+    <h5>状态：进行中</h5>
+    <div *ngIf="pageState.type!='预约确认'" style='position:absolute;right:0;top:12px;'>
+      <button *ngIf="!reportShow" class='btn sure' [routerLink]="['/app/present/pastTable']" [queryParams]="{'taskId':pageState.taskId,'processInsId':pageState.processInsId,'type':'征信拆解'}">查看征信报告</button>
+      <button *ngIf="reportShow" class='btn sure' [routerLink]="['/app/present/report']" [queryParams]="{'taskId':pageState.taskId,'processId':pageState.processInsId,'reportType':reportType,'type': pageState.type}">查看报告</button>
+      <a *ngIf="pageState.type!='风控审批' && !reportShow" class='btn sure' href="{{'http://dd.e-masspick.com/task/resultInfo?processId='+pageState.processInsId}}"
+        target="_blank">查看尽调报告</a>
+    </div>
+  </div>
+  <customer-info></customer-info>
+  <div *ngFor="let item of data">
+    <app-step-result [info]="item" *ngIf="item.fields"></app-step-result>
+  </div>
+  <div class="app" style="padding-top:20px;">
+    <div class="tit" style="padding-bottom: 20px;">
+      <h5 style="font-size: 24px;height: 52px;line-height:52px;">{{navData[0]}}</h5>
+    </div>
+    <dynamic-form [config]="config" (submitted)="formSubmitted($event)">
+    </dynamic-form>
+  </div>
+</div>
+
+<div class="mask" *ngIf="mask"></div>
+<div class='confirm' *ngIf="mask">
+  <div class="head">
+    <span>提示</span>
+  </div>
+  <div class="body">
+    <span>{{confirmMsg}}</span>
+  </div>
+  <div class="footer">
+    <button class="btn sure" (click)='sure();mask=false'>确定</button>
+    <button class="btn cal" (click)='mask=false'>取消</button>
+  </div>
+</div>
+
+<p-confirmDialog style="font-size: 16px;" width="400" transition='10ms cubic-bezier(0.25, 0.8, 0.25, 1)' #cd>
+  <p-footer class="confirm-footer">
+    <button type="button" class="cancel" (click)="cd.reject()">取消</button>
+    <button type="button" class="accept" (click)="cd.accept()">确定</button>
+  </p-footer>
+</p-confirmDialog>
+
+<loading [loading]='loading'></loading>
+<app-warning #warningBlock [warning]="warning"></app-warning>

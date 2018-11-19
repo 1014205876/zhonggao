@@ -1,0 +1,84 @@
+input[type=text],select,textarea,.value input[type=date],input[type=datetime-local]{
+    border: 1px solid #9c9c9c;
+}
+
+.ng-dirty.ng-invalid{
+    border-color: #f00;
+}
+
+.row:after{
+    content: "";
+    display: block;
+    height: 0;
+    clear: both;
+}
+.col_5{
+    width: 50%;
+    float: left;
+}
+.col_10{
+    width: 100%;
+    float: left;
+}
+.key{
+    width: 25%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.value{
+    width: calc(75% + 1px );
+}
+.value input[type=text],.value input[type=date],.value select,.value input[type=datetime-local]{
+    display: inline-block;
+    padding: 0 10px;
+    width: 240px;
+    height: 32px;
+}
+.value textarea{
+    display: inline-block;
+    width: 100%;
+    height: 160px;
+}
+.col_10.text_area .key,.col_10.text_area .value{
+    height: 180px;
+    line-height: 180px;
+}
+.col_10 .key{
+    /* width: 16em; */
+    width: 22%;
+}
+.col_10 .value{
+    /* width: calc(100% - 2px - 16em ); */
+    width: calc(100% + 1px - 22% );
+}
+.key,.value{
+    margin: -1px 0 0 -1px;
+    padding: 0 10px;
+    float: left;
+    height: 52px;
+    line-height: 52px;
+    font-size: 14px;
+    border: 1px solid #e2e2e2;
+}
+.btn_row{
+    text-align: center;
+    padding: 30px 0 20px;
+}
+.btn{
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 12px;
+}
+.btn.sure{
+    background-color: #589af8;
+    color: #fff;
+}
+.btn.cal{
+    background-color: #f26666;
+    color: #fff;
+}

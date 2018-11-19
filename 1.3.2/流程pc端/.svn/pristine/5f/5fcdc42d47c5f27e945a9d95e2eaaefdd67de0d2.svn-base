@@ -1,0 +1,54 @@
+.sheet{
+    border-top: 1px solid #e2e2e2;
+}
+.sheet_tit,.tit,.s_tit{
+    position: relative;
+}
+.tit h2{
+    font-size: 40px;
+    height: 50px;
+    line-height: 50px;
+}
+.sheet_tit>h2{
+    font-size: 32px;
+    height: 48px;
+    line-height: 48px;
+}
+.class_tit h2{
+    font-size: 26px;
+    height: 40px;
+    line-height: 40px;
+}
+.sheet h4{
+    font-size: 20px;
+    height: 38px;
+    line-height: 38px;
+}
+.tit h6{
+    font-size: 18px;
+    height: 40px;
+    line-height: 40px;
+}
+.s_tit h6{
+    font-size: 16px;
+    height: 32px;
+    line-height: 32px;
+}
+.btn{
+    display: inline-block;
+    height: 38px;
+    line-height: 38px;
+    padding: 0 20px;
+    font-size: 14px;
+    border-radius: 3px;
+    margin: 0 10px;
+}
+.btn.sure{
+    background-color: #589af8;
+    color: #fff;
+}
+.btn.cal{
+    background-color: #f26666;
+    color: #fff;
+}
+.tree_mask{position: fixed;left: 0;top: 0;z-index: 9998; width: 100%;height: 100%;background-color: rgba(0, 0, 0, 0.3)}
